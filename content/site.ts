@@ -1,22 +1,48 @@
 export const site = {
-  name: "DealRadar",
-  title: "DealRadar | Pick the tenders worth pursuing",
-  description: "A workspace demo for bid teams to shortlist public tenders, track deadlines and take the next step with a bid brief.",
+  name: "Folio",
+  title: "Folio | Relationships and outbound, together",
+  description:
+    "An open-source CRM demo with people, companies, deal pipelines, outbound sequences, and a shared inbox.",
   audience: "B2B",
   theme: "tool" as "tool" | "editorial" | "technical",
-  primaryAction: { label: "Open the demo", href: "/workspace" },
+  primaryAction: { label: "Open the demo", href: "/crm/overview" },
   hero: {
-    headline: "Pick the tenders worth pursuing.",
-    description: "Shortlist public tenders and turn each decision into a brief for your bid team.",
+    headline: "Your next conversation starts here.",
+    description:
+      "Keep your people, pipeline, and outreach in one thoughtful workspace. Built for teams that grow through relationships.",
   },
   workflow: [
-    { title: "Start with the shortlist", description: "Set a stage and filter to the tenders worth discussing." },
-    { title: "Write down the next move", description: "Keep the deadline and your next action with the original decision." },
-    { title: "Draft a brief for the bid review", description: "Generate an editable draft from the record and download it to share." },
+    {
+      title: "Know who you’re talking to",
+      description:
+        "Explore contacts and companies with a shared view of every relationship.",
+    },
+    {
+      title: "Make your outreach personal",
+      description:
+        "Plan a sequence, write each follow-up, and keep the conversation in context.",
+    },
+    {
+      title: "Keep the conversation moving",
+      description:
+        "Review replies, save a draft, and move opportunities through your pipeline.",
+    },
   ],
   faq: [
-    { question: "Who is this for?", answer: "This demo is for software and IT services teams that review public tenders and need to agree on which ones to pursue." },
-    { question: "Does the workspace pull live tenders?", answer: "This demo uses fictional tenders. You can add your own sample records; there is no live feed connected." },
-    { question: "Where are changes saved?", answer: "The demo saves changes in this browser when local storage is available. Use sample information and download any briefs you want to keep." },
+    {
+      question: "Who is this for?",
+      answer:
+        "For founders and B2B teams who want to manage relationships and outbound together.",
+    },
+    {
+      question: "Does the demo send emails?",
+      answer:
+        "Campaigns use fictional contacts and simulated sending. Create drafts and edit sequences to explore the workflow.",
+    },
+    {
+      question: "Where are changes saved?",
+      answer:
+        "The demo saves changes in this browser when local storage is available. Campaign edits, pipeline changes, and reply drafts stay on this device.",
+    },
   ],
 } as const;

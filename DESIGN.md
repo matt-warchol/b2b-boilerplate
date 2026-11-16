@@ -23,3 +23,7 @@ Use the shared button variants. Keep touch targets generous and focus visible. R
 ## Demo material
 
 The hero uses desktop (1120 × 650 CSS pixels) and mobile (390 × 440) captures of `/workspace` on fictional data. Replace `public/workspace-preview.webp` and `public/workspace-preview-mobile.webp` with new product captures, then update their dimensions and alt text. Store private customer screenshots outside the public repo.
+
+## Folio CRM
+
+The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its cool white canvas, pale gray sidebar, navy text, blue accents, and small pastel identity marks take cues from Attio and Warmbly. The Folio mark is an original vector. Motion is reserved for navigation feedback, charts, and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.

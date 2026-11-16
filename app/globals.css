@@ -185,3 +185,18 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Folio's public page shares the CRM's cool neutral palette. */
+:root[data-theme="tool"] {
+  --color-paper: #fcfcfe;
+  --color-paper-2: #f4f6fa;
+  --color-ink: #202632;
+  --color-muted: #687286;
+  --color-rule: #e3e7f0;
+  --color-brand: #536caa;
+  --color-brand-soft: #edf1fb;
+  --color-focus: #465fa0;
+  --color-stage-start: #eef2fb;
+  --color-stage-end: #dce4f3;
+  --color-stage-grid: #657ca214;
+}

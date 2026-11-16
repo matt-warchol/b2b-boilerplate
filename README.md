@@ -2,9 +2,12 @@
 
 An open-source starting point for B2B products that sell on a landing page and do the daily work in a CRM-style workspace. It also includes a playbook for auditing a product you already have.
 
-![DealRadar sample workspace with filter views, stages and deadlines](public/workspace-preview.webp)
+![Folio CRM overview with outbound activity, pipeline metrics, and sample relationships](public/crm-preview.webp)
 
-The example is **DealRadar**, a fictional public procurement workspace. Open the demo, review a tender, change its stage, record the next action, and turn it into an editable brief. Everything runs locally without accounts or API keys.
+The main demo is **Folio**, a CRM with ten connected views. Explore people and companies, move deals through a pipeline, create an outbound campaign, edit its three-step sequence, and save reply drafts. The cool neutral design is inspired by Attio and Warmbly, with original identity marks and subtle Motion interactions.
+
+All contacts, companies, and campaign metrics are fictional. Sending is simulated. Campaign drafts, sequence edits, deal stages, tasks, reply drafts, and workspace preferences persist in this browser. Campaigns currently share one set of demo sequence templates. The original DealRadar tender workflow remains available under `/workspace`.
+
 
 ## Run it
 
@@ -21,7 +24,14 @@ Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, type
 
 | Route | What you can try |
 | --- | --- |
-| `/` | Product-led B2B landing with a real workspace screenshot, workflow, FAQ, and one primary action |
+| `/` | Folio landing with responsive screenshots and a direct CRM demo link |
+| `/crm/overview` | Relationship dashboard, sample activity, outbound charts and people |
+| `/crm/people`, `/crm/companies` | Searchable records, filtered views and contact details |
+| `/crm/pipeline` | Editable deal stages in a kanban board |
+| `/crm/campaigns` | Create drafts, edit sequence copy, start or pause simulations |
+| `/crm/inbox` | Sample conversations and saved reply drafts |
+| `/crm/tasks`, `/crm/templates` | Task completion and reusable sequence copy |
+| `/crm/analytics`, `/crm/settings` | Sample performance and local preferences |
 | `/workspace` | Search, sort, filter, open and edit opportunities; changes persist in this browser |
 | `/workspace/briefs` | Generate a draft from a record, edit it, then copy or download it |
 
