@@ -109,7 +109,7 @@ export function ProductHero() {
         </Reveal>
       </div>
       <Reveal eager delay={0.18} className="mt-9 sm:mt-12">
-        <div className="overflow-hidden rounded-[1.4rem] bg-[#192746] bg-[radial-gradient(ellipse_at_15%_10%,#6d85d4_0%,transparent_54%),radial-gradient(ellipse_at_82%_15%,#3e55a1_0%,transparent_47%)] p-2.5 sm:rounded-[2rem] sm:p-5 lg:p-8">
+        <div className="overflow-hidden rounded-[1.4rem] bg-zinc-900 bg-[radial-gradient(ellipse_at_15%_10%,#52525b_0%,transparent_54%),radial-gradient(ellipse_at_82%_15%,#3f3f46_0%,transparent_47%)] p-2.5 sm:rounded-[2rem] sm:p-5 lg:p-8">
           <Link
             href="/crm/overview"
             className="block overflow-hidden rounded-xl bg-background ring-1 ring-white/30 shadow-2xl transition-[filter] hover:brightness-[1.025] sm:rounded-[1.25rem]"
@@ -355,7 +355,7 @@ export function Questions() {
 export function Closing() {
   return (
     <section className={`${pageWidth} pb-14 sm:pb-20`}>
-      <Reveal className="rounded-3xl bg-[#1d2b4b] bg-[radial-gradient(ellipse_at_top_right,#485b9c,transparent_60%)] px-6 py-14 text-white sm:py-20">
+      <Reveal className="rounded-3xl bg-zinc-900 bg-[radial-gradient(ellipse_at_top_right,#52525b,transparent_60%)] px-6 py-14 text-white sm:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className={titleStyle}>Build your first campaign in Folidock.</h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
