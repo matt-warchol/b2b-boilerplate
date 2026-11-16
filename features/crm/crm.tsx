@@ -27,6 +27,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -134,6 +141,14 @@ function CRMLayout({ view }: { view: string }) {
     initialSequence,
   );
   const [pipeline, setPipeline] = useSaved("folio.pipeline.v1", deals);
+  const [dragging, setDragging] = useState<string | null>(null);
+  const [dropStage, setDropStage] = useState<string | null>(null);
+  const moveDeal = (company: string, stage: string) =>
+    setPipeline(
+      pipeline.map((item) =>
+        item.company === company ? { ...item, stage } : item,
+      ),
+    );
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [person, setPerson] = useState<Person | null>(null);
@@ -508,7 +523,28 @@ function CRMLayout({ view }: { view: string }) {
                   <div className="crm-kanban">
                     {["Qualified", "Discovery", "Proposal", "Won"].map(
                       (stage) => (
-                        <section key={stage}>
+                        <section
+                          key={stage}
+                          aria-label={stage + " stage"}
+                          data-drop={dropStage === stage ? "" : undefined}
+                          onDragOver={(e) => {
+                            if (!dragging) return;
+                            e.preventDefault();
+                            e.dataTransfer.dropEffect = "move";
+                            if (dropStage !== stage) setDropStage(stage);
+                          }}
+                          onDragLeave={(e) => {
+                            if (!e.currentTarget.contains(e.relatedTarget as Node))
+                              setDropStage(null);
+                          }}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            const company = e.dataTransfer.getData("text/plain");
+                            if (company) moveDeal(company, stage);
+                            setDropStage(null);
+                            setDragging(null);
+                          }}
+                        >
                           <header>
                             <span
                               className={"stage-dot " + stage.toLowerCase()}
@@ -532,8 +568,25 @@ function CRMLayout({ view }: { view: string }) {
                                 layout
                                 className="deal-card"
                                 key={d.company}
+                                data-dragging={
+                                  dragging === d.company ? "" : undefined
+                                }
                               >
-                                <div>
+                                <div
+                                  className="deal-drag"
+                                  draggable
+                                  title="Drag to another stage"
+                                  onDragStart={(e) => {
+                                    e.dataTransfer.setData("text/plain", d.company);
+                                    e.dataTransfer.effectAllowed = "move";
+                                    setDragging(d.company);
+                                  }}
+                                  onDragEnd={() => {
+                                    setDragging(null);
+                                    setDropStage(null);
+                                  }}
+                                >
+                                <div className="deal-head">
                                   <Avatar
                                     name={d.company}
                                     color={d.color}
@@ -549,34 +602,39 @@ function CRMLayout({ view }: { view: string }) {
                                   <Avatar name={d.person} color={d.color} />
                                   <span>{d.person}</span>
                                 </footer>
+                                </div>
                                 <label
                                   className="sr-only"
                                   htmlFor={"stage-" + d.company}
                                 >
                                   Stage for {d.company}
                                 </label>
-                                <select
-                                  id={"stage-" + d.company}
+                                <Select
                                   value={stage}
-                                  onChange={(e) =>
-                                    setPipeline(
-                                      pipeline.map((item) =>
-                                        item.company === d.company
-                                          ? { ...item, stage: e.target.value }
-                                          : item,
-                                      ),
-                                    )
+                                  onValueChange={(value) =>
+                                    moveDeal(d.company, value)
                                   }
                                 >
-                                  {[
-                                    "Qualified",
-                                    "Discovery",
-                                    "Proposal",
-                                    "Won",
-                                  ].map((s) => (
-                                    <option key={s}>{s}</option>
-                                  ))}
-                                </select>
+                                  <SelectTrigger
+                                    id={"stage-" + d.company}
+                                    size="sm"
+                                    className="deal-stage w-full bg-background"
+                                  >
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {[
+                                      "Qualified",
+                                      "Discovery",
+                                      "Proposal",
+                                      "Won",
+                                    ].map((s) => (
+                                      <SelectItem key={s} value={s}>
+                                        {s}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
                               </motion.article>
                             ))}
                         </section>
@@ -804,15 +862,26 @@ function CRMLayout({ view }: { view: string }) {
                     </label>
                     <label>
                       Default timezone
-                      <select
+                      <Select
                         name="timezone"
                         defaultValue={preferences.timezone}
                         key={preferences.timezone}
                       >
-                        <option>Europe / Madrid</option>
-                        <option>Europe / London</option>
-                        <option>America / New York</option>
-                      </select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {[
+                            "Europe / Madrid",
+                            "Europe / London",
+                            "America / New York",
+                          ].map((zone) => (
+                            <SelectItem key={zone} value={zone}>
+                              {zone}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </label>
                     <Button type="submit">Save preferences</Button>
                   </form>

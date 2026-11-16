@@ -4,6 +4,13 @@ import { Clipboard, Download, FileText } from "lucide-react";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useOpportunities } from "@/features/opportunities/store";
 import { buildBidBrief } from "./engine";
 
@@ -45,10 +52,10 @@ export function BriefBuilder() {
         {opportunities.length ? <>
           <div className="brief-field">
             <label htmlFor="brief-opportunity">Opportunity</label>
-            <select id="brief-opportunity" value={record?.id ?? ""} onChange={(event) => { setId(event.target.value); setBrief(""); setFeedback(""); }}>
-              {!record && <option value="">Select an opportunity</option>}
-              {opportunities.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
-            </select>
+            <Select value={record?.id ?? ""} onValueChange={(value) => { setId(value); setBrief(""); setFeedback(""); }}>
+              <SelectTrigger id="brief-opportunity" className="w-full"><SelectValue placeholder="Select an opportunity" /></SelectTrigger>
+              <SelectContent>{opportunities.map((item) => <SelectItem key={item.id} value={item.id}>{item.title}</SelectItem>)}</SelectContent>
+            </Select>
           </div>
           <p>This draft uses the fields on the opportunity. Check the official notice before sharing it.</p>
           <Button disabled={!record} onClick={() => { if (record) { setBrief(buildBidBrief(record)); setFeedback("Draft ready."); } }}>

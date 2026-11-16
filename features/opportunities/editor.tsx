@@ -3,6 +3,13 @@
 import type { FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { SheetDescription, SheetTitle } from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { stages, type Opportunity, type Stage } from "./model";
 import { saveOpportunity } from "./store";
 
@@ -44,9 +51,10 @@ export function OpportunityEditor({ record, onSave }: {
         <label>Region<input name="region" maxLength={80} defaultValue={record?.region} /></label>
         <label>Deadline<input name="deadline" type="date" min="1900-01-01" max="2100-12-31" defaultValue={record?.deadline} /></label>
       </div>
-      <label>Stage<select name="stage" defaultValue={record?.stage ?? "New"}>
-        {stages.map((stage) => <option key={stage}>{stage}</option>)}
-      </select></label>
+      <label>Stage<Select name="stage" defaultValue={record?.stage ?? "New"}>
+        <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+        <SelectContent>{stages.map((stage) => <SelectItem key={stage} value={stage}>{stage}</SelectItem>)}</SelectContent>
+      </Select></label>
       <label>Next step<textarea name="nextStep" maxLength={600} rows={4} defaultValue={record?.nextStep} /></label>
       <div className="form-actions"><Button type="submit">Save opportunity</Button></div>
     </form>

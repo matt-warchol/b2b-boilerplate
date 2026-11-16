@@ -10,7 +10,7 @@ The original demo used bespoke sidebar markup, popovers, table markup and a CSS 
 | Outbound dashboard | ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, Card and Toggle Group | Recharts bar series, a 7/14-day range, palette, and sample time series |
 | Landing | Navigation Menu, Dropdown Menu, Tabs, Card, Accordion and Button | Product copy, page layout, brand and screenshots from the running app |
 
-The Folidock wordmark, product views, charts' sample data and campaign workflow are project-specific. The kanban layout and the inbox split layout remain Folidock compositions. The deal stage and timezone use native selects. The original procurement demo remains a separate example and retains its existing TanStack Table logic.
+The Folidock wordmark, product views, charts' sample data and campaign workflow are project-specific. The kanban layout and the inbox split layout remain Folidock compositions. The deal stage, timezone, opportunity and brief pickers use the registry Select. Pipeline cards move between stages by drag and drop (native HTML drag events, no extra dependency); the Select on each card is the keyboard and touch path. For a richer board, the open-source shadcn-compatible Kanban from Dice UI or Kibo UI (both MIT, built on dnd-kit) is the next step. The original procurement demo remains a separate example and retains its existing TanStack Table logic.
 
 Framer Motion (Motion for React) animates CRM screen changes, deal layout transitions and product tour panel changes. Recharts animates the bar series. Radix and the registry's CSS animations handle menu, accordion and sheet transitions. Motion uses the user's reduced-motion preference. A global reduced-motion override covers CSS effects.
 
