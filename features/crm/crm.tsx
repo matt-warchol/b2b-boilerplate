@@ -6,15 +6,10 @@ import { motion, MotionConfig } from "motion/react";
 import {
   ArrowUpRight,
   ArrowRight,
-  Building2,
-  CheckCheck,
   ChevronDown,
   ChevronRight,
-  CircleHelp,
   Clock3,
-  FileText,
   Inbox,
-  LayoutDashboard,
   ListTodo,
   Mail,
   MoreHorizontal,
@@ -23,12 +18,9 @@ import {
   Plus,
   Search,
   Send,
-  Settings2,
   SlidersHorizontal,
-  Sparkles,
   Users,
   X,
-  ChartNoAxesCombined,
   Columns3,
   Globe,
   CheckCircle2,
@@ -50,43 +42,33 @@ import {
   type Campaign,
 } from "./data";
 
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
-import { Avatar as UIAvatar, AvatarFallback } from "@/components/ui/avatar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Badge as UIBadge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { FolioMark } from "@/components/brand";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { AppSidebar, SiteHeader } from "./dashboard-shell";
+import { InboxPanel, inboxContacts } from "./inbox-panel";
+import { RecordAvatar as Avatar } from "./record-avatar";
+import { SectionCards, type Metric } from "./section-cards";
 import { OutboundChart } from "./outbound-chart";
 
-const navigation = [
-  {
-    label: "Workspace",
-    items: [
-      ["overview", "Overview", LayoutDashboard],
-      ["inbox", "Inbox", Inbox],
-      ["tasks", "My tasks", CheckCheck],
-    ],
-  },
-  {
-    label: "Relationships",
-    items: [
-      ["people", "People", Users],
-      ["companies", "Companies", Building2],
-      ["pipeline", "Pipeline", Columns3],
-    ],
-  },
-  {
-    label: "Outbound",
-    items: [
-      ["campaigns", "Campaigns", Send],
-      ["templates", "Templates", FileText],
-      ["analytics", "Analytics", ChartNoAxesCombined],
-    ],
-  },
-] as const;
 const titles: Record<string, string> = {
   overview: "Overview",
   inbox: "Inbox",
@@ -106,25 +88,6 @@ const money = (n: number) =>
     maximumFractionDigits: 0,
   }).format(n);
 
-function Avatar({
-  name,
-  color = "lilac",
-  square = false,
-}: {
-  name: string;
-  color?: string;
-  square?: boolean;
-}) {
-  return (
-    <UIAvatar className={"crm-avatar " + color + (square ? " square" : "")}><AvatarFallback className="bg-transparent text-inherit">
-      {name
-        .split(" ")
-        .map((n) => n[0])
-        .slice(0, 2)
-        .join("")}
-    </AvatarFallback></UIAvatar>
-  );
-}
 function Badge({ text }: { text: string }) {
   const tone = [
     "Active",
@@ -137,7 +100,11 @@ function Badge({ text }: { text: string }) {
     : ["Draft", "New", "Paused"].includes(text)
       ? "gray"
       : "violet";
-  return <UIBadge variant="secondary" className={"crm-badge " + tone}>{text}</UIBadge>;
+  return (
+    <UIBadge variant="secondary" className={"crm-badge " + tone}>
+      {text}
+    </UIBadge>
+  );
 }
 const savedCache = new Map<string, { raw: string | null; value: unknown }>();
 const subscribers = new Set<() => void>();
@@ -198,11 +165,22 @@ function useSaved<T>(key: string, seed: T): [T, (value: T) => void, string] {
 }
 
 export function CRM({ view }: { view: string }) {
-  return <SidebarProvider className="crm-app" style={{ "--sidebar-width": "15rem" } as React.CSSProperties}><CRMLayout key={view} view={view} /></SidebarProvider>;
+  return (
+    <SidebarProvider
+      className="crm-app"
+      style={
+        {
+          "--sidebar-width": "16rem",
+          "--header-height": "3.5rem",
+        } as React.CSSProperties
+      }
+    >
+      <CRMLayout key={view} view={view} />
+    </SidebarProvider>
+  );
 }
 
 function CRMLayout({ view }: { view: string }) {
-  const { setOpenMobile } = useSidebar();
   const [campaigns, setCampaigns, storageError] = useSaved<Campaign[]>(
     "folio.campaigns.v1",
     initialCampaigns,
@@ -231,12 +209,10 @@ function CRMLayout({ view }: { view: string }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const [reply, setReply] = useState<string | null>(null);
   const [drafts, setDrafts] = useSaved<Record<string, string>>(
     "folio.replies.v1",
     {},
   );
-  const [inboxPerson, setInboxPerson] = useState(0);
   const [preferences, setPreferences] = useSaved("folio.preferences.v1", {
     workspace: "Studio workspace",
     timezone: "Europe / Madrid",
@@ -257,8 +233,6 @@ function CRMLayout({ view }: { view: string }) {
   );
   const totalSent = campaigns.reduce((sum, c) => sum + c.sent, 0);
   const totalReplies = campaigns.reduce((sum, c) => sum + c.replies, 0);
-  const inboxContact = people[inboxPerson];
-  const replyText = reply ?? drafts[inboxContact.email] ?? "";
   function notify(text: string) {
     setMessage(text);
   }
@@ -275,12 +249,24 @@ function CRMLayout({ view }: { view: string }) {
   const tools = (
     <div className="crm-table-tools">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild><Button variant="outline"><span>View: {filter}</span><ChevronDown /></Button></DropdownMenuTrigger>
-        <DropdownMenuContent align="start"><DropdownMenuRadioGroup value={filter} onValueChange={setFilter}>
-          {(view === "campaigns" ? ["All", "Active", "Paused", "Draft"] : ["All", "My contacts", "Interested", "Meeting booked"]).map(tab => (
-            <DropdownMenuRadioItem key={tab} value={tab}>{tab}</DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup></DropdownMenuContent>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">
+            <span>View: {filter}</span>
+            <ChevronDown />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuRadioGroup value={filter} onValueChange={setFilter}>
+            {(view === "campaigns"
+              ? ["All", "Active", "Paused", "Draft"]
+              : ["All", "My contacts", "Interested", "Meeting booked"]
+            ).map((tab) => (
+              <DropdownMenuRadioItem key={tab} value={tab}>
+                {tab}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
       </DropdownMenu>
       <label className="crm-search">
         <Search size={15} />
@@ -306,7 +292,7 @@ function CRMLayout({ view }: { view: string }) {
               <TableHead>Name</TableHead>
               <TableHead>Company</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Fit score</TableHead>
+              <TableHead className="text-right">Fit score</TableHead>
               <TableHead>Owner</TableHead>
               <TableHead>Last activity</TableHead>
             </TableRow>
@@ -332,13 +318,14 @@ function CRMLayout({ view }: { view: string }) {
                 <TableCell>
                   <Badge text={p.status} />
                 </TableCell>
-                <TableCell>
-                  <span className="crm-score">
-                    <span className="score-bars">▂▃▅▆</span> {p.score}
-                  </span>
+                <TableCell className="text-right tabular-nums">
+                  {p.score}
                 </TableCell>
                 <TableCell>
-                  <span className="owner-circle">{p.owner[0]}</span> {p.owner}
+                  <span className="flex items-center gap-2">
+                    <Avatar name={p.owner} className="size-6" />
+                    {p.owner}
+                  </span>
                 </TableCell>
                 <TableCell className="muted">{i + 1}h ago</TableCell>
               </TableRow>
@@ -354,60 +341,38 @@ function CRMLayout({ view }: { view: string }) {
     );
   }
 
-  function metrics() {
-    return (
-      <div className="crm-metrics">
-        {[
-          [
-            "Active pipeline",
-            money(
-              pipeline
-                .filter((d) => d.stage !== "Won")
-                .reduce((s, d) => s + d.value, 0),
-            ),
-            "+18.6%",
-            "vs. previous period",
-            Columns3,
-          ],
-          [
-            "Emails sent",
-            totalSent.toLocaleString(),
-            "+12.4%",
-            "across 3 campaigns",
-            Send,
-          ],
-          [
-            "Replies received",
-            totalReplies.toString(),
-            ((totalReplies / totalSent) * 100).toFixed(1) + "%",
-            "overall reply rate",
-            Inbox,
-          ],
-          [
-            "Meetings booked",
-            campaigns.reduce((s, c) => s + c.meetings, 0).toString(),
-            "+8",
-            "vs. previous period",
-            Users,
-          ],
-        ].map(([label, value, change, caption, Icon]) => {
-          const MetricIcon = Icon as typeof Users;
-          return (
-            <div className="crm-metric" key={String(label)}>
-              <span>
-                {String(label)}
-                <MetricIcon size={15} />
-              </span>
-              <strong>{String(value)}</strong>
-              <small>
-                <em>{String(change)}</em> {String(caption)}
-              </small>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+  const openDeals = pipeline.filter((deal) => deal.stage !== "Won");
+  const metrics: Metric[] = [
+    {
+      label: "Active pipeline",
+      value: money(openDeals.reduce((sum, deal) => sum + deal.value, 0)),
+      icon: Columns3,
+      context: `${openDeals.length} open deals`,
+    },
+    {
+      label: "Emails sent",
+      value: totalSent.toLocaleString("en-US"),
+      icon: Send,
+      context: `Across ${campaigns.filter((c) => c.sent > 0).length} campaigns`,
+    },
+    {
+      label: "Replies received",
+      value: totalReplies.toLocaleString("en-US"),
+      icon: Inbox,
+      change: totalSent
+        ? ((totalReplies / totalSent) * 100).toFixed(1) + "%"
+        : undefined,
+      context: "Overall reply rate",
+    },
+    {
+      label: "Meetings booked",
+      value: campaigns
+        .reduce((sum, c) => sum + c.meetings, 0)
+        .toLocaleString("en-US"),
+      icon: Users,
+      context: "From outbound campaigns",
+    },
+  ];
 
   return (
     <MotionConfig reducedMotion="user">
@@ -415,110 +380,31 @@ function CRMLayout({ view }: { view: string }) {
         <a href="#crm-main" className="skip-link">
           Skip to workspace
         </a>
-        <Sidebar aria-label="CRM navigation"><SidebarContent className="folio-sidebar-content">
-          <Link href="/crm/overview" className="folio-logo">
-            <FolioMark />
-            folio<span>CRM</span>
-          </Link>
-          <div className="crm-workspace-switch">
-            <span className="workspace-icon">S</span>
-            <span>
-              {preferences.workspace}
-              <small>Pro workspace</small>
-            </span>
-            <ChevronDown size={14} />
-          </div>
-          <button
-            className="crm-search-launch"
-            onClick={() => {
-              setOpenMobile(false);
-              setCompose(true);
-            }}
-          >
-            <Search size={15} /> Quick actions <kbd>⌘ K</kbd>
-          </button>
-          {navigation.map(group => (
-            <SidebarGroup key={group.label}>
-              <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
-              <SidebarMenu>
-                {group.items.map(([route, label, Icon]) => (
-                  <SidebarMenuItem key={route}>
-                    <SidebarMenuButton asChild isActive={view === route} size="lg">
-                      <Link href={"/crm/" + route} onClick={() => setOpenMobile(false)} aria-current={view === route ? "page" : undefined}>
-                        <Icon /> <span>{label}</span>
-                        {route === "inbox" && <UIBadge variant="secondary" className="ml-auto">3</UIBadge>}
-                        {route === "tasks" && <small className="ml-auto">{tasks.filter(t => !t.done).length}</small>}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroup>
-          ))}
-          <div className="crm-sidebar-bottom">
-            <div className="demo-note">
-              <span className="demo-orbit">
-                <Sparkles size={18} />
-              </span>
-              <strong>
-                Your next conversation
-                <br />
-                starts here.
-              </strong>
-              <p>Explore with sample data.</p>
-              <Link href="https://github.com/matt-warchol/b2b-boilerplate">
-                Get the open-source kit <ArrowUpRight size={13} />
-              </Link>
-            </div>
-            <Link href="/crm/settings" className="crm-settings-link">
-              <Settings2 size={17} /> Settings
-            </Link>
-            <div className="crm-user">
-              <Avatar name="Alex Morgan" color="peach" />
-              <span>
-                Alex Morgan<small>Personal workspace</small>
-              </span>
-              <ChevronDown size={13} />
-            </div>
-          </div>
-        </SidebarContent></Sidebar>
-        <div className="crm-body">
-          <header className="crm-topbar">
-            <div>
-              <SidebarTrigger aria-label="Toggle navigation" />
-              <span>Workspace</span>
-              <ChevronRight size={12} />
-              <strong>{titles[view]}</strong>
-            </div>
-            <div>
-              <span className="demo-pill">Demo workspace</span>
-              <a
-                href="https://github.com/matt-warchol/b2b-boilerplate"
-                aria-label="View source and documentation"
-              >
-                <CircleHelp size={17} />
-              </a>
-              <Avatar name="Alex Morgan" color="peach" />
-            </div>
-          </header>
-          <main id="crm-main" className="crm-main" tabIndex={-1}>
+        <AppSidebar
+          view={view}
+          workspace={preferences.workspace}
+          taskCount={tasks.filter((task) => !task.done).length}
+          inboxCount={inboxContacts.length}
+          onCreate={() => setCompose(true)}
+        />
+        <SidebarInset className="min-w-0" id="crm-main" tabIndex={-1}>
+          <SiteHeader title={titles[view]} />
+          <div className="crm-main">
             <motion.div
               key={view}
               initial={{ opacity: 0.6, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
+              className="grid gap-6"
             >
-              <div className="crm-page-heading">
+              <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  {view === "overview" && (
-                    <div className="crm-date">Monday, November 16</div>
-                  )}
-                  <h1>
+                  <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
                     {view === "overview"
                       ? "A good day to make connections."
                       : titles[view]}
                   </h1>
-                  <p>
+                  <p className="mt-2 text-base text-muted-foreground">
                     {
                       (
                         {
@@ -544,14 +430,15 @@ function CRMLayout({ view }: { view: string }) {
                     }
                   </p>
                 </div>
-                <Button onClick={() => setCompose(true)}>
-                  <Plus size={15} />
-                  {view === "campaigns" ? "New campaign" : "Quick create"}
-                </Button>
+                {view === "campaigns" && (
+                  <Button onClick={() => setCompose(true)}>
+                    <Plus /> Create campaign
+                  </Button>
+                )}
               </div>
               {(view === "overview" || view === "analytics") && (
                 <>
-                  {metrics()}
+                  <SectionCards metrics={metrics} />
                   <div className="crm-overview-grid">
                     <OutboundChart />
                     <Card className="crm-panel activity">
@@ -776,10 +663,16 @@ function CRMLayout({ view }: { view: string }) {
                           <TableRow>
                             <TableHead>Campaign</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Contacts</TableHead>
-                            <TableHead>Sent</TableHead>
-                            <TableHead>Reply rate</TableHead>
-                            <TableHead>Meetings</TableHead>
+                            <TableHead className="text-right">
+                              Contacts
+                            </TableHead>
+                            <TableHead className="text-right">Sent</TableHead>
+                            <TableHead className="text-right">
+                              Reply rate
+                            </TableHead>
+                            <TableHead className="text-right">
+                              Meetings
+                            </TableHead>
                             <TableHead />
                           </TableRow>
                         </TableHeader>
@@ -803,32 +696,47 @@ function CRMLayout({ view }: { view: string }) {
                               <TableCell>
                                 <Badge text={c.status} />
                               </TableCell>
-                              <TableCell>{c.contacts}</TableCell>
-                              <TableCell>{c.sent.toLocaleString()}</TableCell>
-                              <TableCell>
-                                <span className="reply-rate">
-                                  {c.sent
-                                    ? ((c.replies / c.sent) * 100).toFixed(1)
-                                    : "0"}
-                                  %
-                                </span>
-                                <div className="mini-progress">
-                                  <span
-                                    style={{
-                                      width:
-                                        (c.sent
-                                          ? (c.replies / c.sent) * 800
-                                          : 0) + "%",
-                                    }}
-                                  />
-                                </div>
+                              <TableCell className="text-right tabular-nums">
+                                {c.contacts.toLocaleString("en-US")}
                               </TableCell>
-                              <TableCell>{c.meetings}</TableCell>
+                              <TableCell className="text-right tabular-nums">
+                                {c.sent.toLocaleString("en-US")}
+                              </TableCell>
+                              <TableCell className="text-right tabular-nums">
+                                {c.sent
+                                  ? ((c.replies / c.sent) * 100).toFixed(1) +
+                                    "%"
+                                  : "—"}
+                              </TableCell>
+                              <TableCell className="text-right tabular-nums">
+                                {c.meetings.toLocaleString("en-US")}
+                              </TableCell>
                               <TableCell>
                                 <DropdownMenu modal={false}>
-                                  <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" aria-label={"Actions for " + c.name}><MoreHorizontal /></Button></DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end" onCloseAutoFocus={event => { if (campaignId === c.id) event.preventDefault(); }}>
-                                    <DropdownMenuItem onSelect={() => { setStep(0); setCampaignId(c.id); }}>Edit sequence</DropdownMenuItem>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      aria-label={"Actions for " + c.name}
+                                    >
+                                      <MoreHorizontal />
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent
+                                    align="end"
+                                    onCloseAutoFocus={(event) => {
+                                      if (campaignId === c.id)
+                                        event.preventDefault();
+                                    }}
+                                  >
+                                    <DropdownMenuItem
+                                      onSelect={() => {
+                                        setStep(0);
+                                        setCampaignId(c.id);
+                                      }}
+                                    >
+                                      Edit sequence
+                                    </DropdownMenuItem>
                                   </DropdownMenuContent>
                                 </DropdownMenu>
                               </TableCell>
@@ -859,92 +767,13 @@ function CRMLayout({ view }: { view: string }) {
                 </>
               )}
               {view === "inbox" && (
-                <Card className="crm-panel crm-inbox">
-                  <div className="inbox-list">
-                    <div className="inbox-label">
-                      Recent conversations <span>3</span>
-                    </div>
-                    {[people[0], people[2], people[4]].map((p) => (
-                      <button
-                        key={p.email}
-                        className={
-                          inboxContact.email === p.email ? "selected" : ""
-                        }
-                        onClick={() => {
-                          setInboxPerson(people.indexOf(p));
-                          setReply(drafts[p.email] ?? "");
-                        }}
-                      >
-                        <Avatar name={p.name} color={p.color} />
-                        <span>
-                          <strong>{p.name}</strong>
-                          <small>Re: A thought for {p.company}</small>
-                          <p>Thanks for reaching out. This is...</p>
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="inbox-thread">
-                    <div className="thread-header">
-                      <div>
-                        <h2>Re: A thought for {inboxContact.company}</h2>
-                        <p>
-                          {inboxContact.name} &lt;{inboxContact.email}&gt;
-                        </p>
-                      </div>
-                      <Badge text="Interested" />
-                    </div>
-                    <article className="email-body">
-                      <Avatar
-                        name={inboxContact.name}
-                        color={inboxContact.color}
-                      />
-                      <div>
-                        <strong>{inboxContact.name}</strong>
-                        <small>Today, 10:42 AM</small>
-                        <p>Hi Alex,</p>
-                        <p>
-                          Thanks for reaching out. This is actually something
-                          we’ve been discussing internally at{" "}
-                          {inboxContact.company}.
-                        </p>
-                        <p>
-                          I’d love to see how this could work for our team.
-                          Would you have time for a quick conversation next
-                          week?
-                        </p>
-                        <p>
-                          Best,
-                          <br />
-                          {inboxContact.name.split(" ")[0]}
-                        </p>
-                      </div>
-                    </article>
-                    <div className="reply-box">
-                      <label htmlFor="reply-draft">Your reply</label>
-                      <Textarea
-                        id="reply-draft"
-                        rows={4}
-                        value={replyText}
-                        onChange={(e) => setReply(e.target.value)}
-                        placeholder="Write a thoughtful reply..."
-                      />
-                      <Button
-                        disabled={!replyText.trim()}
-                        onClick={() => {
-                          setDrafts({
-                            ...drafts,
-                            [inboxContact.email]: replyText,
-                          });
-                          notify("Reply draft saved in this browser.");
-                        }}
-                      >
-                        <FileText size={14} />
-                        Save draft
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                <InboxPanel
+                  drafts={drafts}
+                  onSave={(email, text) => {
+                    setDrafts({ ...drafts, [email]: text });
+                    notify("Reply draft saved in this browser.");
+                  }}
+                />
               )}
               {view === "tasks" && (
                 <Card className="crm-panel task-panel">
@@ -1065,8 +894,8 @@ function CRMLayout({ view }: { view: string }) {
                 </Link>
               </footer>
             </motion.div>
-          </main>
-        </div>
+          </div>
+        </SidebarInset>
         {(message || storageError) && (
           <div role="status" className="crm-toast">
             <CheckCircle2 size={17} />
