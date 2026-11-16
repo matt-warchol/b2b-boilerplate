@@ -24,7 +24,8 @@ Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, type
 
 | Route | What you can try |
 | --- | --- |
-| `/` | Folio landing with responsive screenshots and a direct CRM demo link |
+| `/` | Tailark landing blocks, real product screenshots, workflow tabs, and a direct campaign demo link |
+| `/admin` | SaaS owner demo: search and filter accounts, add and edit customers, update subscription status, seats and notes |
 | `/crm/overview` | Relationship dashboard, sample activity, outbound charts and people |
 | `/crm/people`, `/crm/companies` | Searchable records, filtered views and contact details |
 | `/crm/pipeline` | Editable deal stages in a kanban board |
@@ -35,13 +36,13 @@ Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, type
 | `/workspace` | Search, sort, filter, open and edit opportunities; changes persist in this browser |
 | `/workspace/briefs` | Generate a draft from a record, edit it, then copy or download it |
 
-The demo uses fictional records. There is no live tender feed, database, login, email delivery, or hosted AI in the starter.
+All demo records are fictional. The owner dashboard saves edits in browser storage and uses simulated billing. See the [production guide](docs/PRODUCTION.md#owner-access-and-billing) before connecting real customer data.
 
 ## Start a project or audit an existing one
 
 - **Start:** use **Use this template** on GitHub or copy this folder into your project. Open it in Claude Code or Codex and say: “Use b2b-starter to start [product]. Recommend a landing and workspace style, then build the first workflow.” Claude Code can also run `/b2b-starter start`; Codex can run `$b2b-starter` with the task. The [project brief](docs/PROJECT_BRIEF.md) captures audience, offer, evidence, and one conversion action.
 - **Audit:** point Claude Code or Codex at your existing repo and share the target URL or route and its main business goal. Say: “Use b2b-starter to audit this project. Prioritize fixes with screenshots or code references.” You can use [the audit playbook](docs/AUDIT.md) on its own; there is no need to replace your current stack.
-- **Make it yours:** swap [landing copy and CTA](content/site.ts), choose a [style](DESIGN.md), replace [sample records](features/opportunities/model.ts), change the brand in [the brand component](components/brand.tsx), and recapture the preview from your first working workflow. Replace the demo favicon and point the footer link at your new repo.
+- **Make it yours:** swap [landing blocks](components/marketing/blocks.tsx) and [site settings](content/site.ts), choose a [style](DESIGN.md), replace [sample records](features/opportunities/model.ts), change the brand in [the brand component](components/brand.tsx), and recapture the preview from your first working workflow. Replace the demo favicon and point the footer link at your new repo.
 
 ## What it uses
 

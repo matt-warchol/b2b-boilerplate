@@ -12,6 +12,10 @@ Ship production plumbing in the order the first workflow needs it.
 
 Do not use the browser demo store for customer data or authorization. It intentionally has no login or backend.
 
+## Owner access and billing
+
+The `/admin` route is a public owner demo. Its sample directory and changes live in the browser. Before connecting actual accounts, enforce platform-owner authorization for the page and every server read and write. Store memberships, seats and notes in your database, with an audit trail for plan and status changes. Treat a billing provider as the source of truth for payment status and recurring revenue. Calculate those totals from active subscriptions rather than from the demo's plan-price constants.
+
 ## AI: give the user one useful result first
 
 Start with the deterministic [brief engine](../features/briefs/engine.ts). It gives the user a source-grounded draft at zero model cost. The paid upgrade should improve one action the user can inspect: draft a bid brief from selected evidence, identify missing facts, or suggest the next action. Keep the draft editable and let a person approve any submission.

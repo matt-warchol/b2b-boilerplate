@@ -22,7 +22,7 @@ Use the shared button variants. Keep touch targets generous and focus visible. R
 
 ## Demo material
 
-The hero uses desktop (1120 × 650 CSS pixels) and mobile (390 × 440) captures of `/workspace` on fictional data. Replace `public/workspace-preview.webp` and `public/workspace-preview-mobile.webp` with new product captures, then update their dimensions and alt text. Store private customer screenshots outside the public repo.
+The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. Update the screenshots and alt text together when changing the demo. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
 
 ## Folio CRM
 

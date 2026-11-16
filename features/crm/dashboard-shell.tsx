@@ -256,7 +256,13 @@ export function AppSidebar({
   );
 }
 
-export function SiteHeader({ title }: { title: string }) {
+export function SiteHeader({
+  title,
+  scope = "Workspace",
+}: {
+  title: string;
+  scope?: string;
+}) {
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -268,7 +274,7 @@ export function SiteHeader({ title }: { title: string }) {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden sm:inline-flex">
-              Workspace
+              {scope}
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden sm:block" />
             <BreadcrumbItem>

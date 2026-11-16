@@ -2,33 +2,21 @@ export const site = {
   name: "Folio",
   title: "Folio | Relationships and outbound, together",
   description:
-    "An open-source CRM demo with people, companies, deal pipelines, outbound sequences, and a shared inbox.",
+    "An open-source B2B starter with a CRM, outbound sequences, a shared inbox, and a SaaS owner dashboard.",
   audience: "B2B",
   theme: "tool" as "tool" | "editorial" | "technical",
   primaryAction: { label: "Explore campaigns", href: "/crm/campaigns" },
-  hero: {
-    headline: "Your next conversation starts here.",
-    description:
-      "Keep your people, pipeline, and outreach in one thoughtful workspace. Built for teams that grow through relationships.",
-  },
-  workflow: [
-    {
-      title: "Know who you’re talking to",
-      description:
-        "Explore contacts and companies with a shared view of every relationship.",
-    },
-    {
-      title: "Make your outreach personal",
-      description:
-        "Plan a sequence, write each follow-up, and keep the conversation in context.",
-    },
-    {
-      title: "Keep the conversation moving",
-      description:
-        "Review replies, save a draft, and move opportunities through your pipeline.",
-    },
-  ],
   faq: [
+    {
+      question: "What can the SaaS owner demo do?",
+      answer:
+        "You can add and edit sample customer accounts, filter by status, and review seats and simulated recurring revenue. The owner demo is public and uses browser storage.",
+    },
+    {
+      question: "Can I adapt Folio for my own product?",
+      answer:
+        "Yes. The source is available as an MIT-licensed GitHub template. Replace the sample data and add your own authentication and integrations before using it with real customers.",
+    },
     {
       question: "Who is this for?",
       answer:

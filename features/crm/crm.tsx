@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { motion, MotionConfig } from "motion/react";
 import {
   ArrowUpRight,
@@ -67,6 +67,7 @@ import { AppSidebar, SiteHeader } from "./dashboard-shell";
 import { InboxPanel, inboxContacts } from "./inbox-panel";
 import { RecordAvatar as Avatar } from "./record-avatar";
 import { SectionCards, type Metric } from "./section-cards";
+import { useSaved } from "@/lib/use-demo-storage";
 import { OutboundChart } from "./outbound-chart";
 
 const titles: Record<string, string> = {
@@ -106,64 +107,6 @@ function Badge({ text }: { text: string }) {
     </UIBadge>
   );
 }
-const savedCache = new Map<string, { raw: string | null; value: unknown }>();
-const subscribers = new Set<() => void>();
-function subscribe(listener: () => void) {
-  subscribers.add(listener);
-  window.addEventListener("storage", listener);
-  return () => {
-    subscribers.delete(listener);
-    window.removeEventListener("storage", listener);
-  };
-}
-function useSaved<T>(key: string, seed: T): [T, (value: T) => void, string] {
-  const [error, setError] = useState("");
-  const value = useSyncExternalStore(
-    subscribe,
-    () => {
-      try {
-        const raw = localStorage.getItem(key);
-        const cached = savedCache.get(key);
-        if (cached && cached.raw === raw) return cached.value as T;
-        const parsed = raw ? JSON.parse(raw) : seed;
-        const valid = Array.isArray(seed)
-          ? Array.isArray(parsed) &&
-            parsed.every(
-              (item: unknown) =>
-                typeof item === "object" &&
-                item !== null &&
-                Object.entries(seed[0] ?? {}).every(
-                  ([field, example]) =>
-                    typeof (item as Record<string, unknown>)[field] ===
-                    typeof example,
-                ),
-            )
-          : parsed && typeof parsed === "object" && !Array.isArray(parsed);
-        const result = valid ? (parsed as T) : seed;
-        savedCache.set(key, { raw, value: result });
-        return result;
-      } catch {
-        return seed;
-      }
-    },
-    () => seed,
-  );
-  return [
-    value,
-    (next: T) => {
-      try {
-        const raw = JSON.stringify(next);
-        localStorage.setItem(key, raw);
-        savedCache.set(key, { raw, value: next });
-        subscribers.forEach((listener) => listener());
-      } catch {
-        setError("Browser storage is unavailable. Changes could not be saved.");
-      }
-    },
-    error,
-  ];
-}
-
 export function CRM({ view }: { view: string }) {
   return (
     <SidebarProvider

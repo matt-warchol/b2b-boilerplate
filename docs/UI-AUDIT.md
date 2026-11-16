@@ -28,3 +28,23 @@ The Grill Me design review confirmed Campaigns as the landing’s primary destin
 - **Motion:** screen entrance, deal transitions and landing tour changes use Motion for React. The area chart's entrance animation is Recharts and respects reduced motion. The sidebar, menus and sheet use the registry transitions.
 
 [Dashboard block source and demo](https://ui.shadcn.com/blocks#dashboard-01) · [shadcn license](SHADCN-LICENSE.md) · [DiceBear Notionists](https://www.dicebear.com/styles/notionists/)
+
+## Landing block pass
+
+| Section | Starting point | Folio adaptation |
+| --- | --- | --- |
+| Header and mobile navigation | shadcn Navigation Menu, Dropdown Menu and Button | Folio links, addressable landing sections and a direct link to Campaigns. Header container is Folio's composition. |
+| Hero | Tailark OSS `dusk-hero-section-2` | Split introduction and full-width product frame. Folio copy, responsive CRM screenshots, palette and Motion entrance. |
+| Product story | Tailark OSS `dusk-content-2` | Two-column editorial layout with use cases tied to the working demo. |
+| Feature grid | Tailark OSS `dusk-features-2` with shadcn Card | Three product cards using screenshots of pipeline, inbox and owner workspace. |
+| Product tour | shadcn Tabs, Card and Button | Folio's content and tab transition. |
+| Demo and template comparison | Tailark OSS `mist-pricing-2` with shadcn Card and Button | Two ways to use the starter. No commercial plans or prices are advertised. |
+| FAQ, CTA and footer | Tailark OSS `dusk-faqs-1`, `dusk-call-to-action-1`, `dusk-footer-2` | shadcn Accordion, Folio copy and navigation. Example support, logos and AI links were removed. |
+
+Motion for React animates the hero entrance, the first appearance of marketing sections and changes to the product tour. Feature image zoom is CSS. Both respect reduced-motion preferences. The hero background, screenshots, copy and section order are Folio-specific.
+
+[Tailark OSS registry](https://tailark.com/docs) · [Tailark MIT license](TAILARK-LICENSE.md)
+
+### SaaS owner demo
+
+The owner panel uses the shadcn `dashboard-01` shell pattern, the shared CRM site header and metric cards, plus Table, Badge, Input, Dropdown Menu, Sheet, Select and Textarea for managing customers. Folio supplies the fictional records, filters and form behavior. The landing links to the owner demo, which keeps edits in its own browser storage namespace and simulates billing.
