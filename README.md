@@ -50,3 +50,5 @@ The demo uses fictional records. There is no live tender feed, database, login, 
 Use the [shadcn blocks](https://ui.shadcn.com/blocks) and [Cruip Simple Light](https://github.com/cruip/tailwind-landing-page-template) as references when adding sections. Check the license of each block, font, image, and icon you import. Attio is a workspace design reference; the starter uses its own UI and assets.
 
 See [production next steps](docs/PRODUCTION.md) for auth, persistence, invitations, and cost controls for optional AI. The starter code is [MIT licensed](LICENSE). Contributions can start with a small PR and a screenshot or reproduction for any change the user can see.
+
+See the [UI audit](docs/UI-AUDIT.md) for the registry components used, custom Folio compositions and animation sources.

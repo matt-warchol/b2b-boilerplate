@@ -1,23 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  ListFilter,
-  FileText,
-  SquarePen,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { buttonVariants } from "@/components/ui/button";
 import { site } from "@/content/site";
+import { FolioNav, FolioProductTour, FolioFAQ } from "@/components/folio-landing";
 
-const icons = [ListFilter, SquarePen, FileText];
 
 function PrimaryAction({ inverse = false }: { inverse?: boolean }) {
   return (
     <Link
       href={site.primaryAction.href}
-      className={buttonVariants({ variant: inverse ? "inverse" : "default" })}
+      className={buttonVariants({ variant: inverse ? "secondary" : "default", size: "lg" })}
     >
       {site.primaryAction.label}
       <ArrowUpRight aria-hidden="true" />
@@ -32,12 +26,9 @@ export default function LandingPage() {
         Skip to content
       </a>
       <header className="site-header">
-        <div className="container site-bar">
+        <div className="container site-bar folio-site-bar">
           <Brand />
-          <nav className="site-nav" aria-label="Sections">
-            <a href="#workflow">Workflow</a>
-            <a href="#faq">FAQ</a>
-          </nav>
+          <FolioNav />
           <Link
             className={buttonVariants({ variant: "outline" })}
             href={site.primaryAction.href}
@@ -51,25 +42,25 @@ export default function LandingPage() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="container">
             <div className="intro-copy">
-              <h1 id="hero-title">{site.hero.headline}</h1>
-              <p>{site.hero.description}</p>
+              <h1 id="hero-title">A CRM for the work before and after hello.</h1>
+              <p>Find the right people, run outbound sequences, and pick up every reply where the relationship lives.</p>
               <div className="hero-actions">
                 <PrimaryAction />
-                <a
+                <Link
                   className={buttonVariants({ variant: "outline" })}
-                  href="#workflow"
+                  href="/crm/overview"
                 >
-                  See the workflow
-                  <ArrowDown aria-hidden="true" />
-                </a>
+                  See CRM overview
+                  <ArrowUpRight aria-hidden="true" />
+                </Link>
               </div>
             </div>
             <figure className="hero-preview">
               <div className="preview-stage">
                 <Link
                   className="preview-link"
-                  href={site.primaryAction.href}
-                  aria-label="Open the Folio CRM demo"
+                  href="/crm/overview"
+                  aria-label="Open the Folio CRM overview"
                 >
                   <picture>
                     <source
@@ -96,44 +87,11 @@ export default function LandingPage() {
             </figure>
           </div>
         </section>
-        <section
-          className="workflow container"
-          id="workflow"
-          aria-labelledby="workflow-title"
-        >
-          <div className="section-intro">
-            <h2 id="workflow-title">
-              Every relationship. One shared workspace.
-            </h2>
-          </div>
-          <ol className="workflow-list">
-            {site.workflow.map(({ title, description }, index) => {
-              const Icon = icons[index];
-              return (
-                <li key={title}>
-                  <div className="workflow-icon">
-                    <Icon aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
+        <FolioProductTour />
         <section className="faq-band" id="faq" aria-labelledby="faq-title">
           <div className="container faq-grid">
             <h2 id="faq-title">Before you try it.</h2>
-            <div className="faq-list">
-              {site.faq.map(({ question, answer }) => (
-                <details key={question}>
-                  <summary>{question}</summary>
-                  <p>{answer}</p>
-                </details>
-              ))}
-            </div>
+            <FolioFAQ />
           </div>
         </section>
         <section className="closing" aria-labelledby="closing-title">

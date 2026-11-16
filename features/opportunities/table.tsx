@@ -109,8 +109,8 @@ export function OpportunityTable() {
     </div>
     {rows.length === 0 && <div className="empty-state">
       <p>{search.trim() ? "No opportunities match your search." : "This view has no opportunities yet."}</p>
-      {search.trim() ? <Button variant="outline" size="small" onClick={() => setSearch("")}>Clear search</Button>
-        : view !== "All opportunities" && <Button variant="outline" size="small" onClick={() => setView("All opportunities")}>Show all opportunities</Button>}
+      {search.trim() ? <Button variant="outline" size="sm" onClick={() => setSearch("")}>Clear search</Button>
+        : view !== "All opportunities" && <Button variant="outline" size="sm" onClick={() => setView("All opportunities")}>Show all opportunities</Button>}
     </div>}
     {table.getPageCount() > 1 && <div className="pagination">
       <span>Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</span>
@@ -118,7 +118,7 @@ export function OpportunityTable() {
       <Button variant="outline" size="icon" aria-label="Next page" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}><ChevronRight aria-hidden="true" /></Button>
     </div>}
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetContent onCloseAutoFocus={(event) => {
+      <SheetContent className="sheet-content" onCloseAutoFocus={(event) => {
         event.preventDefault();
         (opener.current?.isConnected ? opener.current : newButton.current)?.focus();
       }}>

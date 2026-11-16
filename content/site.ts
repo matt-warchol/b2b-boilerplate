@@ -5,7 +5,7 @@ export const site = {
     "An open-source CRM demo with people, companies, deal pipelines, outbound sequences, and a shared inbox.",
   audience: "B2B",
   theme: "tool" as "tool" | "editorial" | "technical",
-  primaryAction: { label: "Open the demo", href: "/crm/overview" },
+  primaryAction: { label: "Explore campaigns", href: "/crm/campaigns" },
   hero: {
     headline: "Your next conversation starts here.",
     description:

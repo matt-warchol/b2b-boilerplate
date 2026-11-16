@@ -60,8 +60,8 @@ export function BriefBuilder() {
         <div className="document-heading">
           <h2 id="brief-result">Draft</h2>
           <div className="document-actions">
-            <Button variant="outline" size="small" disabled={!brief.trim()} onClick={copy}><Clipboard aria-hidden="true" /> Copy</Button>
-            <Button variant="outline" size="small" disabled={!brief.trim()} onClick={download}><Download aria-hidden="true" /> Download</Button>
+            <Button variant="outline" size="sm" disabled={!brief.trim()} onClick={copy}><Clipboard aria-hidden="true" /> Copy</Button>
+            <Button variant="outline" size="sm" disabled={!brief.trim()} onClick={download}><Download aria-hidden="true" /> Download</Button>
           </div>
         </div>
         <textarea ref={output} aria-label="Draft brief" value={brief} onChange={(event) => { setBrief(event.target.value); setFeedback(""); }}
