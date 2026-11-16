@@ -48,7 +48,7 @@ All demo records are fictional. The owner dashboard saves edits in browser stora
 
 [Next.js App Router](https://nextjs.org/docs/app) and TypeScript; [Tailwind CSS](https://tailwindcss.com/) and local [shadcn/ui](https://ui.shadcn.com/) patterns built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog); [TanStack Table](https://tanstack.com/table/v8/docs/overview) for record views; [Lucide](https://lucide.dev/) icons and [Motion](https://motion.dev/docs/react-accessibility) for the active view indicator.
 
-Use the [shadcn blocks](https://ui.shadcn.com/blocks) and [Cruip Simple Light](https://github.com/cruip/tailwind-landing-page-template) as references when adding sections. Check the license of each block, font, image, and icon you import. Attio is a workspace design reference; the starter uses its own UI and assets.
+When adding or auditing a screen, follow the [shadcn-first workflow](DESIGN.md#shadcn-first-workflow). Start with official blocks and components, reuse the project's icon library, and use Motion for React when a transition needs more than the component's built-in behavior. Folio shows how these pieces fit together.
 
 See [production next steps](docs/PRODUCTION.md) for auth, persistence, invitations, and cost controls for optional AI. The starter code is [MIT licensed](LICENSE). Contributions can start with a small PR and a screenshot or reproduction for any change the user can see.
 
