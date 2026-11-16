@@ -4,7 +4,8 @@ Pick a style for the buyer and the work the screen has to support. Reuse an exis
 
 | Style | When to pick it | Theme |
 | --- | --- | --- |
-| Tool-led | Default for B2B SaaS: the visitor needs to see what the product does | `tool` |
+| Zinc (default) | Default for B2B SaaS and every app surface: shadcn/ui Zinc greys, Geist, black primary, colour only in small status dots | `zinc` |
+| Tool-led | Cool indigo variant when the brand needs a colour accent | `tool` |
 | Editorial | Founder-led services or a high-consideration offer with real examples and longer reading | `editorial` |
 | Technical | Data products, developer tools, and especially buyers who need to inspect the system | `technical` |
 

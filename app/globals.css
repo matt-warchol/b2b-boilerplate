@@ -82,6 +82,48 @@
   --color-focus: #7c3728;
 }
 
+:root[data-theme="zinc"] {
+  /* Official shadcn/ui Zinc base colour. Default for Folidock and RFPZen. */
+  --font-body: "Geist Variable", system-ui, sans-serif;
+  --font-display: var(--font-body);
+  --heading-spacing: -0.04em;
+  --color-paper: #ffffff;
+  --color-paper-2: #f4f4f5;
+  --color-surface: #ffffff;
+  --color-ink: #09090b;
+  --color-muted: #71717a;
+  --color-rule: #e4e4e7;
+  --color-field: #a1a1aa;
+  --color-focus: #71717a;
+  --color-brand: #18181b;
+  --color-brand-soft: #f4f4f5;
+  --color-on-dark: #fafafa;
+  --color-stage-start: #f4f4f5;
+  --color-stage-end: #e4e4e7;
+  --color-stage-grid: #18181b0d;
+  --color-app-rail: #fafafa;
+  --color-app-hover: #f4f4f5;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #a1a1aa;
+  --radius: 0.625rem;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #3f3f46;
+  --sidebar-primary: #18181b;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #a1a1aa;
+}
+
 :root[data-theme="technical"] {
   --font-display: "Manrope Variable", system-ui, sans-serif;
   --heading-spacing: -0.05em;

@@ -4,7 +4,7 @@ export const site = {
   description:
     "Build your B2B SaaS from a landing page, CRM with outbound sequences and shared inbox, and an owner console for customer accounts.",
   audience: "B2B",
-  theme: "tool" as "tool" | "editorial" | "technical",
+  theme: "zinc" as "zinc" | "tool" | "editorial" | "technical",
   primaryAction: { label: "Explore campaigns", href: "/crm/campaigns" },
   faq: [
     {

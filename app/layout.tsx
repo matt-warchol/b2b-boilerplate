@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/manrope";
+import "@fontsource-variable/geist";
 import "./globals.css";
 import "./workspace.css";
 import { site } from "@/content/site";
