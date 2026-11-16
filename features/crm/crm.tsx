@@ -46,6 +46,7 @@ import {
 import {
   people,
   deals,
+  money,
   initialCampaigns,
   initialSequence,
   initialTasks,
@@ -80,6 +81,7 @@ import { RecordAvatar as Avatar } from "./record-avatar";
 import { SectionCards, type Metric } from "./section-cards";
 import { useSaved } from "@/lib/use-demo-storage";
 import { OutboundChart } from "./outbound-chart";
+import { PipelineBoard } from "./pipeline-board";
 
 const titles: Record<string, string> = {
   overview: "Overview",
@@ -93,12 +95,6 @@ const titles: Record<string, string> = {
   analytics: "Analytics",
   settings: "Settings",
 };
-const money = (n: number) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
 
 function Badge({ text }: { text: string }) {
   const tone = [
@@ -144,15 +140,7 @@ function CRMLayout({ view }: { view: string }) {
     "folio.sequence.v1",
     initialSequence,
   );
-  const [pipeline, setPipeline] = useSaved("folio.pipeline.v1", deals);
-  const [dragging, setDragging] = useState<string | null>(null);
-  const [dropStage, setDropStage] = useState<string | null>(null);
-  const moveDeal = (company: string, stage: string) =>
-    setPipeline(
-      pipeline.map((item) =>
-        item.company === company ? { ...item, stage } : item,
-      ),
-    );
+  const [pipeline, setPipeline, pipelineError] = useSaved("folio.pipeline.v1", deals);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [person, setPerson] = useState<Person | null>(null);
@@ -440,7 +428,7 @@ function CRMLayout({ view }: { view: string }) {
                           "pink",
                         ],
                       ].map(([name, action, context, time, color]) => (
-                        <Item asChild size="sm" key={name} className="activity-row rounded-none">
+                        <Item asChild size="sm" key={name} className="activity-row flex-nowrap rounded-none">
                         {/* eslint-disable-next-line no-restricted-syntax -- registry Item asChild renders this native button */}
                         <button
                           type="button"
@@ -521,136 +509,7 @@ function CRMLayout({ view }: { view: string }) {
                 </Card>
               )}
               {view === "pipeline" && (
-                <>
-                  <div className="pipeline-summary">
-                    <span>Sales pipeline</span>
-                    <strong>
-                      {money(pipeline.reduce((s, d) => s + d.value, 0))}
-                    </strong>
-                    <span>{pipeline.length} opportunities</span>
-                  </div>
-                  <div className="crm-kanban">
-                    {["Qualified", "Discovery", "Proposal", "Won"].map(
-                      (stage) => (
-                        <section
-                          key={stage}
-                          aria-label={stage + " stage"}
-                          data-drop={dropStage === stage ? "" : undefined}
-                          onDragOver={(e) => {
-                            if (!dragging) return;
-                            e.preventDefault();
-                            e.dataTransfer.dropEffect = "move";
-                            if (dropStage !== stage) setDropStage(stage);
-                          }}
-                          onDragLeave={(e) => {
-                            if (!e.currentTarget.contains(e.relatedTarget as Node))
-                              setDropStage(null);
-                          }}
-                          onDrop={(e) => {
-                            e.preventDefault();
-                            const company = e.dataTransfer.getData("text/plain");
-                            if (company) moveDeal(company, stage);
-                            setDropStage(null);
-                            setDragging(null);
-                          }}
-                        >
-                          <header>
-                            <span
-                              className={"stage-dot " + stage.toLowerCase()}
-                            />
-                            <h2>{stage}</h2>
-                            <span>
-                              {pipeline.filter((d) => d.stage === stage).length}
-                            </span>
-                          </header>
-                          <p className="lane-total">
-                            {money(
-                              pipeline
-                                .filter((d) => d.stage === stage)
-                                .reduce((s, d) => s + d.value, 0),
-                            )}
-                          </p>
-                          {pipeline
-                            .filter((d) => d.stage === stage)
-                            .map((d) => (
-                              <motion.article
-                                layout
-                                className="deal-card"
-                                key={d.company}
-                                data-dragging={
-                                  dragging === d.company ? "" : undefined
-                                }
-                              >
-                                <div
-                                  className="deal-drag"
-                                  draggable
-                                  title="Drag to another stage"
-                                  onDragStart={(e) => {
-                                    e.dataTransfer.setData("text/plain", d.company);
-                                    e.dataTransfer.effectAllowed = "move";
-                                    setDragging(d.company);
-                                  }}
-                                  onDragEnd={() => {
-                                    setDragging(null);
-                                    setDropStage(null);
-                                  }}
-                                >
-                                <div className="deal-head">
-                                  <Avatar
-                                    name={d.company}
-                                    color={d.color}
-                                    square
-                                  />
-                                  <strong>{d.company}</strong>
-                                </div>
-                                <h3>{d.title}</h3>
-                                <strong className="deal-value">
-                                  {money(d.value)}
-                                </strong>
-                                <footer>
-                                  <Avatar name={d.person} color={d.color} />
-                                  <span>{d.person}</span>
-                                </footer>
-                                </div>
-                                <label
-                                  className="sr-only"
-                                  htmlFor={"stage-" + d.company}
-                                >
-                                  Stage for {d.company}
-                                </label>
-                                <Select
-                                  value={stage}
-                                  onValueChange={(value) =>
-                                    moveDeal(d.company, value)
-                                  }
-                                >
-                                  <SelectTrigger
-                                    id={"stage-" + d.company}
-                                    size="sm"
-                                    className="deal-stage w-full bg-background"
-                                  >
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {[
-                                      "Qualified",
-                                      "Discovery",
-                                      "Proposal",
-                                      "Won",
-                                    ].map((s) => (
-                                      <SelectItem key={s} value={s}>
-                                        {s}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </motion.article>
-                            ))}
-                        </section>
-                      ),
-                    )}
-                  </div>
-                </>
+                <PipelineBoard deals={pipeline} onChange={setPipeline} storageError={pipelineError} />
               )}
               {view === "campaigns" && (
                 <>

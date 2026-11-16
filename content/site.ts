@@ -1,10 +1,12 @@
+import type { Theme } from "./themes";
+
 export const site = {
   name: "Folidock",
   title: "Folidock | Open-source B2B SaaS starter",
   description:
     "Build your B2B SaaS from a landing page, CRM with outbound sequences and shared inbox, and an owner console for customer accounts.",
   audience: "B2B",
-  theme: "zinc" as "zinc" | "tool" | "editorial" | "technical",
+  theme: "zinc" as Theme,
   primaryAction: { label: "Explore campaigns", href: "/crm/campaigns" },
   faq: [
     {

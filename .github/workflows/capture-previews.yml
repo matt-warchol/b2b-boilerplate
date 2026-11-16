@@ -7,6 +7,8 @@ on:
   push:
     paths:
       - "app/globals.css"
+      - "app/themes.css"
+      - "content/themes.ts"
       - "app/crm/crm.css"
       - "app/workspace.css"
       - "content/site.ts"

@@ -4,8 +4,6 @@ An open-source B2B SaaS starter with a marketing site, CRM and outbound workspac
 
 [Live demo](https://folio-crm-demo.vercel.app/) · [Open CRM](https://folio-crm-demo.vercel.app/crm/overview) · [Owner console](https://folio-crm-demo.vercel.app/admin) · [Use this template](https://github.com/matt-warchol/b2b-boilerplate/generate)
 
-[![Folidock landing page, showing the product and its campaign demo](docs/screenshots/landing.webp)](https://folio-crm-demo.vercel.app/)
-
 ## What’s inside
 
 | Screen | What you can try |
@@ -14,10 +12,47 @@ An open-source B2B SaaS starter with a marketing site, CRM and outbound workspac
 | [CRM](https://folio-crm-demo.vercel.app/crm/overview) | Interactive dashboard, contact and company records, tasks, and account settings. |
 | [Campaigns](https://folio-crm-demo.vercel.app/crm/campaigns) | Create a draft, edit the sample sequence, and start or pause a send simulation. |
 | [Inbox](https://folio-crm-demo.vercel.app/crm/inbox) | Read sample conversations and save reply drafts. |
-| [Pipeline](https://folio-crm-demo.vercel.app/crm/pipeline) | Move opportunities across deal stages and review owners and totals. |
+| [Pipeline](https://folio-crm-demo.vercel.app/crm/pipeline) | Drag deals between stages, reorder cards, or use the stage menu. Totals update as you move deals. |
 | [Owner console](https://folio-crm-demo.vercel.app/admin) | Search customer accounts, review sample MRR, and edit plans, status, seats, and notes. |
 
-### Product screenshots
+## Visual styles
+
+Style switches the landing, CRM, and owner console together. It saves your choice in the browser and puts `?theme=` in the URL so you can share the current screen. Set the default in [`content/site.ts`](content/site.ts) and customize the shared CSS tokens in [`app/themes.css`](app/themes.css).
+
+### Zinc
+
+Neutral gray, split intro, full-width preview. [Open landing](https://folio-crm-demo.vercel.app/?theme=zinc) · [Open dashboard](https://folio-crm-demo.vercel.app/crm/overview?theme=zinc)
+
+<table>
+<tr>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/?theme=zinc"><img src="docs/screenshots/landing.webp" width="480" alt="Zinc landing page"></a></td>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/crm/overview?theme=zinc"><img src="docs/screenshots/dashboard.webp" width="480" alt="Zinc CRM dashboard"></a></td>
+</tr>
+</table>
+
+### Editorial
+
+Warm neutrals, centered hero, serif headings. [Open landing](https://folio-crm-demo.vercel.app/?theme=editorial) · [Open dashboard](https://folio-crm-demo.vercel.app/crm/overview?theme=editorial)
+
+<table>
+<tr>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/?theme=editorial"><img src="docs/screenshots/landing-editorial.webp" width="480" alt="Editorial landing page"></a></td>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/crm/overview?theme=editorial"><img src="docs/screenshots/dashboard-editorial.webp" width="480" alt="Editorial CRM dashboard"></a></td>
+</tr>
+</table>
+
+### Technical
+
+Dark graphite, mint, side-by-side hero and a denser CRM. [Open landing](https://folio-crm-demo.vercel.app/?theme=technical) · [Open dashboard](https://folio-crm-demo.vercel.app/crm/overview?theme=technical)
+
+<table>
+<tr>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/?theme=technical"><img src="docs/screenshots/landing-technical.webp" width="480" alt="Technical landing page"></a></td>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/crm/overview?theme=technical"><img src="docs/screenshots/dashboard-technical.webp" width="480" alt="Technical CRM dashboard"></a></td>
+</tr>
+</table>
+
+## Product screenshots
 
 <table>
 <tr>
@@ -55,4 +90,4 @@ Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, type
 - **Work with Claude Code or Codex:** use the [starter skill](.agents/skills/b2b-starter/SKILL.md) to plan a new screen or [audit an existing app](docs/AUDIT.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before implementation and before handoff.
 - **Go to production:** see the [production guide](docs/PRODUCTION.md) for authorization, persistence, billing, email, and optional AI cost controls.
 
-Folidock uses Next.js, TypeScript, Tailwind CSS, shadcn/ui, Tailark OSS, Recharts, TanStack Table, Motion for React, and Lucide. The [UI audit](docs/UI-AUDIT.md) shows which pieces came from ready-made blocks and what was adapted. The starter is [MIT licensed](LICENSE).
+Folidock uses Next.js, TypeScript, Tailwind CSS, shadcn/ui, Tailark OSS, Dice UI Kanban with dnd-kit, Recharts, TanStack Table, Motion for React, and Lucide. The [UI audit](docs/UI-AUDIT.md) shows which pieces came from ready-made blocks and what was adapted. The starter is [MIT licensed](LICENSE).

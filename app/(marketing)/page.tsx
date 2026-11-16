@@ -17,7 +17,7 @@ export default function LandingPage() {
         Skip to content
       </a>
       <MarketingHeader />
-      <main id="main" tabIndex={-1}>
+      <main id="main" className="folidock-landing" tabIndex={-1}>
         <ProductHero />
         <ProductStory />
         <ProductFeatures />

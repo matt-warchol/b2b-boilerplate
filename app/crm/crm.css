@@ -1,26 +1,7 @@
-/* Folidock (shadcn Zinc) theme for the dashboard-01 block and the CRM's domain views. */
+/* Folidock theme for the dashboard-01 block and the CRM's domain views. */
 body:has(.crm-app) {
-  /* shadcn/ui Zinc (same values as :root[data-theme="zinc"] in globals.css). */
   --font-body: "Geist Variable", system-ui, sans-serif;
   --font-display: var(--font-body);
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #a1a1aa;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #3f3f46;
-  --sidebar-primary: #18181b;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f4f4f5;
-  --sidebar-accent-foreground: #18181b;
-  --sidebar-border: #e4e4e7;
-  --folio-chart-replies: #18181b;
-  --folio-chart-meetings: #a1a1aa;
   font-family: var(--font-body);
 }
 
@@ -222,8 +203,7 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
 }
 
 .crm-company-grid,
-.template-grid,
-.crm-kanban {
+.template-grid {
   display: grid;
   gap: 1rem;
 }
@@ -232,8 +212,7 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
 }
 .company-card,
-.template-card,
-.deal-card {
+.template-card {
   text-align: left;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -250,17 +229,13 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
 }
 .company-card p,
 .company-card > span,
-.template-card p,
-.lane-total,
-.deal-card h3 {
+.template-card p {
   color: var(--muted-foreground);
   font-size: 0.875rem;
 }
 .company-card > span,
 .company-card > div,
-.template-card footer,
-.deal-card .deal-head,
-.deal-card footer {
+.template-card footer {
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -285,7 +260,6 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
   place-items: center;
   border-radius: var(--radius);
 }
-.pipeline-summary,
 .campaign-summary,
 .campaign-bottom {
   display: flex;
@@ -295,12 +269,6 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
   font-size: 0.875rem;
   color: var(--muted-foreground);
 }
-.pipeline-summary strong,
-.deal-value {
-  color: var(--foreground);
-  font-size: 1.125rem;
-  font-variant-numeric: tabular-nums;
-}
 .campaign-summary span,
 .campaign-bottom span {
   display: flex;
@@ -308,72 +276,19 @@ body:has(.crm-app) [data-slot="sheet-content"] .muted {
   gap: 0.375rem;
 }
 .status-dot,
-.stage-dot {
+.pipeline-stage-dot {
   width: 0.5rem;
   height: 0.5rem;
+  flex: none;
   border-radius: 100%;
-  background: #71717a;
+  background: var(--color-brand);
 }
 .status-dot,
-.stage-dot.won {
-  background: #31866b;
-}
-.stage-dot.proposal {
-  background: #a86825;
-}
-.crm-kanban {
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(13rem, 1fr);
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-}
-.crm-kanban > section {
-  min-height: 24rem;
-  background: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.75rem;
-}
-.crm-kanban header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.crm-kanban header h2 {
-  font-size: 0.875rem;
-}
-.lane-total {
-  margin-block: 0.375rem 1rem;
-}
-.deal-card {
-  background: var(--card);
-  margin-bottom: 0.75rem;
-}
-.deal-card h3 {
-  margin-block: 0.5rem;
-  font-weight: 500;
-}
-.deal-card footer {
-  margin-block: 0.5rem;
-  font-size: 0.875rem;
-}
-.deal-drag {
-  cursor: grab;
-}
-.deal-drag:active {
-  cursor: grabbing;
-}
-.deal-card[data-dragging] {
-  opacity: 0.45;
-}
-.deal-card .deal-stage {
-  margin-top: 0.75rem;
-}
-.crm-kanban > section[data-drop] {
-  background: var(--accent);
-  outline: 2px dashed var(--sidebar-accent-foreground);
-  outline-offset: -2px;
-}
+.pipeline-stage-dot.won { background: #31866b; }
+.pipeline-stage-dot.discovery { background: #8f68bb; }
+.pipeline-stage-dot.proposal { background: #b97a36; }
+.pipeline-board:focus-visible { outline-offset: -2px; }
+.pipeline-deal h3 { font-weight: 500; }
 
 .task-row {
   display: flex;

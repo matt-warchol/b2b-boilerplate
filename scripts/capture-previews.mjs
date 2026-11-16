@@ -16,11 +16,15 @@ async function open(width, height, path) {
   return page;
 }
 
-// Hero: CRM overview, desktop and mobile.
-for (const [name, w, h] of [["crm-preview", 1512, 1100], ["crm-preview-mobile", 390, 844]]) {
-  const page = await open(w, h, "/crm/overview");
-  await save(await page.screenshot(), name);
-  await page.context().close();
+// Hero: CRM overview, desktop and mobile for each preset.
+for (const theme of ["zinc", "editorial", "technical"]) {
+  const name = theme === "zinc" ? "crm-preview" : `crm-preview-${theme}`;
+  for (const [asset, w, h] of [[name, 1512, 1100], [`${name}-mobile`, 390, 844]]) {
+    const page = await open(w, h, `/crm/overview?theme=${theme}`);
+    await page.waitForFunction((preset) => document.documentElement.dataset.theme === preset, theme);
+    await save(await page.screenshot(), asset);
+    await page.context().close();
+  }
 }
 
 // Feature tiles: 860 x 540 crop starting at the page heading.
@@ -30,7 +34,7 @@ for (const [name, path] of [
   ["marketing-pipeline", "/crm/pipeline"],
   ["marketing-admin", "/admin"],
 ]) {
-  const page = await open(1440, 900, path);
+  const page = await open(1440, 900, `${path}?theme=zinc`);
   const box = await page.locator("h1").first().boundingBox();
   const clip = { x: Math.max(0, box.x - 16), y: Math.max(0, box.y - 16), width: 860, height: 540 };
   await save(await page.screenshot({ clip }), name);
@@ -39,7 +43,7 @@ for (const [name, path] of [
 
 // Campaigns tile: the campaign editor sheet, right-aligned crop.
 {
-  const page = await open(1440, 900, "/crm/campaigns");
+  const page = await open(1440, 900, "/crm/campaigns?theme=zinc");
   const row = page.getByText(/SaaS founders/i).first();
   await row.click();
   await page.waitForTimeout(1000);

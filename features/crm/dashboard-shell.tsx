@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import { FolidockMark } from "@/components/brand";
+import { ThemePicker } from "@/components/theme-picker";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -282,9 +283,10 @@ export function SiteHeader({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <Badge variant="secondary" className="ml-auto">
-          Demo workspace
-        </Badge>
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <Badge variant="secondary" className="hidden sm:inline-flex">Demo workspace</Badge>
+          <ThemePicker />
+        </div>
       </div>
     </header>
   );

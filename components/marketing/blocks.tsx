@@ -12,6 +12,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { Brand } from "@/components/brand";
+import { ThemePicker } from "@/components/theme-picker";
 import { FolioFAQ, FolioNav } from "@/components/folio-landing";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { site } from "@/content/site";
+import { HeroPreview } from "./hero-preview";
 import { Reveal } from "./reveal";
 
 const source = "https://github.com/matt-warchol/b2b-boilerplate";
@@ -43,18 +45,17 @@ function CampaignButton() {
 export function MarketingHeader() {
   return (
     <header className="border-b bg-background/95">
-      <div className={`${pageWidth} flex min-h-17 items-center gap-4 sm:gap-8`}>
+      <div className={`${pageWidth} flex min-h-17 items-center gap-2 md:gap-6`}>
         <Brand />
         <FolioNav />
-        <Button
-          asChild
-          variant="outline"
-          className="ml-auto hidden rounded-full sm:inline-flex"
-        >
-          <Link href={site.primaryAction.href}>
-            {site.primaryAction.label} <ArrowUpRight />
-          </Link>
-        </Button>
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <ThemePicker />
+          <Button asChild variant="outline" className="hidden rounded-full lg:inline-flex">
+            <Link href={site.primaryAction.href}>
+              {site.primaryAction.label} <ArrowUpRight />
+            </Link>
+          </Button>
+        </div>
       </div>
     </header>
   );
@@ -64,10 +65,10 @@ export function MarketingHeader() {
 export function ProductHero() {
   return (
     <section
-      className={`${pageWidth} pt-16 sm:pt-22 lg:pt-25`}
+      className={`${pageWidth} product-hero pt-16 sm:pt-22 lg:pt-25`}
       aria-labelledby="hero-title"
     >
-      <div className="flex justify-between gap-6 max-md:flex-col md:items-end">
+      <div className="product-hero-intro flex justify-between gap-6 max-md:flex-col md:items-end">
         <Reveal eager>
           <Button
             asChild
@@ -91,13 +92,13 @@ export function ProductHero() {
         <Reveal
           eager
           delay={0.1}
-          className="space-y-5 md:max-w-[20rem] md:pb-1 lg:max-w-[23rem]"
+          className="product-hero-summary space-y-5 md:max-w-[20rem] md:pb-1 lg:max-w-[23rem]"
         >
           <p className="text-pretty text-lg leading-relaxed text-muted-foreground">
             Find the right contacts, draft outbound sequences, and keep replies
             and deals in one workspace.
           </p>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="product-hero-actions flex flex-wrap items-center gap-2">
             <CampaignButton />
             <Button variant="ghost" size="lg" asChild className="rounded-full">
               <Link href="/crm/overview">
@@ -108,33 +109,8 @@ export function ProductHero() {
           </div>
         </Reveal>
       </div>
-      <Reveal eager delay={0.18} className="mt-9 sm:mt-12">
-        <div className="overflow-hidden rounded-[1.4rem] bg-zinc-900 bg-[radial-gradient(ellipse_at_15%_10%,#52525b_0%,transparent_54%),radial-gradient(ellipse_at_82%_15%,#3f3f46_0%,transparent_47%)] p-2.5 sm:rounded-[2rem] sm:p-5 lg:p-8">
-          <Link
-            href="/crm/overview"
-            className="block overflow-hidden rounded-xl bg-background ring-1 ring-white/30 shadow-2xl transition-[filter] hover:brightness-[1.025] sm:rounded-[1.25rem]"
-            aria-label="Open the Folidock CRM overview"
-          >
-            <picture>
-              <source
-                media="(max-width: 600px)"
-                srcSet="/crm-preview-mobile.webp"
-                width={390}
-                height={844}
-              />
-              <Image
-                src="/crm-preview.webp"
-                width={1512}
-                height={1100}
-                sizes="(max-width: 600px) 90vw, (max-width: 1280px) 92vw, 1170px"
-                className="h-auto w-full"
-                preload
-                unoptimized
-                alt="Folidock CRM overview showing campaign performance, contacts, and sample activity."
-              />
-            </picture>
-          </Link>
-        </div>
+      <Reveal eager delay={0.18} className="product-hero-preview mt-9 sm:mt-12">
+        <HeroPreview />
       </Reveal>
     </section>
   );
@@ -325,7 +301,7 @@ export function DemoOptions() {
                   <ul className="grid gap-3 p-6 text-sm sm:p-8">
                     {choice.items.map((item) => (
                       <li key={item} className="flex items-center gap-2">
-                        <Check className="size-4 text-[#5267bc]" />
+                        <Check className="size-4 text-[var(--color-brand)]" />
                         {item}
                       </li>
                     ))}
@@ -355,7 +331,7 @@ export function Questions() {
 export function Closing() {
   return (
     <section className={`${pageWidth} pb-14 sm:pb-20`}>
-      <Reveal className="rounded-3xl bg-zinc-900 bg-[radial-gradient(ellipse_at_top_right,#52525b,transparent_60%)] px-6 py-14 text-white sm:py-20">
+      <Reveal className="product-closing rounded-3xl px-6 py-14 text-white sm:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className={titleStyle}>Build your first campaign in Folidock.</h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">

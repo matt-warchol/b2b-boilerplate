@@ -204,6 +204,18 @@ export const deals = [
     person: "Noah Williams",
   },
 ];
+export type Deal = (typeof deals)[number];
+
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
+export function money(value: number) {
+  return currency.format(value);
+}
+
 export const initialSequence = [
   {
     title: "A thoughtful introduction",

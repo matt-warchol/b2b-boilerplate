@@ -99,6 +99,7 @@ export function OutboundChart() {
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="date"
+              tick={{ fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
               tickMargin={10}
@@ -106,6 +107,7 @@ export function OutboundChart() {
             />
             <YAxis
               width={30}
+              tick={{ fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
               allowDecimals={false}

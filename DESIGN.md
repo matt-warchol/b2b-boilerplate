@@ -4,12 +4,11 @@ Pick a style for the buyer and the work the screen has to support. Reuse an exis
 
 | Style | When to pick it | Theme |
 | --- | --- | --- |
-| Zinc (default) | Default for B2B SaaS and every app surface: shadcn/ui Zinc greys, Geist, black primary, colour only in small status dots | `zinc` |
-| Tool-led | Cool indigo variant when the brand needs a colour accent | `tool` |
-| Editorial | Founder-led services or a high-consideration offer with real examples and longer reading | `editorial` |
-| Technical | Data products, developer tools, and especially buyers who need to inspect the system | `technical` |
+| Zinc | Default for B2B SaaS and CRM. shadcn/ui Zinc, Geist, split intro, and a wide preview. | `zinc` |
+| Editorial | Founder-led or high-consideration products. Warm palette, centered hero, and serif headings. | `editorial` |
+| Technical | Data and developer products. Dark palette, mint accent, side-by-side hero, and denser dashboard. | `technical` |
 
-Set `site.theme` in `content/site.ts`. The starter applies it to the HTML root; the token overrides live in `app/globals.css`. These presets change colour and type. Change the section order when the buyer needs a different argument. Recapture the preview if you change anything visible in the workspace.
+Set `site.theme` in `content/site.ts` as the default. The Style picker on the landing, CRM, and owner console remembers the selected preset locally. Add `?theme=editorial` or `?theme=technical` to a demo URL to share that style. Edit `app/themes.css` to adapt shadcn tokens, chart colors, type, and layout. The presets share the same Tailark and shadcn components. Change the section order when the buyer needs a different argument.
 
 ## Registry-only UI
 
@@ -46,6 +45,7 @@ These are the preferred tools for the jobs they already cover in Folidock. Use a
 | Theme, layout, spacing and responsive states | [Tailwind CSS](https://tailwindcss.com/docs) and the project's existing shadcn theme tokens. |
 | Transitions, layout animation and reveals | [Motion for React](https://motion.dev/docs/react), alongside existing component transitions and reduced-motion support. |
 | Standard interface icons | [Lucide](https://lucide.dev/icons/), or the target repo's established icon library. Folidock uses [DiceBear Notionists](https://www.dicebear.com/styles/notionists/) for optional demo avatar assets. |
+| Drag-and-drop boards | [Dice UI Kanban (Radix)](https://diceui.com/docs/components/radix/kanban) with [dnd-kit](https://dndkit.com/). Compose it with shadcn Card and Select for moving deals. |
 | Interactive charts | [shadcn Chart](https://ui.shadcn.com/docs/components/chart) with [Recharts](https://recharts.github.io/). Keep chart tooltips, legends and accessibility features where relevant. |
 | Table sorting, filters and selection that outgrow a basic table | shadcn Table with [TanStack Table](https://tanstack.com/table/latest/docs/introduction) for behavior. Folidock uses this combination in the tender workspace. |
 
@@ -61,8 +61,8 @@ Use the shared button variants. Keep touch targets generous and focus visible. R
 
 ## Demo material
 
-The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. The `Capture previews` GitHub Action (`scripts/capture-previews.mjs`) recaptures them when a theme file changes, or on demand from the Actions tab. Update the alt text when the content changes. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
+The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data for each theme. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. The `Capture previews` GitHub Action runs `scripts/capture-previews.mjs` to recapture the hero in all three styles and refresh the feature tiles. It runs when a theme file changes or on demand from the Actions tab. Update the alt text when the content changes. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
 
 ## Folidock CRM
 
-The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its cool white canvas, pale gray sidebar, navy text, blue accents, and small pastel identity marks take cues from Attio and Warmbly. The Folidock mark is an original vector. Motion is reserved for navigation feedback, charts, and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.
+The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its default Zinc workspace uses a white canvas, pale gray sidebar, charcoal text, and small status accents. The Folidock mark is an original vector. Motion animates screen entrances and landing reveals. Recharts and dnd-kit animate the chart and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.

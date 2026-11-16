@@ -3,7 +3,7 @@
 @import "tw-animate-css";
 
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, :root[data-theme="technical"]:has(.folidock-landing, .crm-app) *));
 
 :root {
   --font-body: "Manrope Variable", system-ui, sans-serif;
@@ -70,72 +70,6 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-:root[data-theme="editorial"] {
-  --font-display: Georgia, serif;
-  --heading-spacing: -0.045em;
-  --color-paper: #faf8f1;
-  --color-paper-2: #f0ebde;
-  --color-stage-start: #f2ecda;
-  --color-stage-end: #dfd4b9;
-  --color-brand: #6d3d29;
-  --color-brand-soft: #f4e6db;
-  --color-focus: #7c3728;
-}
-
-:root[data-theme="zinc"] {
-  /* Official shadcn/ui Zinc base colour. Default for Folidock and RFPZen. */
-  --font-body: "Geist Variable", system-ui, sans-serif;
-  --font-display: var(--font-body);
-  --heading-spacing: -0.04em;
-  --color-paper: #ffffff;
-  --color-paper-2: #f4f4f5;
-  --color-surface: #ffffff;
-  --color-ink: #09090b;
-  --color-muted: #71717a;
-  --color-rule: #e4e4e7;
-  --color-field: #a1a1aa;
-  --color-focus: #71717a;
-  --color-brand: #18181b;
-  --color-brand-soft: #f4f4f5;
-  --color-on-dark: #fafafa;
-  --color-stage-start: #f4f4f5;
-  --color-stage-end: #e4e4e7;
-  --color-stage-grid: #18181b0d;
-  --color-app-rail: #fafafa;
-  --color-app-hover: #f4f4f5;
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --secondary: #f4f4f5;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #a1a1aa;
-  --radius: 0.625rem;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #3f3f46;
-  --sidebar-primary: #18181b;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f4f4f5;
-  --sidebar-accent-foreground: #18181b;
-  --sidebar-border: #e4e4e7;
-  --sidebar-ring: #a1a1aa;
-}
-
-:root[data-theme="technical"] {
-  --font-display: "Manrope Variable", system-ui, sans-serif;
-  --heading-spacing: -0.05em;
-  --color-paper: #f7f9fb;
-  --color-paper-2: #edf1f6;
-  --color-stage-start: #e7edf5;
-  --color-stage-end: #cfdbe9;
-  --color-brand: #254d79;
-  --color-brand-soft: #e5edf7;
-  --color-focus: #254d79;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -183,33 +117,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
-/* Folidock's public page shares the CRM's cool neutral palette. */
-:root[data-theme="tool"] {
-  --color-paper: #fcfcfe;
-  --color-paper-2: #f4f6fa;
-  --color-ink: #202632;
-  --color-muted: #687286;
-  --color-rule: #e3e7f0;
-  --color-brand: #536caa;
-  --color-brand-soft: #edf1fb;
-  --color-focus: #465fa0;
-  --color-stage-start: #eef2fb;
-  --color-stage-end: #dce4f3;
-  --color-stage-grid: #657ca214;
-}
-
-.dark {
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-}
-
-:root[data-theme="tool"] { --accent: #eef1f9; --muted: #f0f3f9; --input: #dee3ee; }
 @theme inline { --color-muted: var(--muted); --color-accent: var(--accent); }
 .folio-mega-menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(35rem, 85vw); gap: .5rem; padding: .75rem; }
 .folio-mega-menu strong { display: block; font-size: .95rem; }

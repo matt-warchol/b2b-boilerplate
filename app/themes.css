@@ -1,0 +1,205 @@
+/* Shared shadcn tokens. The HTML root lets Radix portals inherit each preset. */
+:root {
+  /* Official shadcn/ui Zinc base colour. Default for Folidock and RFPZen. */
+  --font-body: "Geist Variable", system-ui, sans-serif;
+  --font-display: var(--font-body);
+  --heading-spacing: -0.04em;
+  --color-paper: #ffffff;
+  --color-paper-2: #f4f4f5;
+  --color-surface: #ffffff;
+  --color-ink: #09090b;
+  --color-muted: #71717a;
+  --color-rule: #e4e4e7;
+  --color-field: #a1a1aa;
+  --color-focus: #71717a;
+  --color-brand: #18181b;
+  --color-brand-soft: #f4f4f5;
+  --color-on-dark: #fafafa;
+  --color-stage-start: #f4f4f5;
+  --color-stage-end: #e4e4e7;
+  --color-stage-grid: #18181b0d;
+  --color-app-rail: #fafafa;
+  --color-app-hover: #f4f4f5;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #a1a1aa;
+  --radius: 0.625rem;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #3f3f46;
+  --sidebar-primary: #18181b;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #a1a1aa;
+  --hero-base: #18181b;
+  --hero-glow: #52525b;
+  --hero-glow-end: #3f3f46;
+  --closing-base: #18181b;
+  --closing-glow: #52525b;
+  --hero-radius: clamp(1.4rem, 3vw, 2rem);
+  --preview-radius: clamp(.75rem, 2vw, 1.25rem);
+  --folio-chart-replies: #18181b;
+  --folio-chart-meetings: #71717a;
+}
+
+:root[data-theme="editorial"]:has(.folidock-landing, .crm-app) {
+  --border: var(--color-rule);
+  --ring: var(--color-focus);
+  --secondary: var(--color-paper-2);
+  --secondary-foreground: var(--color-ink);
+  --color-paper: #faf7f0;
+  --color-paper-2: #efe9df;
+  --color-surface: #fffdf8;
+  --color-ink: #332620;
+  --color-muted: #63534a;
+  --color-rule: #ded3c5;
+  --color-brand: #944c35;
+  --color-brand-soft: #f1e0d2;
+  --color-focus: #8d402e;
+  --primary: #804330;
+  --primary-foreground: #fffaf4;
+  --muted: #f3ede3;
+  --muted-foreground: #63534a;
+  --accent: #eee1d3;
+  --accent-foreground: #642e21;
+  --input: #b9a798;
+  --sidebar: #f4ede2;
+  --sidebar-foreground: #49392f;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #ebdaca;
+  --sidebar-accent-foreground: #642e21;
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --radius: .85rem;
+  --hero-base: #805440;
+  --hero-glow: #e7c4a2;
+  --hero-glow-end: #c2866a;
+  --closing-base: #4d3026;
+  --closing-glow: #83553e;
+  --hero-radius: 1rem;
+  --preview-radius: .5rem;
+  --folio-chart-replies: #a05840;
+  --folio-chart-meetings: #507159;
+}
+
+:root[data-theme="technical"]:has(.folidock-landing, .crm-app) {
+  --border: var(--color-rule);
+  --ring: var(--color-focus);
+  --secondary: var(--color-paper-2);
+  --secondary-foreground: var(--color-ink);
+  color-scheme: dark;
+  --font-body: "Manrope Variable", system-ui, sans-serif;
+  --color-paper: #101816;
+  --color-paper-2: #1b2724;
+  --color-surface: #151e1c;
+  --color-ink: #e9f3ef;
+  --color-muted: #aabbb5;
+  --color-rule: #34443f;
+  --color-brand: #8fe9c0;
+  --color-brand-soft: #233b32;
+  --color-focus: #8fe9c0;
+  --primary: #93e9c2;
+  --primary-foreground: #10231b;
+  --muted: #1b2724;
+  --muted-foreground: #aabbb5;
+  --accent: #263b34;
+  --accent-foreground: #adf0d2;
+  --input: #485c55;
+  --destructive: #c45552;
+  --sidebar: #101816;
+  --sidebar-foreground: #d2ded9;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #243a32;
+  --sidebar-accent-foreground: #adf0d2;
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --radius: .375rem;
+  --hero-base: #101c18;
+  --hero-glow: #27483b;
+  --hero-glow-end: #20352d;
+  --closing-base: #192c24;
+  --closing-glow: #2e5142;
+  --hero-radius: .65rem;
+  --preview-radius: .375rem;
+  --folio-chart-replies: #8be4b9;
+  --folio-chart-meetings: #a2b9ff;
+}
+
+.theme-swatch[data-swatch="zinc"] { background: #52525b; }
+.theme-swatch[data-swatch="editorial"] { background: #a3644b; }
+.theme-swatch[data-swatch="technical"] { background: #284b3d; }
+
+.product-hero-frame {
+  background: radial-gradient(ellipse at 15% 10%, var(--hero-glow), transparent 54%),
+    radial-gradient(ellipse at 82% 15%, var(--hero-glow-end), transparent 47%), var(--hero-base);
+  border-radius: var(--hero-radius);
+}
+.product-hero-shot { border-radius: var(--preview-radius); }
+.product-closing {
+  background: radial-gradient(ellipse at top right, var(--closing-glow), transparent 60%), var(--closing-base);
+}
+
+[data-theme="editorial"] :is(.folidock-landing h1, .folidock-landing h2, .crm-app h1) {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+[data-theme="editorial"] .product-hero-intro {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+[data-theme="editorial"] .product-hero-summary { max-width: 33rem; }
+[data-theme="editorial"] .product-hero-actions { justify-content: center; }
+[data-theme="editorial"] .product-hero-intro h1 br { display: none; }
+[data-theme="editorial"] .product-hero-preview { max-width: 64rem; margin-inline: auto; }
+[data-theme="editorial"] .crm-app h1 { font-size: clamp(2rem, 4vw, 3.4rem); }
+[data-theme="editorial"] .crm-main { padding-block: clamp(1.25rem, 3.5vw, 3rem); }
+
+[data-theme="technical"] .product-hero-intro h1 {
+  font-size: clamp(2.85rem, 5.2vw, 5.25rem);
+  letter-spacing: -.055em;
+}
+[data-theme="technical"] .product-hero-intro h1 br { display: none; }
+[data-theme="technical"] .product-hero-intro { flex-direction: column; align-items: start; }
+[data-theme="technical"] .product-hero-summary { max-width: 30rem; }
+[data-theme="technical"] .product-hero-frame {
+  border: 1px solid var(--border);
+  background-image: linear-gradient(#93e9c21a 1px, transparent 1px),
+    linear-gradient(90deg, #93e9c21a 1px, transparent 1px),
+    radial-gradient(ellipse at top right, var(--hero-glow), transparent 65%);
+  background-size: 1.25rem 1.25rem, 1.25rem 1.25rem, auto;
+}
+[data-theme="technical"] .product-hero-actions a,
+[data-theme="technical"] .product-hero-intro a[href^="https://github.com"] { border-radius: var(--radius); }
+[data-theme="technical"] .crm-app [aria-label="Workspace metrics"] [data-slot="card-title"] {
+  font-family: var(--font-mono);
+  letter-spacing: -.045em;
+}
+[data-theme="technical"] .crm-app .crm-table td { padding-block: .5rem; }
+[data-theme="technical"] .crm-badge { color: var(--muted-foreground); }
+
+@media (min-width: 64rem) {
+  [data-theme="technical"] .product-hero {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+  [data-theme="technical"] .product-hero-preview { margin-top: 0; }
+  [data-theme="technical"] .product-hero-frame { padding: 1rem; }
+}
+@media (min-width: 78.125rem) {
+  [data-theme="editorial"] .crm-overview-grid { grid-template-columns: minmax(0, 1.6fr) minmax(17rem, 1fr); gap: 1.5rem; }
+  [data-theme="technical"] .crm-overview-grid { grid-template-columns: minmax(0, 2.5fr) minmax(17rem, 1fr); gap: .75rem; }
+}
