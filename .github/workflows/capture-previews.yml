@@ -1,0 +1,47 @@
+name: Capture previews
+
+# Rebuilds the landing-page screenshots when the look of the app changes
+# (theme files) or on demand, and commits them to the same branch.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "app/globals.css"
+      - "app/crm/crm.css"
+      - "app/workspace.css"
+      - "content/site.ts"
+      - "scripts/capture-previews.mjs"
+      - ".github/workflows/capture-previews.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: capture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm i --no-save playwright sharp && npx playwright install --with-deps chromium
+      - name: Capture
+        run: |
+          npm start -- -p 3000 &
+          npx -y wait-on http://localhost:3000 --timeout 60000
+          node scripts/capture-previews.mjs
+      - name: Commit changed screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add public/*.webp
+          if git diff --cached --quiet; then echo "No visual change"; exit 0; fi
+          git commit -m "Recapture landing previews"
+          git push

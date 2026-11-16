@@ -61,7 +61,7 @@ Use the shared button variants. Keep touch targets generous and focus visible. R
 
 ## Demo material
 
-The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. Update the screenshots and alt text together when changing the demo. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
+The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. The `Capture previews` GitHub Action (`scripts/capture-previews.mjs`) recaptures them when a theme file changes, or on demand from the Actions tab. Update the alt text when the content changes. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
 
 ## Folidock CRM
 
