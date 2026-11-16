@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Inbox, Menu, Send, Users } from "lucide-react";
 import { motion, MotionConfig } from "motion/react";
@@ -42,11 +43,8 @@ const views = [
     label: "Relationships",
     title: "Know who you’re reaching out to.",
     text: "Find contacts by company or relationship status. Open a record to see who owns it and where the conversation left off.",
-    points: [
-      "Find the right contact",
-      "See the relationship timeline",
-      "Keep ownership visible",
-    ],
+    screenshot: "/marketing-people.webp",
+    alt: "Contact directory with relationship statuses and account owners",
   },
   {
     key: "campaigns",
@@ -54,11 +52,8 @@ const views = [
     label: "Outbound",
     title: "Make each follow-up count.",
     text: "Draft an introduction and follow-ups in the same workspace where you keep your contacts.",
-    points: [
-      "Build a three-step sequence",
-      "Personalize the message",
-      "Start and pause a simulation",
-    ],
+    screenshot: "/marketing-campaigns.webp",
+    alt: "Campaign list and the three-step sequence editor",
   },
   {
     key: "inbox",
@@ -66,11 +61,8 @@ const views = [
     label: "Inbox",
     title: "Take the next step when they reply.",
     text: "Open a sample conversation and save a response you can come back to.",
-    points: [
-      "Browse recent conversations",
-      "Read replies in context",
-      "Save a reply draft",
-    ],
+    screenshot: "/marketing-inbox.webp",
+    alt: "Shared inbox with a sample conversation and reply composer",
   },
 ];
 
@@ -160,7 +152,7 @@ export function FolioProductTour() {
               </TabsTrigger>
             ))}
           </TabsList>
-          {views.map(({ key, label, icon: Icon, title, text, points }) => (
+          {views.map(({ key, label, title, text, screenshot, alt }) => (
             <TabsContent key={key} value={key}>
               <motion.div
                 data-marketing-motion
@@ -181,15 +173,15 @@ export function FolioProductTour() {
                       </Link>
                     </Button>
                   </CardHeader>
-                  <CardContent>
-                    <ul>
-                      {points.map((point) => (
-                        <li key={point}>
-                          <Icon className="size-5" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                  <CardContent className="self-center">
+                    <Image
+                      src={screenshot}
+                      alt={alt}
+                      width={860}
+                      height={540}
+                      unoptimized
+                      className="h-auto w-full rounded-lg border bg-card shadow-sm"
+                    />
                   </CardContent>
                 </Card>
               </motion.div>

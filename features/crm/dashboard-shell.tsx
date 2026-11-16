@@ -1,7 +1,7 @@
 "use client";
 
 // shadcn/ui dashboard-01: app-sidebar, nav-main, nav-user and site-header,
-// adapted to Folio's routes and the existing Lucide icon set.
+// adapted to Folidock's routes and the existing Lucide icon set.
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -18,7 +18,7 @@ import {
   Settings2,
   Users,
 } from "lucide-react";
-import { FolioMark } from "@/components/brand";
+import { FolidockMark } from "@/components/brand";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -105,11 +105,11 @@ export function AppSidebar({
             <SidebarMenuButton asChild size="lg">
               <Link href="/crm/overview" onClick={closeMobile}>
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground [&_svg]:size-6">
-                  <FolioMark />
+                  <FolidockMark />
                 </span>
                 <span className="grid min-w-0 flex-1 text-left leading-tight">
                   <span className="truncate text-base font-semibold">
-                    Folio
+                    Folidock
                   </span>
                   <span className="truncate text-sm text-muted-foreground">
                     {workspace}

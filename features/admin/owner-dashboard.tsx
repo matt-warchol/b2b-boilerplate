@@ -9,10 +9,10 @@ import {
   LayoutDashboard,
   Plus,
   Search,
-  Shield,
   Timer,
   TriangleAlert,
 } from "lucide-react";
+import { FolidockMark } from "@/components/brand";
 import { SiteHeader } from "@/features/crm/dashboard-shell";
 import { SectionCards } from "@/features/crm/section-cards";
 import { useSaved } from "@/lib/use-demo-storage";
@@ -97,10 +97,10 @@ function OwnerSidebar() {
             <SidebarMenuButton asChild size="lg">
               <Link href="/admin" onClick={() => setOpenMobile(false)}>
                 <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-                  <Shield className="size-4" />
+                  <span className="size-6"><FolidockMark /></span>
                 </span>
                 <span className="grid flex-1 leading-tight">
-                  <strong className="text-base">Folio</strong>
+                  <strong className="text-base">Folidock</strong>
                   <span className="text-sm text-muted-foreground">
                     Owner workspace
                   </span>
@@ -183,7 +183,7 @@ export function OwnerDashboard() {
       label: "Trials",
       value: String(customers.filter((c) => c.status === "Trial").length),
       icon: Timer,
-      context: "Accounts evaluating Folio",
+      context: "Accounts evaluating Folidock",
     },
     {
       label: "Past due",

@@ -1,4 +1,4 @@
-/* Folio theme for the dashboard-01 block and the CRM's domain views. */
+/* Folidock theme for the dashboard-01 block and the CRM's domain views. */
 body:has(.crm-app) {
   --font-body: "Geist Variable", system-ui, sans-serif;
   --font-display: var(--font-body);

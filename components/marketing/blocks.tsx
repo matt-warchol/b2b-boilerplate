@@ -77,7 +77,7 @@ export function ProductHero() {
           >
             <Link href={source}>
               <GitBranch />
-              Open-source CRM starter
+              Open-source B2B starter
             </Link>
           </Button>
           <h1
@@ -94,8 +94,8 @@ export function ProductHero() {
           className="space-y-5 md:max-w-[20rem] md:pb-1 lg:max-w-[23rem]"
         >
           <p className="text-pretty text-lg leading-relaxed text-muted-foreground">
-            Find the right people, draft each follow-up, and track warm
-            conversations in your pipeline.
+            Find the right contacts, draft outbound sequences, and keep replies
+            and deals in one workspace.
           </p>
           <div className="flex flex-wrap items-center gap-2">
             <CampaignButton />
@@ -113,7 +113,7 @@ export function ProductHero() {
           <Link
             href="/crm/overview"
             className="block overflow-hidden rounded-xl bg-background ring-1 ring-white/30 shadow-2xl transition-[filter] hover:brightness-[1.025] sm:rounded-[1.25rem]"
-            aria-label="Open the Folio CRM overview"
+            aria-label="Open the Folidock CRM overview"
           >
             <picture>
               <source
@@ -130,7 +130,7 @@ export function ProductHero() {
                 className="h-auto w-full"
                 preload
                 unoptimized
-                alt="Folio CRM overview showing campaign performance, contacts, and sample activity."
+                alt="Folidock CRM overview showing campaign performance, contacts, and sample activity."
               />
             </picture>
           </Link>
@@ -199,7 +199,7 @@ const featureCards = [
   },
 ];
 
-// Tailark dusk-features-2: three visual feature cards. The artwork is captured from Folio.
+// Tailark dusk-features-2: three visual feature cards. The artwork is captured from Folidock.
 export function ProductFeatures() {
   return (
     <section id="features" className={`${blockSpace} border-y bg-muted/50`}>
@@ -240,7 +240,7 @@ export function ProductFeatures() {
                     sizes="(max-width: 1024px) 90vw, 380px"
                     unoptimized
                     className="size-full rounded-t-lg border object-cover object-top shadow-sm transition-transform duration-500 motion-safe:group-hover:scale-[1.035]"
-                    alt={item.name + " in Folio"}
+                    alt={item.name + " in Folidock"}
                   />
                 </div>
               </Card>
@@ -288,7 +288,7 @@ export function DemoOptions() {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className={titleStyle}>Try it or make it yours.</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Open Folio in the browser, or start your next SaaS from the
+              Open Folidock in the browser, or start your next SaaS from the
               source.
             </p>
           </div>
@@ -357,7 +357,7 @@ export function Closing() {
     <section className={`${pageWidth} pb-14 sm:pb-20`}>
       <Reveal className="rounded-3xl bg-[#1d2b4b] bg-[radial-gradient(ellipse_at_top_right,#485b9c,transparent_60%)] px-6 py-14 text-white sm:py-20">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className={titleStyle}>Build your first campaign in Folio.</h2>
+          <h2 className={titleStyle}>Build your first campaign in Folidock.</h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Button
               variant="secondary"
@@ -423,7 +423,7 @@ export function MarketingFooter() {
           <div className="col-span-full lg:col-span-3">
             <Brand />
             <p className="mt-3 max-w-55 text-sm text-muted-foreground">
-              An open-source starter for teams building B2B products.
+              An open-source starter with a CRM, outbound workspace, and SaaS owner console.
             </p>
           </div>
           {footerGroups.map((group) => (
@@ -445,7 +445,7 @@ export function MarketingFooter() {
           ))}
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
-          <span>Folio · Open-source demo</span>
+          <span>Folidock · Open-source demo</span>
           <Link
             href={source}
             className="inline-flex items-center gap-2 hover:underline"

@@ -24,7 +24,7 @@ export async function generateMetadata({
 }) {
   const { view } = await params;
   return {
-    title: view.charAt(0).toUpperCase() + view.slice(1) + " | Folio CRM",
+    title: view.charAt(0).toUpperCase() + view.slice(1) + " · CRM",
     robots: { index: false },
   };
 }

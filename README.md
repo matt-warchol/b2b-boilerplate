@@ -1,17 +1,44 @@
-# B2B Product Starter
+# Folidock
 
-An open-source starting point for B2B products that sell on a landing page and do the daily work in a CRM-style workspace. It also includes a playbook for auditing a product you already have.
+An open-source B2B SaaS starter with a marketing site, CRM and outbound workspace, and an owner console. Clone it to start a product with real screens and working demo flows.
 
-![Folio CRM overview with outbound activity, pipeline metrics, and sample relationships](public/crm-preview.webp)
+[Live demo](https://folio-crm-demo.vercel.app/) · [Open CRM](https://folio-crm-demo.vercel.app/crm/overview) · [Owner console](https://folio-crm-demo.vercel.app/admin) · [Use this template](https://github.com/matt-warchol/b2b-boilerplate/generate)
 
-The main demo is **Folio**, a CRM with ten connected views. Explore people and companies, move deals through a pipeline, create an outbound campaign, edit its three-step sequence, and save reply drafts. The cool neutral design is inspired by Attio and Warmbly, with original identity marks and subtle Motion interactions.
+[![Folidock landing page, showing the product and its campaign demo](docs/screenshots/landing.webp)](https://folio-crm-demo.vercel.app/)
 
-All contacts, companies, and campaign metrics are fictional. Sending is simulated. Campaign drafts, sequence edits, deal stages, tasks, reply drafts, and workspace preferences persist in this browser. Campaigns currently share one set of demo sequence templates. The original DealRadar tender workflow remains available under `/workspace`.
+## What’s inside
 
+| Screen | What you can try |
+| --- | --- |
+| [Marketing site](https://folio-crm-demo.vercel.app/) | Tailark OSS landing blocks, product tour, FAQ, and Motion animations. |
+| [CRM](https://folio-crm-demo.vercel.app/crm/overview) | Interactive dashboard, contact and company records, tasks, and account settings. |
+| [Campaigns](https://folio-crm-demo.vercel.app/crm/campaigns) | Create a draft, edit the sample sequence, and start or pause a send simulation. |
+| [Inbox](https://folio-crm-demo.vercel.app/crm/inbox) | Read sample conversations and save reply drafts. |
+| [Pipeline](https://folio-crm-demo.vercel.app/crm/pipeline) | Move opportunities across deal stages and review owners and totals. |
+| [Owner console](https://folio-crm-demo.vercel.app/admin) | Search customer accounts, review sample MRR, and edit plans, status, seats, and notes. |
 
-## Run it
+### Product screenshots
 
-Use Node.js 22 or newer. Node.js 24 is used in CI.
+<table>
+<tr>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/crm/overview"><img src="docs/screenshots/dashboard.webp" alt="CRM dashboard with interactive chart, recent activity, and contacts" width="480"></a><br><strong>CRM dashboard</strong></td>
+<td width="50%"><a href="https://folio-crm-demo.vercel.app/crm/campaigns"><img src="docs/screenshots/campaigns.webp" alt="Campaign list with an open sequence editor and sample email" width="480"></a><br><strong>Campaigns and sequence editor</strong></td>
+</tr>
+<tr>
+<td><a href="https://folio-crm-demo.vercel.app/crm/inbox"><img src="docs/screenshots/inbox.webp" alt="Shared inbox with a sample conversation and reply composer" width="480"></a><br><strong>Shared inbox</strong></td>
+<td><a href="https://folio-crm-demo.vercel.app/crm/pipeline"><img src="docs/screenshots/pipeline.webp" alt="Deal pipeline with four stages and sample opportunities" width="480"></a><br><strong>Deal pipeline</strong></td>
+</tr>
+<tr>
+<td><a href="https://folio-crm-demo.vercel.app/admin"><img src="docs/screenshots/owner.webp" alt="SaaS owner console with subscription metrics and a customer directory" width="480"></a><br><strong>Owner console</strong></td>
+<td><a href="https://folio-crm-demo.vercel.app/crm/people"><img src="docs/screenshots/people.webp" alt="Searchable contacts with owners, statuses, and fit scores" width="480"></a><br><strong>Contact directory</strong></td>
+</tr>
+</table>
+
+The demo runs on fictional data. Edits persist in your browser. Sending and billing are simulated. The original DealRadar example is also included at [the tender workspace](https://folio-crm-demo.vercel.app/workspace) and has a [bid brief builder](https://folio-crm-demo.vercel.app/workspace/briefs).
+
+## Run locally
+
+Use Node.js 22 or newer.
 
 ```sh
 git clone https://github.com/matt-warchol/b2b-boilerplate.git
@@ -22,34 +49,10 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, types, and a production build.
 
-| Route | What you can try |
-| --- | --- |
-| `/` | Tailark landing blocks, real product screenshots, workflow tabs, and a direct campaign demo link |
-| `/admin` | SaaS owner demo: search and filter accounts, add and edit customers, update subscription status, seats and notes |
-| `/crm/overview` | Relationship dashboard, sample activity, outbound charts and people |
-| `/crm/people`, `/crm/companies` | Searchable records, filtered views and contact details |
-| `/crm/pipeline` | Editable deal stages in a kanban board |
-| `/crm/campaigns` | Create drafts, edit sequence copy, start or pause simulations |
-| `/crm/inbox` | Sample conversations and saved reply drafts |
-| `/crm/tasks`, `/crm/templates` | Task completion and reusable sequence copy |
-| `/crm/analytics`, `/crm/settings` | Sample performance and local preferences |
-| `/workspace` | Search, sort, filter, open and edit opportunities; changes persist in this browser |
-| `/workspace/briefs` | Generate a draft from a record, edit it, then copy or download it |
+## Build on it
 
-All demo records are fictional. The owner dashboard saves edits in browser storage and uses simulated billing. See the [production guide](docs/PRODUCTION.md#owner-access-and-billing) before connecting real customer data.
+- **Start a project:** use the GitHub template and customize [site settings](content/site.ts), [landing blocks](components/marketing/blocks.tsx), [CRM records](features/crm/data.ts), and [owner demo accounts](features/admin/customers.ts).
+- **Work with Claude Code or Codex:** use the [starter skill](.agents/skills/b2b-starter/SKILL.md) to plan a new screen or [audit an existing app](docs/AUDIT.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before implementation and before handoff.
+- **Go to production:** see the [production guide](docs/PRODUCTION.md) for authorization, persistence, billing, email, and optional AI cost controls.
 
-## Start a project or audit an existing one
-
-- **Start:** use **Use this template** on GitHub or copy this folder into your project. Open it in Claude Code or Codex and say: “Use b2b-starter to start [product]. Recommend a landing and workspace style, then build the first workflow.” Claude Code can also run `/b2b-starter start`; Codex can run `$b2b-starter` with the task. The [project brief](docs/PROJECT_BRIEF.md) captures audience, offer, evidence, and one conversion action.
-- **Audit:** point Claude Code or Codex at your existing repo and share the target URL or route and its main business goal. Say: “Use b2b-starter to audit this project. Prioritize fixes with screenshots or code references.” You can use [the audit playbook](docs/AUDIT.md) on its own; there is no need to replace your current stack.
-- **Make it yours:** swap [landing blocks](components/marketing/blocks.tsx) and [site settings](content/site.ts), choose a [style](DESIGN.md), replace [sample records](features/opportunities/model.ts), change the brand in [the brand component](components/brand.tsx), and recapture the preview from your first working workflow. Replace the demo favicon and point the footer link at your new repo.
-
-## What it uses
-
-[Next.js App Router](https://nextjs.org/docs/app) and TypeScript; [Tailwind CSS](https://tailwindcss.com/) and local [shadcn/ui](https://ui.shadcn.com/) patterns built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog); [TanStack Table](https://tanstack.com/table/v8/docs/overview) for record views; [Lucide](https://lucide.dev/) icons and [Motion](https://motion.dev/docs/react-accessibility) for the active view indicator.
-
-When adding or auditing a screen, follow the [shadcn-first workflow](DESIGN.md#shadcn-first-workflow). Start with official blocks and components, reuse the project's icon library, and use Motion for React when a transition needs more than the component's built-in behavior. Folio shows how these pieces fit together.
-
-See [production next steps](docs/PRODUCTION.md) for auth, persistence, invitations, and cost controls for optional AI. The starter code is [MIT licensed](LICENSE). Contributions can start with a small PR and a screenshot or reproduction for any change the user can see.
-
-See the [UI audit](docs/UI-AUDIT.md) for the registry components used, custom Folio compositions and animation sources.
+Folidock uses Next.js, TypeScript, Tailwind CSS, shadcn/ui, Tailark OSS, Recharts, TanStack Table, Motion for React, and Lucide. The [UI audit](docs/UI-AUDIT.md) shows which pieces came from ready-made blocks and what was adapted. The starter is [MIT licensed](LICENSE).

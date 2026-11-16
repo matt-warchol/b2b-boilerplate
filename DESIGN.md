@@ -12,13 +12,13 @@ Set `site.theme` in `content/site.ts`. The starter applies it to the HTML root; 
 
 ## shadcn-first workflow
 
-Treat Folio as a working example of composition and theming. Use shadcn/ui as the first source for reusable UI.
+Treat Folidock as a working example of composition and theming. Use shadcn/ui as the first source for reusable UI.
 
 1. **Inspect the project.** Check its framework, `components.json`, installed UI components, design tokens, and icon library. Reuse components already installed from shadcn/ui. For an existing product, preserve its working design system and recommend migration only where it addresses a specific problem.
 2. **Look for a complete block first.** Search the official [shadcn Blocks](https://ui.shadcn.com/blocks) for the screen or section. For gaps, check the official [component catalog](https://ui.shadcn.com/docs/components) and compose the screen from the relevant primitives. This applies to navigation, forms, tables, charts, overlays, feedback, and loading and empty states. Follow the official [installation guide](https://ui.shadcn.com/docs/installation) for the target stack and add the missing pieces through the [CLI](https://ui.shadcn.com/docs/cli). Keep the project's existing Radix or Base UI setup.
 3. **Adapt the smallest surface.** Plug in real product data and copy, then use shared tokens for type, spacing, and color. If the official registry has no good fit, check a compatible open-source shadcn registry such as [Tailark OSS](https://tailark.com/docs) and verify the license before copying code into a template. Compose custom markup for product-specific needs that the available blocks and primitives do not cover. Keep reusable pieces shared when another view needs them.
 4. **Reuse icons and interactions.** Use the project's icon library, with [Lucide](https://lucide.dev/icons/) as the default for greenfield work. Reserve original artwork for the brand or a domain-specific visual. Keep the component's built-in interaction and animation where suitable. Use [Motion for React (Framer Motion)](https://motion.dev/docs/react) for additional transitions, layout changes, and reveals. Respect [reduced motion](https://motion.dev/docs/react-accessibility), and check keyboard and touch behavior. Keep chart interactions in the shadcn Chart/Recharts implementation.
-5. **Verify and report provenance.** Distinguish an installed block, a composition of registry components, and a visual reference. Name what drives motion (registry, Recharts, Motion, or CSS). See [Folio's UI audit](docs/UI-AUDIT.md) for an example.
+5. **Verify and report provenance.** Distinguish an installed block, a composition of registry components, and a visual reference. Name what drives motion (registry, Recharts, Motion, or CSS). See [Folidock's UI audit](docs/UI-AUDIT.md) for an example.
 
 Use two checks on every new screen, redesign, or UI audit:
 
@@ -27,17 +27,17 @@ Use two checks on every new screen, redesign, or UI audit:
 
 ## Open-source library defaults
 
-These are the preferred tools for the jobs they already cover in Folio. Use a suitable library already in the target repo before introducing a duplicate. Install only what the screen needs.
+These are the preferred tools for the jobs they already cover in Folidock. Use a suitable library already in the target repo before introducing a duplicate. Install only what the screen needs.
 
 | Job | Preferred source |
 | --- | --- |
-| App shells, sidebars, navigation, forms, dialogs, tables, empty and loading states | [shadcn/ui](https://ui.shadcn.com/docs/installation) and [official blocks](https://ui.shadcn.com/blocks). Folio uses the Radix registry, including dashboard-01. |
-| Ready-made marketing sections | Official shadcn blocks first. Use [Tailark OSS](https://tailark.com/docs) where the official registry has no suitable section. Folio uses its hero, feature grid, FAQ, CTA, and footer layouts. |
+| App shells, sidebars, navigation, forms, dialogs, tables, empty and loading states | [shadcn/ui](https://ui.shadcn.com/docs/installation) and [official blocks](https://ui.shadcn.com/blocks). Folidock uses the Radix registry, including dashboard-01. |
+| Ready-made marketing sections | Official shadcn blocks first. Use [Tailark OSS](https://tailark.com/docs) where the official registry has no suitable section. Folidock uses its hero, feature grid, FAQ, CTA, and footer layouts. |
 | Theme, layout, spacing and responsive states | [Tailwind CSS](https://tailwindcss.com/docs) and the project's existing shadcn theme tokens. |
 | Transitions, layout animation and reveals | [Motion for React](https://motion.dev/docs/react), alongside existing component transitions and reduced-motion support. |
-| Standard interface icons | [Lucide](https://lucide.dev/icons/), or the target repo's established icon library. Folio uses [DiceBear Notionists](https://www.dicebear.com/styles/notionists/) for optional demo avatar assets. |
+| Standard interface icons | [Lucide](https://lucide.dev/icons/), or the target repo's established icon library. Folidock uses [DiceBear Notionists](https://www.dicebear.com/styles/notionists/) for optional demo avatar assets. |
 | Interactive charts | [shadcn Chart](https://ui.shadcn.com/docs/components/chart) with [Recharts](https://recharts.github.io/). Keep chart tooltips, legends and accessibility features where relevant. |
-| Table sorting, filters and selection that outgrow a basic table | shadcn Table with [TanStack Table](https://tanstack.com/table/latest/docs/introduction) for behavior. Folio uses this combination in the tender workspace. |
+| Table sorting, filters and selection that outgrow a basic table | shadcn Table with [TanStack Table](https://tanstack.com/table/latest/docs/introduction) for behavior. Folidock uses this combination in the tender workspace. |
 
 ## Landing
 
@@ -53,6 +53,6 @@ Use the shared button variants. Keep touch targets generous and focus visible. R
 
 The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of `/crm/overview` on fictional data. The feature tiles use 860 × 540 crops from the pipeline, inbox and owner views. Update the screenshots and alt text together when changing the demo. The landing section layouts are adapted from the Tailark OSS registry. See the [UI audit](docs/UI-AUDIT.md#landing-block-pass) for exact block names.
 
-## Folio CRM
+## Folidock CRM
 
-The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its cool white canvas, pale gray sidebar, navy text, blue accents, and small pastel identity marks take cues from Attio and Warmbly. The Folio mark is an original vector. Motion is reserved for navigation feedback, charts, and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.
+The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its cool white canvas, pale gray sidebar, navy text, blue accents, and small pastel identity marks take cues from Attio and Warmbly. The Folidock mark is an original vector. Motion is reserved for navigation feedback, charts, and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.

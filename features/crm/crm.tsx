@@ -831,7 +831,7 @@ function CRMLayout({ view }: { view: string }) {
                 </Card>
               )}
               <footer className="crm-demo-footer">
-                <span>Folio demo · Fictional contacts and activity</span>
+                <span>Folidock demo · Fictional contacts and activity</span>
                 <Link href="/workspace">
                   Explore the tender workspace <ArrowUpRight size={12} />
                 </Link>
