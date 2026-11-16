@@ -11,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useOpportunities } from "@/features/opportunities/store";
 import { buildBidBrief } from "./engine";
 
@@ -51,7 +53,7 @@ export function BriefBuilder() {
         <h2 id="brief-source">Source</h2>
         {opportunities.length ? <>
           <div className="brief-field">
-            <label htmlFor="brief-opportunity">Opportunity</label>
+            <Label htmlFor="brief-opportunity">Opportunity</Label>
             <Select value={record?.id ?? ""} onValueChange={(value) => { setId(value); setBrief(""); setFeedback(""); }}>
               <SelectTrigger id="brief-opportunity" className="w-full"><SelectValue placeholder="Select an opportunity" /></SelectTrigger>
               <SelectContent>{opportunities.map((item) => <SelectItem key={item.id} value={item.id}>{item.title}</SelectItem>)}</SelectContent>
@@ -71,8 +73,8 @@ export function BriefBuilder() {
             <Button variant="outline" size="sm" disabled={!brief.trim()} onClick={download}><Download aria-hidden="true" /> Download</Button>
           </div>
         </div>
-        <textarea ref={output} aria-label="Draft brief" value={brief} onChange={(event) => { setBrief(event.target.value); setFeedback(""); }}
-          placeholder="Generate a brief to start editing here." rows={15} />
+        <Textarea ref={output} aria-label="Draft brief" value={brief} onChange={(event) => { setBrief(event.target.value); setFeedback(""); }}
+          placeholder="Generate a brief to start editing here." rows={15} className="mt-3 leading-relaxed" />
         <div className="brief-feedback" role="status">{feedback}</div>
       </section>
     </div>

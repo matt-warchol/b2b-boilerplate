@@ -10,6 +10,15 @@ Pick a style for the buyer and the work the screen has to support. Reuse an exis
 
 Set `site.theme` in `content/site.ts`. The starter applies it to the HTML root; the token overrides live in `app/globals.css`. These presets change colour and type. Change the section order when the buyer needs a different argument. Recapture the preview if you change anything visible in the workspace.
 
+## Registry-only UI
+
+The starter is meant to be assembled by agents from ready-made parts. Custom UI is the last resort.
+
+1. **Look up the registry before writing markup.** For each element on the screen, find the shadcn/ui component or block (`npx shadcn@latest add <name>`). Common mappings: action → Button; field → Input/Textarea/Select with Label; list of records → Table (+ TanStack Table for sorting and paging); view switch → Tabs or Toggle Group; record edit → Sheet; confirmation → Dialog/Alert Dialog; status line → Alert; nothing to show → Empty; divider → Separator; app shell → Sidebar (dashboard-01); metrics → Card (SectionCards); clickable row → Item; status → Badge; notification → Sonner.
+2. **Then an open-source shadcn registry** with a checked licence: Tailark for marketing sections, Dice UI or Kibo UI for kanban, file upload, tags input and stepper.
+3. **Only then compose.** If nothing fits, compose from registry primitives. Write custom CSS only for layout and brand tokens, never for a control the registry already styles.
+4. **Enforced.** `npm run lint` fails on raw form, table and dialog elements outside `components/ui`. Each allowed exception carries an `eslint-disable-next-line no-restricted-syntax -- reason` comment and appears in [docs/UI-AUDIT.md](docs/UI-AUDIT.md#allowed-exceptions).
+
 ## shadcn-first workflow
 
 Treat Folidock as a working example of composition and theming. Use shadcn/ui as the first source for reusable UI.

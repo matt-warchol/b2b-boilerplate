@@ -53,6 +53,7 @@ export function InboxPanel({
                 variant={contact.email === person.email ? "muted" : "default"}
                 className="w-full flex-nowrap text-left hover:bg-accent/65 aria-pressed:border-border aria-pressed:bg-accent"
               >
+                {/* eslint-disable-next-line no-restricted-syntax -- registry Item asChild renders this native button */}
                 <button
                   type="button"
                   aria-pressed={contact.email === person.email}

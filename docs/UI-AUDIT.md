@@ -48,3 +48,45 @@ Motion for React animates the hero entrance, the first appearance of marketing s
 ### SaaS owner demo
 
 The owner panel uses the shadcn `dashboard-01` shell pattern, the shared CRM site header and metric cards, plus Table, Badge, Input, Dropdown Menu, Sheet, Select and Textarea for managing customers. Folidock supplies the fictional records, filters and form behavior. The landing links to the owner demo, which keeps edits in its own browser storage namespace and simulates billing.
+
+
+## Registry audit (16 Nov 2026)
+
+Goal: every screen built from ready-made components. Findings and what changed:
+
+| Where | Was | Now |
+| --- | --- | --- |
+| Tender workspace shell (`/workspace`) | Custom `aside.sidebar` rail and top bar in `workspace.css` | shadcn Sidebar, SidebarInset, SidebarTrigger, Separator and Badge (same pattern as the CRM) |
+| Opportunities view switch | Custom `button[aria-pressed]` row with a Motion underline | shadcn Tabs (`variant="line"`) |
+| Opportunities search | Raw `input` with custom icon field | shadcn Input with a Lucide icon |
+| Opportunities table | Raw `table` styled in `workspace.css` | shadcn Table (+ TanStack Table for sorting, filtering, paging) |
+| Sort headers, record links | Custom `.sort-button`, `.record-link` buttons | shadcn Button (`ghost`, `link`) |
+| Stage labels | Custom `.stage` spans | shadcn Badge with stage colour tokens |
+| Storage warning | Custom `.notice` paragraph | shadcn Alert |
+| Empty results | Custom `.empty-state` | shadcn Empty |
+| Opportunity editor | Raw `input`, `textarea`, `select`, custom sheet CSS | shadcn Input, Textarea, Select, Label, SheetHeader; default SheetContent |
+| Bid brief | Raw `textarea`, native `select` | shadcn Textarea, Select, Label |
+| CRM deal stage, timezone | Native `select` | shadcn Select |
+| CRM pipeline | No drag and drop | Native drag and drop, Select as keyboard path |
+| CRM toast | Custom `div` + raw dismiss button | shadcn Alert + Button (`icon-sm`) |
+| CRM and owner record links | Raw `button.crm-person` | shadcn Button (`ghost`) |
+| CRM activity rows | Raw `button` | shadcn Item (`asChild`) |
+| CRM empty lists | Custom `.crm-empty` | shadcn Empty |
+| Settings divider | Raw `hr` | shadcn Separator |
+| Global CSS | Unused `.button-*` classes | Removed |
+
+New registry files: `components/ui/label.tsx`, `alert.tsx`, `empty.tsx` (shadcn/ui source).
+
+### Allowed exceptions
+
+No registry component covers these yet. Each carries an `eslint-disable` comment in the code.
+
+- **Pipeline kanban** (`features/crm/crm.tsx`): Folidock composition. Next step: Dice UI or Kibo UI Kanban (MIT, dnd-kit).
+- **Company and template tiles** (`features/crm/crm.tsx`): clickable Card-style tiles. Next step: Item (`variant="outline"`) or Card with a link.
+- **Sequence step list** (`features/crm/crm.tsx`): no registry stepper. Next step: a Dice UI or Kibo UI stepper.
+- **Native button under Item `asChild`** (`features/crm/crm.tsx`, `features/crm/inbox-panel.tsx`): the registry pattern itself; allowed.
+
+### Follow-ups that need a new package
+
+- Toasts: replace the Alert-based toast with shadcn Sonner (`npx shadcn@latest add sonner`).
+- Kanban and stepper as above.

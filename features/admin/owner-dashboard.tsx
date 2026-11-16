@@ -310,9 +310,10 @@ export function OwnerDashboard() {
                     {filtered.map((c) => (
                       <TableRow key={c.id}>
                         <TableCell>
-                          <button
+                          <Button
                             type="button"
-                            className="crm-person rounded-sm"
+                            variant="ghost"
+                            className="crm-person h-auto justify-start rounded-sm px-2 py-1.5 whitespace-normal"
                             onClick={(e) => {
                               trigger.current = e.currentTarget;
                               setEditor(c);
@@ -328,7 +329,7 @@ export function OwnerDashboard() {
                               <strong>{c.company}</strong>
                               <small>{c.email}</small>
                             </span>
-                          </button>
+                          </Button>
                         </TableCell>
                         <TableCell>{c.plan}</TableCell>
                         <TableCell>

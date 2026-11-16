@@ -25,7 +25,11 @@ import {
   Globe,
   CheckCircle2,
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Empty, EmptyDescription } from "@/components/ui/empty";
+import { Item } from "@/components/ui/item";
+import { Separator } from "@/components/ui/separator";
 import {
   Select,
   SelectContent,
@@ -259,13 +263,13 @@ function CRMLayout({ view }: { view: string }) {
             {records.map((p, i) => (
               <TableRow key={p.email}>
                 <TableCell>
-                  <button className="crm-person" onClick={() => setPerson(p)}>
+                  <Button variant="ghost" className="crm-person h-auto justify-start px-2 py-1.5 whitespace-normal" onClick={() => setPerson(p)}>
                     <Avatar name={p.name} color={p.color} />
                     <span>
                       <strong>{p.name}</strong>
                       <small>{p.role}</small>
                     </span>
-                  </button>
+                  </Button>
                 </TableCell>
                 <TableCell>
                   <span className="crm-company">
@@ -291,9 +295,11 @@ function CRMLayout({ view }: { view: string }) {
           </TableBody>
         </Table>
         {!records.length && (
-          <p className="crm-empty">
-            No records match. Try a different name or view.
-          </p>
+          <Empty className="p-6 md:p-8">
+            <EmptyDescription>
+              No records match. Try a different name or view.
+            </EmptyDescription>
+          </Empty>
         )}
       </div>
     );
@@ -434,9 +440,10 @@ function CRMLayout({ view }: { view: string }) {
                           "pink",
                         ],
                       ].map(([name, action, context, time, color]) => (
+                        <Item asChild size="sm" key={name} className="activity-row rounded-none">
+                        {/* eslint-disable-next-line no-restricted-syntax -- registry Item asChild renders this native button */}
                         <button
-                          className="activity-row"
-                          key={name}
+                          type="button"
                           onClick={() =>
                             setPerson(
                               people.find((p) => p.name === name) ?? null,
@@ -452,6 +459,7 @@ function CRMLayout({ view }: { view: string }) {
                             </small>
                           </span>
                         </button>
+                        </Item>
                       ))}
                       <Link className="panel-footer-link" href="/crm/inbox">
                         Open your inbox <ArrowRight size={14} />
@@ -480,6 +488,7 @@ function CRMLayout({ view }: { view: string }) {
                   ) : (
                     <div className="crm-company-grid">
                       {records.map((p, i) => (
+                        // eslint-disable-next-line no-restricted-syntax -- clickable company tile: Folidock composition, documented in docs/UI-AUDIT.md
                         <button
                           className="company-card"
                           key={p.email}
@@ -681,8 +690,9 @@ function CRMLayout({ view }: { view: string }) {
                           {filteredCampaigns.map((c) => (
                             <TableRow key={c.id}>
                               <TableCell>
-                                <button
-                                  className="crm-person"
+                                <Button
+                                  variant="ghost"
+                                  className="crm-person h-auto justify-start px-2 py-1.5 whitespace-normal"
                                   onClick={() => setCampaignId(c.id)}
                                 >
                                   <span className={"campaign-icon " + c.color}>
@@ -692,7 +702,7 @@ function CRMLayout({ view }: { view: string }) {
                                     <strong>{c.name}</strong>
                                     <small>{c.audience}</small>
                                   </span>
-                                </button>
+                                </Button>
                               </TableCell>
                               <TableCell>
                                 <Badge text={c.status} />
@@ -746,7 +756,11 @@ function CRMLayout({ view }: { view: string }) {
                         </TableBody>
                       </Table>
                       {!filteredCampaigns.length && (
-                        <p className="crm-empty">No campaigns in this view.</p>
+                        <Empty className="p-6 md:p-8">
+                          <EmptyDescription>
+                            No campaigns in this view.
+                          </EmptyDescription>
+                        </Empty>
                       )}
                     </div>
                   </Card>
@@ -812,6 +826,7 @@ function CRMLayout({ view }: { view: string }) {
               {view === "templates" && (
                 <div className="template-grid">
                   {sequence.map((item, i) => (
+                    // eslint-disable-next-line no-restricted-syntax -- clickable template tile: Folidock composition, documented in docs/UI-AUDIT.md
                     <button
                       className="crm-panel template-card"
                       key={i}
@@ -885,7 +900,7 @@ function CRMLayout({ view }: { view: string }) {
                     </label>
                     <Button type="submit">Save preferences</Button>
                   </form>
-                  <hr />
+                  <Separator className="my-6" />
                   <h2>Connected mailboxes</h2>
                   <div className="mailbox-row">
                     <span className="campaign-icon blue">
@@ -909,16 +924,21 @@ function CRMLayout({ view }: { view: string }) {
           </div>
         </SidebarInset>
         {(message || storageError) && (
-          <div role="status" className="crm-toast">
-            <CheckCircle2 size={17} />
-            {message || storageError}
-            <button
+          <Alert role="status" className="crm-toast pr-12">
+            <CheckCircle2 aria-hidden="true" />
+            <AlertDescription className="text-foreground">
+              {message || storageError}
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="absolute top-1.5 right-1.5"
               aria-label="Dismiss notification"
               onClick={() => setMessage("")}
             >
-              <X size={14} />
-            </button>
-          </div>
+              <X aria-hidden="true" />
+            </Button>
+          </Alert>
         )}
         <Sheet
           open={!!person}
@@ -999,6 +1019,7 @@ function CRMLayout({ view }: { view: string }) {
                 {message && <p role="status">{message}</p>}
                 <div className="sequence-steps">
                   {sequence.map((item, i) => (
+                    // eslint-disable-next-line no-restricted-syntax -- Folidock sequence step list: no registry stepper; documented in docs/UI-AUDIT.md
                     <button
                       key={i}
                       className={step === i ? "selected" : ""}

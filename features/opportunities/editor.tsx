@@ -2,7 +2,10 @@
 
 import type { FormEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { SheetDescription, SheetTitle } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -41,22 +44,24 @@ export function OpportunityEditor({ record, onSave }: {
     }));
   }
 
-  return <div className="editor">
-    <SheetTitle>{record ? "Edit opportunity" : "New opportunity"}</SheetTitle>
-    <SheetDescription>{record ? record.id + " / " + record.buyer : "Add a tender to the demo workspace."}</SheetDescription>
-    <form onSubmit={handleSubmit} className="record-form">
-      <label>Opportunity<input name="title" maxLength={120} defaultValue={record?.title} required onInput={(e) => e.currentTarget.setCustomValidity("")} /></label>
-      <label>Buyer<input name="buyer" maxLength={100} defaultValue={record?.buyer} required onInput={(e) => e.currentTarget.setCustomValidity("")} /></label>
-      <div className="form-pair">
-        <label>Region<input name="region" maxLength={80} defaultValue={record?.region} /></label>
-        <label>Deadline<input name="deadline" type="date" min="1900-01-01" max="2100-12-31" defaultValue={record?.deadline} /></label>
+  return <>
+    <SheetHeader>
+      <SheetTitle>{record ? "Edit opportunity" : "New opportunity"}</SheetTitle>
+      <SheetDescription>{record ? record.id + " / " + record.buyer : "Add a tender to the demo workspace."}</SheetDescription>
+    </SheetHeader>
+    <form onSubmit={handleSubmit} className="grid gap-4 px-4 pb-6">
+      <div className="grid gap-2"><Label htmlFor="op-title">Opportunity</Label><Input id="op-title" name="title" maxLength={120} defaultValue={record?.title} required onInput={(e) => e.currentTarget.setCustomValidity("")} /></div>
+      <div className="grid gap-2"><Label htmlFor="op-buyer">Buyer</Label><Input id="op-buyer" name="buyer" maxLength={100} defaultValue={record?.buyer} required onInput={(e) => e.currentTarget.setCustomValidity("")} /></div>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="grid gap-2"><Label htmlFor="op-region">Region</Label><Input id="op-region" name="region" maxLength={80} defaultValue={record?.region} /></div>
+        <div className="grid gap-2"><Label htmlFor="op-deadline">Deadline</Label><Input id="op-deadline" name="deadline" type="date" min="1900-01-01" max="2100-12-31" defaultValue={record?.deadline} /></div>
       </div>
-      <label>Stage<Select name="stage" defaultValue={record?.stage ?? "New"}>
-        <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+      <div className="grid gap-2"><Label htmlFor="op-stage">Stage</Label><Select name="stage" defaultValue={record?.stage ?? "New"}>
+        <SelectTrigger id="op-stage" className="w-full"><SelectValue /></SelectTrigger>
         <SelectContent>{stages.map((stage) => <SelectItem key={stage} value={stage}>{stage}</SelectItem>)}</SelectContent>
-      </Select></label>
-      <label>Next step<textarea name="nextStep" maxLength={600} rows={4} defaultValue={record?.nextStep} /></label>
-      <div className="form-actions"><Button type="submit">Save opportunity</Button></div>
+      </Select></div>
+      <div className="grid gap-2"><Label htmlFor="op-next">Next step</Label><Textarea id="op-next" name="nextStep" maxLength={600} rows={4} defaultValue={record?.nextStep} /></div>
+      <div><Button type="submit">Save opportunity</Button></div>
     </form>
-  </div>;
+  </>;
 }

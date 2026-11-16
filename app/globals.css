@@ -136,18 +136,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .brand { display: inline-flex; gap: .55rem; align-items: center; font-weight: 800; font-size: 1.12rem; letter-spacing: -.045em; white-space: nowrap; }
 .brand-mark { width: 1.9rem; height: 1.9rem; display: grid; place-items: center; border-radius: .5rem; background: var(--color-brand-soft); color: var(--color-brand); }
 .brand-mark svg { width: 1.1rem; height: 1.1rem; }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; border: 1px solid var(--transparent); border-radius: var(--radius); font-size: .875rem; font-weight: 750; line-height: 1.15; white-space: nowrap; transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
-.button-standard { min-height: 2.875rem; padding: 0 .95rem; }
-.button-small { min-height: 2.25rem; padding: 0 .65rem; font-size: .8rem; }
-.button-icon { width: 2.25rem; height: 2.25rem; }
-.button svg { width: 1rem; height: 1rem; flex: none; }
-.button-primary { background: var(--color-ink); color: var(--color-on-dark); }
-.button-primary:hover:not(:disabled), .button-primary:active:not(:disabled) { background: var(--color-brand); }
-.button-outline { background: var(--color-surface); border-color: var(--color-rule); color: var(--color-ink); }
-.button-outline:hover:not(:disabled), .button-outline:active:not(:disabled), .button-ghost:hover:not(:disabled) { background: var(--color-paper-2); border-color: var(--color-rule); }
-.button-inverse { background: var(--color-on-dark); color: var(--color-ink); }
-.button-inverse:hover, .button-inverse:active { background: var(--color-dark-hover); }
-.button-inverse:focus-visible { outline-color: var(--color-on-dark); }
 @media (prefers-reduced-motion: reduce) {
   [data-marketing-motion] { opacity: 1 !important; transform: none !important; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
