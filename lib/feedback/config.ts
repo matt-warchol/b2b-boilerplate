@@ -2,7 +2,7 @@
 export const feedbackLimits = {
   maxInput: 1000,
   maxHistory: 10,
-  maxOutputTokens: 400,
+  maxOutputTokens: 800,
   timeoutMs: 20_000,
   maxBodyBytes: 20_000,
   perUserPerHour: 20,

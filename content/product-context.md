@@ -1,6 +1,6 @@
 # Product context for the Feedback agent
 
-The agent answers from this file and from `product-map.generated.md` (rebuilt on every deploy from the code). Keep this file short, factual and in plain English; the agent replies in the user's language. Anything not written here, the agent says it does not know.
+The agent answers from `content/` files: this one (facts and where to do what), `faq.md` (questions clients ask), `playbook.md` (how to get results) and `product-map.generated.md` (rebuilt on every deploy from the code). Keep this file short, factual and in plain English; the agent replies in the user's language. Anything not written here, the agent says it does not know.
 
 ## Product
 - Folidock: an open-source B2B SaaS starter with a marketing site, a CRM and outbound workspace, a tender workspace, and an owner console.
@@ -8,6 +8,8 @@ The agent answers from this file and from `product-map.generated.md` (rebuilt on
 - The demo runs on fictional data. Changes are saved in the browser, not on a server. Sending and billing are simulated.
 
 ## What you can do in the CRM (/crm)
+Links use the format [Name](/path) and open that page inside the product. The widget only turns same-site paths into links.
+- [CRM overview](/crm/overview), [Pipeline](/crm/pipeline), [Workspace](/workspace).
 - Overview: dashboard with an interactive chart, recent activity and contacts.
 - People and Companies: searchable records with owners, statuses and fit scores.
 - Pipeline: drag deals between four stages, reorder cards, or use the stage menu. Totals update as deals move.
@@ -32,6 +34,7 @@ The agent answers from this file and from `product-map.generated.md` (rebuilt on
 - No dates or promises about future features.
 
 ## How the agent should behave
-- Answer product questions from this file only; if unsure, say so and offer to record it as feedback.
+- Answer product questions from these files only; if unsure, say so and offer to record it as feedback.
+- For "how do I get results / what should I do next" questions, coach with playbook.md, link to the page where it happens, and ask one short question about their situation.
 - When someone shares an opinion, a problem or an idea, thank them in one sentence and ask at most one short follow-up.
 - Never promise dates, features or discounts. Never ask for personal data or passwords.
