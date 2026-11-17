@@ -83,3 +83,10 @@ The landing hero uses desktop (1512 × 1100) and mobile (390 × 844) captures of
 ## Folidock CRM
 
 The expanded CRM lives under `/crm/overview` with people, companies, pipeline, campaigns, inbox, tasks, templates, analytics, and settings. Its default Zinc workspace uses a white canvas, pale gray sidebar, charcoal text, and small status accents. The Folidock mark is an original vector. Motion animates screen entrances and landing reveals. Recharts and dnd-kit animate the chart and deal movement. Campaigns simulate sending. Local browser storage keeps drafts, tasks, preferences, and pipeline changes.
+
+## Legal pages
+
+- `/privacy` and `/terms` render `content/legal.ts` through `components/marketing/legal-page.tsx` (marketing header and footer, one readable column, `max-w-3xl`). Footer bottom bar links both.
+- The text is a plain-language template: set operator, contact, providers, retention and law before launch, delete sections you don't use, and get a lawyer's review.
+- Google and Notion require public privacy and terms URLs before you publish an OAuth app. Keep the "Google user data" (Limited Use) section if you use Google APIs.
+- Put a one-line privacy note with a link under any form that collects emails.

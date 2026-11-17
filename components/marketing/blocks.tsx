@@ -422,6 +422,9 @@ export function MarketingFooter() {
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
           <span>Folidock · Open-source demo</span>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/privacy" className="hover:underline">Privacy</Link>
+            <Link href="/terms" className="hover:underline">Terms</Link>
           <Link
             href={source}
             className="inline-flex items-center gap-2 hover:underline"
@@ -429,6 +432,7 @@ export function MarketingFooter() {
             <GitBranch className="size-4" />
             View source
           </Link>
+          </div>
         </div>
       </div>
     </footer>
