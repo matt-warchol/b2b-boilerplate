@@ -71,6 +71,12 @@ Dark graphite, mint, side-by-side hero and a denser CRM. [Open landing](https://
 
 The demo runs on fictional data. Edits persist in your browser. Sending and billing are simulated. The original DealRadar example is also included at [the tender workspace](https://folio-crm-demo.vercel.app/workspace) and has a [bid brief builder](https://folio-crm-demo.vercel.app/workspace/briefs).
 
+## Planned paid configuration wizard
+
+The paid wizard is a [product roadmap item](docs/ROADMAP.md), not a shipped feature. It will guide project setup, module selection, secure integrations, and deployment, with an optional [Logo Generator](docs/LOGO-GENERATOR.md).
+
+The [logo-generation skill](.agents/skills/b2b-logo-generator/SKILL.md) is available now for manual use in your own AI agent: six distinct minimalist concepts per batch, rationale and prompts, optional images when tools are available, and further iterations with your feedback. Wizard UI, image-provider integration, SVG/favicon export, and automatic branding are planned.
+
 ## Run locally
 
 Use Node.js 22 or newer.
