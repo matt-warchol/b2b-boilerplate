@@ -9,6 +9,8 @@ export type AgentResult = {
   topic: string;
   sentiment: "positive" | "neutral" | "negative";
   summary: string | null;
+  inputTokens: number | null;
+  outputTokens: number | null;
 };
 
 export const fallbackResult: AgentResult = {
@@ -17,23 +19,25 @@ export const fallbackResult: AgentResult = {
   topic: "uncategorized",
   sentiment: "neutral",
   summary: null,
+  inputTokens: null,
+  outputTokens: null,
 };
 
 async function productContext() {
-  try {
-    return await readFile(path.join(process.cwd(), "content", "product-context.md"), "utf8");
-  } catch {
-    return "";
-  }
+  const files = ["product-context.md", "product-map.generated.md"];
+  const parts = await Promise.all(
+    files.map((f) => readFile(path.join(process.cwd(), "content", f), "utf8").catch(() => "")),
+  );
+  return parts.filter(Boolean).join("\n\n");
 }
 
 function system(context: string, topics: string[]) {
-  return `You are the Feedback agent inside a software product. Answer questions about the product using ONLY the context below; if the answer is not there, say you do not know. Also collect feedback: when the user gives an opinion, problem or idea, thank them in one sentence and ask at most one short follow-up. Keep replies under 80 words, plain text.
+  return `You are the Feedback agent inside a software product. Answer questions about the product using ONLY the context below; if the answer is not there, say you do not know. Also collect feedback: when the user gives an opinion, problem or idea, thank them in one sentence and ask at most one short follow-up. Keep replies under 80 words, plain text. Reply in the language the user writes in.
 
 Reply with JSON only, no markdown fence:
 {"reply": string, "kind": "question"|"feedback"|"bug"|"idea", "topic": string, "sentiment": "positive"|"neutral"|"negative", "summary": string|null}
-- topic: 1-3 lowercase words. Reuse one of the existing topics when it fits: ${topics.length ? topics.join(", ") : "(none yet)"}.
-- summary: one sentence describing the user's feedback in third person; null for a pure question.
+- topic: 1-3 lowercase English words, whatever language the user writes in. Reuse one of the existing topics when it fits: ${topics.length ? topics.join(", ") : "(none yet)"}.
+- summary: one English sentence describing the user's feedback in third person; null for a pure question.
 
 Product context:
 ${context}`;
@@ -68,6 +72,7 @@ export async function runAgent(history: AgentTurn[], topics: string[]): Promise<
   const signal = AbortSignal.timeout(feedbackLimits.timeoutMs);
   try {
     let text = "";
+    let usage = { input: 0, output: 0 };
     if (cfg.provider === "anthropic") {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -78,6 +83,7 @@ export async function runAgent(history: AgentTurn[], topics: string[]): Promise<
       if (!res.ok) throw new Error(`anthropic ${res.status}`);
       const data = await res.json();
       text = data.content?.map((c: { text?: string }) => c.text ?? "").join("") ?? "";
+      usage = { input: data.usage?.input_tokens ?? 0, output: data.usage?.output_tokens ?? 0 };
     } else {
       const base = cfg.provider === "openai" ? "https://api.openai.com/v1" : cfg.baseUrl!.replace(/\/$/, "");
       const res = await fetch(`${base}/chat/completions`, {
@@ -89,8 +95,10 @@ export async function runAgent(history: AgentTurn[], topics: string[]): Promise<
       if (!res.ok) throw new Error(`llm ${res.status}`);
       const data = await res.json();
       text = data.choices?.[0]?.message?.content ?? "";
+      usage = { input: data.usage?.prompt_tokens ?? 0, output: data.usage?.completion_tokens ?? 0 };
     }
-    return parse(text) ?? { ...fallbackResult, reply: text.trim().slice(0, 800) || fallbackResult.reply };
+    const tokens = { inputTokens: usage.input, outputTokens: usage.output };
+    return { ...(parse(text) ?? { ...fallbackResult, reply: text.trim().slice(0, 800) || fallbackResult.reply }), ...tokens };
   } catch (error) {
     console.error("feedback agent failed", error);
     return fallbackResult;

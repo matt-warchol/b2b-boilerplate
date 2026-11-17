@@ -98,5 +98,5 @@ The board uses the [Dice UI Radix Kanban](https://diceui.com/docs/components/rad
 
 ## Feedback agent
 
-- Reuse map: Card, Button, Textarea (widget); Accordion, Table, Badge, Alert, Empty, Input (`/admin/feedback`). All from `components/ui`; nothing installed.
+- Reuse map: Card, Button, Textarea (widget); Tabs, Accordion, Table, Badge, Alert, Empty, Input, Button (`/admin/feedback`). All from `components/ui`; nothing installed.
 - Exceptions: none. The `<form>` and `<a>` in the admin page are not restricted elements.

@@ -14,6 +14,9 @@ export type FeedbackRow = {
   topic?: string | null;
   sentiment?: "positive" | "neutral" | "negative" | null;
   summary?: string | null;
+  input_tokens?: number | null;
+  output_tokens?: number | null;
+  cost_usd?: number | null;
 };
 
 function headers(key: string) {
@@ -44,6 +47,27 @@ export async function listSince(sinceIso: string, limit = 1000): Promise<Feedbac
   return res.json();
 }
 
+export async function countWhere(filter: string): Promise<number> {
+  const cfg = supabaseConfig();
+  if (!cfg) return 0;
+  const res = await fetch(`${cfg.url}/rest/v1/feedback?select=id&${filter}`, {
+    headers: { ...headers(cfg.key), Prefer: "count=exact", Range: "0-0" },
+    cache: "no-store",
+  });
+  const total = res.headers.get("content-range")?.split("/")[1];
+  return res.ok && total && total !== "*" ? Number(total) : 0;
+}
+
+export async function spentSince(sinceIso: string): Promise<number> {
+  const cfg = supabaseConfig();
+  if (!cfg) return 0;
+  const query = `select=cost_usd&cost_usd=not.is.null&created_at=gte.${encodeURIComponent(sinceIso)}&limit=10000`;
+  const res = await fetch(`${cfg.url}/rest/v1/feedback?${query}`, { headers: headers(cfg.key), cache: "no-store" });
+  if (!res.ok) return Number.POSITIVE_INFINITY; // fail closed: unknown spend counts as over budget
+  const rows: { cost_usd: number | string }[] = await res.json();
+  return rows.reduce((sum, r) => sum + Number(r.cost_usd), 0);
+}
+
 export async function recentTopics(days = 30): Promise<string[]> {
   const since = new Date(Date.now() - days * 86_400_000).toISOString();
   const rows = await listSince(since, 500);
@@ -65,6 +89,31 @@ export function groupByTopic(rows: FeedbackRow[]) {
       items,
       negative: items.filter((i) => i.sentiment === "negative").length,
       sessions: new Set(items.map((i) => i.session_id)).size,
+    }))
+    .sort((a, b) => b.items.length - a.items.length);
+}
+
+export function pathOf(url: string | null) {
+  if (!url) return "unknown page";
+  try {
+    return new URL(url).pathname;
+  } catch {
+    return url;
+  }
+}
+
+export function userLabel(r: FeedbackRow) {
+  return r.user_email ?? r.user_id ?? "anonymous";
+}
+
+export function groupByUser(rows: FeedbackRow[]) {
+  const users = new Map<string, FeedbackRow[]>();
+  for (const r of rows) if (r.role === "user") users.set(userLabel(r), [...(users.get(userLabel(r)) ?? []), r]);
+  return [...users.entries()]
+    .map(([user, items]) => ({
+      user,
+      workspace: items.find((i) => i.workspace_id)?.workspace_id ?? null,
+      items: [...items].sort((a, b) => pathOf(a.page_url).localeCompare(pathOf(b.page_url)) || (a.created_at ?? "").localeCompare(b.created_at ?? "")),
     }))
     .sort((a, b) => b.items.length - a.items.length);
 }

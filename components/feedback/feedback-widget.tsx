@@ -8,7 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 type Turn = { role: "user" | "assistant"; content: string };
 
-const greeting: Turn = { role: "assistant", content: "Hi! Ask me about the product, or tell me what works and what does not." };
+// Short on purpose: what it is, what happens to the message, and that any language works.
+const greeting: Turn = {
+  role: "assistant",
+  content: "This is the feedback agent. Ask a question and I answer from our knowledge base, or tell us what to improve: we read it and use it to make the product better for you. Any language works.",
+};
 
 export function FeedbackWidget() {
   const [open, setOpen] = useState(false);
@@ -40,11 +44,11 @@ export function FeedbackWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId: session.current, pageUrl: location.href, messages: next.slice(1) }),
       });
-      if (!res.ok) throw new Error(String(res.status));
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(typeof data.error === "string" ? data.error : "Message not sent. Try again.");
       setTurns([...next, { role: "assistant", content: data.reply }]);
-    } catch {
-      setError("Message not sent. Try again.");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Message not sent. Try again.");
       setDraft(text);
       setTurns(turns);
     } finally {
@@ -77,7 +81,7 @@ export function FeedbackWidget() {
               value={draft}
               maxLength={1000}
               rows={2}
-              placeholder="Your question or feedback"
+              placeholder="Ask or tell us what to improve"
               aria-label="Message"
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {

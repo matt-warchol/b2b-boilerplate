@@ -69,6 +69,10 @@ Dark graphite, mint, side-by-side hero and a denser CRM. [Open landing](https://
 </tr>
 </table>
 
+## Feedback agent
+
+A ready-made module for product feedback. A small chat inside the product (not on the public site) that answers questions from a knowledge base and collects what users want improved, in any language. Every message is saved with the user, workspace and page, sent to PostHog, listed at `/admin/feedback` by topic and by user, and summarized daily by email. A button there copies a ready prompt plus the data, so you can analyze it with Claude. Limits per user, session and workspace and a daily cost cap keep it cheap (Claude Haiku by default). Setup and porting to another product: [docs/FEEDBACK.md](docs/FEEDBACK.md).
+
 The demo runs on fictional data. Edits persist in your browser. Sending and billing are simulated. The original DealRadar example is also included at [the tender workspace](https://folio-crm-demo.vercel.app/workspace) and has a [bid brief builder](https://folio-crm-demo.vercel.app/workspace/briefs).
 
 ## Run locally
