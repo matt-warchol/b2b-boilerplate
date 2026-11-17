@@ -46,3 +46,8 @@ Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedb
 ## Known gaps
 - Messages are stored as plain text. The agent never asks for personal data, but users can type anything.
 - Limits count rows in Supabase, so they are not atomic. For hard guarantees, add a Postgres function or a rate limiter.
+
+## Cookie banner and analytics (template)
+- `lib/consent.ts` is a vanilla cookie banner shared by the Next pages and any raw HTML route. `lib/posthog.ts` loads PostHog only when `NEXT_PUBLIC_POSTHOG_KEY` is set and starts opted out; it measures only after Accept (stored in local storage as `rz_consent`). The footer "Cookie settings" button reopens the banner.
+- Exclude your own browsers: open any page with `?internal=1` once (`?internal=0` undoes it). IP filtering does not work when PostHog anonymises IPs, so this is more reliable.
+- `content/legal.ts` has GDPR legal bases, cookies and cookie choices sections. Replace the operator, contact, cookie names and retention with your real ones and have a lawyer review before launch.

@@ -7,6 +7,8 @@ import "./workspace.css";
 import "./themes.css";
 import { site } from "@/content/site";
 import { themes, themeStorageKey } from "@/content/themes";
+import { consentCss, consentJs } from "@/lib/consent";
+import { posthogSnippet } from "@/lib/posthog";
 
 export const metadata: Metadata = {
   title: { default: site.title, template: "%s | " + site.name },
@@ -32,11 +34,15 @@ const themeScript = `(() => {
 })();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const ph = posthogSnippet(); // empty unless NEXT_PUBLIC_POSTHOG_KEY is set
   return (
     <html lang="en" data-theme={site.theme} suppressHydrationWarning>
       <body>
         <Script id="folidock-theme" strategy="beforeInteractive">{themeScript}</Script>
         {children}
+        {ph && <script dangerouslySetInnerHTML={{ __html: ph }} />}
+        {ph && <style dangerouslySetInnerHTML={{ __html: consentCss }} />}
+        {ph && <script dangerouslySetInnerHTML={{ __html: consentJs }} />}
       </body>
     </html>
   );

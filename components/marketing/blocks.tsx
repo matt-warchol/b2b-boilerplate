@@ -1,4 +1,5 @@
 // Layouts adapted from the Tailark OSS Dusk and Mist blocks listed in docs/UI-AUDIT.md.
+import { CookieSettings } from "@/components/marketing/cookie-settings";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -425,6 +426,7 @@ export function MarketingFooter() {
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/privacy" className="hover:underline">Privacy</Link>
             <Link href="/terms" className="hover:underline">Terms</Link>
+            <CookieSettings />
           <Link
             href={source}
             className="inline-flex items-center gap-2 hover:underline"

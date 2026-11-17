@@ -12,7 +12,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
         <p className="mt-6 text-lg text-muted-foreground">{doc.intro}</p>
         <div className="mt-10 space-y-9">
           {doc.sections.map((s) => (
-            <section key={s.heading} className="space-y-3">
+            <section key={s.heading} id={s.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")} className="scroll-mt-24 space-y-3">
               <h2 className="text-xl font-semibold tracking-tight">{s.heading}</h2>
               {s.body.map((p, i) => (
                 <p key={i} className="leading-7 text-muted-foreground">
