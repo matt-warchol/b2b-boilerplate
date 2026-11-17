@@ -62,7 +62,7 @@ Proven in RFPZen (rfpzen.com, Nov 2026). Reuse these instead of designing settin
 | Webhook to a CRM | Input + Button "Save" + Button "Send a test" | Explain in one sentence what is sent and when; recommend Zapier, Make or n8n for HubSpot/Pipedrive/Attio. Server forwards the request (https only, no raw IPs). |
 | Deadlines to a calendar | Link to an `.ics` route | Works with Google, Outlook and Apple Calendar without OAuth. |
 | Help text that would clutter the page | `details`/Accordion "Why they ask and how to answer" | Plain language; pair every question with a "Suggest an answer" Button that prefills an editable Textarea. |
-| Feedback from any page | Floating Button bottom-right opening a Card with a Textarea | Send the message with the page URL; also capture a PostHog event. |
+| Feedback and help inside the product | The Feedback agent module (`components/feedback`, see [docs/FEEDBACK.md](docs/FEEDBACK.md)): floating Button bottom-right opening a Card chat | Signed-in users only, never on the public site. Saves user, workspace and page; sends PostHog events. |
 
 Remove legal-sounding grey footnotes from product screens; put commitments in one "Safe by design" block where they matter.
 

@@ -7,6 +7,7 @@ import {
   Building2,
   CreditCard,
   LayoutDashboard,
+  MessageSquareText,
   Plus,
   Search,
   Timer,
@@ -229,6 +230,12 @@ export function OwnerDashboard() {
                   place.
                 </p>
               </div>
+              <Button asChild variant="outline">
+                <Link href="/admin/feedback">
+                  <MessageSquareText />
+                  Product feedback
+                </Link>
+              </Button>
               <Button
                 ref={createButton}
                 onClick={(e) => {
