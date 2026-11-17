@@ -24,7 +24,7 @@ export const fallbackResult: AgentResult = {
 };
 
 async function productContext() {
-  const files = ["product-context.md", "product-map.generated.md"];
+  const files = ["product-context.md", "faq.md", "playbook.md", "product-map.generated.md"];
   const parts = await Promise.all(
     files.map((f) => readFile(path.join(process.cwd(), "content", f), "utf8").catch(() => "")),
   );
@@ -32,7 +32,7 @@ async function productContext() {
 }
 
 function system(context: string, topics: string[]) {
-  return `You are the Feedback agent inside a software product. Answer questions about the product using ONLY the context below; if the answer is not there, say you do not know. Also collect feedback: when the user gives an opinion, problem or idea, thank them in one sentence and ask at most one short follow-up. Keep replies under 80 words, plain text. Reply in the language the user writes in.
+  return `You are the Feedback agent inside a software product. Answer questions about the product using ONLY the context below; if the answer is not there, say you do not know. For questions about how to get results or what to do next, coach with the Playbook and ask one short question about their situation. When something can be done in the product, point to it with a link written exactly as [Pipeline](/crm/pipeline): the target must be a path that starts with one "/" and appears in the context. No external links. Also collect feedback: when the user gives an opinion, problem or idea, thank them in one sentence and ask at most one short follow-up. Keep replies under 90 words, plain text, short sentences; a short list of up to 4 lines with "- " is fine for steps. Reply in the language the user writes in.
 
 Reply with JSON only, no markdown fence:
 {"reply": string, "kind": "question"|"feedback"|"bug"|"idea", "topic": string, "sentiment": "positive"|"neutral"|"negative", "summary": string|null}
@@ -45,24 +45,38 @@ ${context}`;
 
 type Parsed = Omit<AgentResult, "inputTokens" | "outputTokens">;
 
+// If the model ran out of tokens mid-JSON, still pull out whatever the reply text says.
+function salvage(text: string): Parsed | null {
+  const m = text.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)/);
+  if (!m) return null;
+  let reply = m[1];
+  try {
+    reply = JSON.parse(`"${reply.replace(/\\$/, "")}"`);
+  } catch {
+    /* keep the raw text */
+  }
+  reply = reply.trim().slice(0, 1200);
+  return reply ? { ...fallbackResult, reply } : null;
+}
+
 function parse(text: string): Parsed | null {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
-  if (start < 0 || end < start) return null;
+  if (start < 0 || end < start) return salvage(text);
   try {
     const raw = JSON.parse(text.slice(start, end + 1));
     if (typeof raw.reply !== "string" || !raw.reply.trim()) return null;
     const kinds = ["question", "feedback", "bug", "idea"] as const;
     const moods = ["positive", "neutral", "negative"] as const;
     return {
-      reply: raw.reply.slice(0, 800),
+      reply: raw.reply.slice(0, 1200),
       kind: kinds.includes(raw.kind) ? raw.kind : "feedback",
       topic: String(raw.topic ?? "uncategorized").toLowerCase().slice(0, 40) || "uncategorized",
       sentiment: moods.includes(raw.sentiment) ? raw.sentiment : "neutral",
       summary: typeof raw.summary === "string" && raw.summary.trim() ? raw.summary.slice(0, 300) : null,
     };
   } catch {
-    return null;
+    return salvage(text);
   }
 }
 
@@ -100,7 +114,7 @@ export async function runAgent(history: AgentTurn[], topics: string[]): Promise<
       usage = { input: data.usage?.prompt_tokens ?? 0, output: data.usage?.completion_tokens ?? 0 };
     }
     const tokens = { inputTokens: usage.input, outputTokens: usage.output };
-    return { ...(parse(text) ?? { ...fallbackResult, reply: text.trim().slice(0, 800) || fallbackResult.reply }), ...tokens };
+    return { ...(parse(text) ?? { ...fallbackResult, reply: text.trim().slice(0, 1200) || fallbackResult.reply }), ...tokens };
   } catch (error) {
     console.error("feedback agent failed", error);
     return fallbackResult;

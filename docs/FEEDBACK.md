@@ -23,7 +23,7 @@ One short intro: this is the feedback agent, it answers from the knowledge base,
 - Default model: Claude Haiku. Change with `FEEDBACK_LLM_PROVIDER` and `FEEDBACK_LLM_MODEL`.
 
 ## Knowledge base
-- `content/product-context.md`: curated, edit by hand.
+- `content/product-context.md`, `content/faq.md`, `content/playbook.md`: curated, edit by hand. The product context links to pages with `[Name](/path)`; the widget renders only same-site paths as links. Replies can run up to about 90 words (800 output tokens); if the model gets cut off the reply is salvaged from the partial JSON.
 - `content/product-map.generated.md`: screens, pages, FAQ and styles read from the code by `scripts/product-map.mjs` before every build. Do not edit.
 - A weekly scheduled task compares the curated file with the code and opens a pull request when the product changed.
 
@@ -33,7 +33,7 @@ One short intro: this is the feedback agent, it answers from the knowledge base,
 3. Edit `content/product-context.md` for your product.
 
 ## Port to another product (e.g. RFPZen)
-Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedback`, `content/product-context.md`, `content/feedback-prompt.ts`, `scripts/product-map.mjs`, `supabase/feedback.sql`, the `vercel.json` cron, the `prebuild` script and the `outputFileTracingIncludes` entry. Then replace `resolveIdentity` with the real session, mount the widget in the signed-in layout, and put `/admin/feedback` behind owner auth instead of the token.
+Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedback`, `content/product-context.md`, `content/faq.md`, `content/playbook.md`, `content/feedback-prompt.ts`, `scripts/product-map.mjs`, `supabase/feedback.sql`, the `vercel.json` cron, the `prebuild` script and the `outputFileTracingIncludes` entry. Then replace `resolveIdentity` with the real session, mount the widget in the signed-in layout, and put `/admin/feedback` behind owner auth instead of the token.
 
 ## Security
 - Keys live only in server environment variables (Vercel, marked Sensitive). Nothing is prefixed `NEXT_PUBLIC_`. The Supabase service role key is used only on the server, and the table has row-level security with no policies.

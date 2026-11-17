@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { MessageCircle, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +14,26 @@ const greeting: Turn = {
   role: "assistant",
   content: "This is the feedback agent. Ask a question and I answer from our knowledge base, or tell us what to improve: we read it and use it to make the product better for you. Any language works.",
 };
+
+// Turns [Name](/path) into an in-app link. Only same-site paths are allowed; everything else stays plain text.
+function Linked({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  const re = /\[([^\]]{1,60})\]\((\/[A-Za-z0-9\-_/#?=&.]{0,120})\)/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m[2].startsWith("//")) continue;
+    parts.push(text.slice(last, m.index));
+    parts.push(
+      <Link key={m.index} href={m[2]} className="font-medium underline underline-offset-2">
+        {m[1]}
+      </Link>,
+    );
+    last = re.lastIndex;
+  }
+  parts.push(text.slice(last));
+  return <>{parts}</>;
+}
 
 export function FeedbackWidget() {
   const [open, setOpen] = useState(false);
@@ -69,7 +90,7 @@ export function FeedbackWidget() {
           <CardContent className="max-h-72 space-y-2 overflow-y-auto px-4" aria-live="polite">
             {turns.map((t, i) => (
               <p key={i} className={t.role === "user" ? "ml-8 rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground" : "mr-8 rounded-lg bg-muted px-3 py-2 text-sm"}>
-                {t.content}
+                {t.role === "user" ? t.content : <Linked text={t.content} />}
               </p>
             ))}
             {busy && <p className="text-muted-foreground text-xs">Thinking…</p>}
