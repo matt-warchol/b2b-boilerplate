@@ -5,6 +5,7 @@ import "@fontsource-variable/geist";
 import "./globals.css";
 import "./workspace.css";
 import "./themes.css";
+import { FeedbackWidget } from "@/components/feedback/feedback-widget";
 import { site } from "@/content/site";
 import { themes, themeStorageKey } from "@/content/themes";
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <Script id="folidock-theme" strategy="beforeInteractive">{themeScript}</Script>
         {children}
+        <FeedbackWidget />
       </body>
     </html>
   );

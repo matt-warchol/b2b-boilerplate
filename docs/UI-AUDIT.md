@@ -95,3 +95,8 @@ No registry component covers these yet. Each carries an `eslint-disable` comment
 ### Sales pipeline
 
 The board uses the [Dice UI Radix Kanban](https://diceui.com/docs/components/radix/kanban) registry item ([MIT license](DICEUI-LICENSE.md)). Its vendored component uses Folidock’s `cn` helper and dnd-kit for sensor handling, sorting, and the drag overlay. The local adaptations keep card sorting vertical within each stage, skip nonmeasurable keyboard targets, and require a valid board target for pointer drops. The drag preview updates in memory. Completing a valid move saves the order and stage to the existing demo storage. The shadcn Select also moves deals by stage with keyboard or touch.
+
+## Feedback agent
+
+- Reuse map: Card, Button, Textarea (widget); Accordion, Table, Badge, Alert, Empty, Input (`/admin/feedback`). All from `components/ui`; nothing installed.
+- Exceptions: none. The `<form>` and `<a>` in the admin page are not restricted elements.
