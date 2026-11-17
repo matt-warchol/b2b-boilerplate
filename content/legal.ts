@@ -33,7 +33,8 @@ export const privacy: LegalDoc = {
         "Account: the email you sign in with, when you were invited and last signed in.",
         "Workspace content: answers, notes, pipeline items and files you or your team add, and the data your company stores in the product.",
         "Connected sources: only the files you pick in Google Drive and the Notion pages you share with us (read only).",
-        "Usage data: pages viewed and clicks in the product, browser and device type, via PostHog (EU cloud), with cookies.",
+        "Usage data: pages viewed and clicks on the website and in the product, browser and device type, via PostHog (EU cloud). Only after you accept analytics cookies; IP addresses are not stored.",
+        "Feedback chat: the messages you write to the in-product feedback agent, with the page, your email and your workspace. An AI model answers and sorts them by topic.",
         "Feedback you send through the feedback button, with the page it was sent from.",
       ],
     },
@@ -43,7 +44,8 @@ export const privacy: LegalDoc = {
       list: [
         "To run the service you signed up for: sign-in links, your workspace, your leads and plans (contract).",
         "To send the email notifications you chose in Settings (contract; you can switch them off).",
-        "To improve the product and fix problems, using usage data and feedback (legitimate interest).",
+        "To improve the product and fix problems, using feedback and your messages to the feedback agent (legitimate interest).",
+        "To measure how the website and product are used, with analytics cookies (your consent; you can withdraw it at any time).",
         "To reply to your early-access request (your request; legitimate interest).",
       ],
     },
@@ -52,6 +54,35 @@ export const privacy: LegalDoc = {
       body: [
         `If you connect Google Drive, ${product} uses the Google Picker with the drive.file scope: we can open only the files you select, never the rest of your Drive. We copy the selected files into your workspace so your team can use them in the product.`,
         `${product}'s use and transfer of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements. We do not use Google user data for advertising, do not sell it, and do not use it to train general AI models.`,
+      ],
+    },
+    {
+      heading: "Legal bases (GDPR)",
+      body: ["We process personal data under the General Data Protection Regulation (GDPR) on these bases:"],
+      list: [
+        "Contract (Art. 6(1)(b)): to give you the service you signed up for.",
+        "Legitimate interest (Art. 6(1)(f)): to keep the service secure, fix problems, improve it, and answer early-access requests. You can object at any time.",
+        "Consent (Art. 6(1)(a)): for analytics cookies and for connecting Google Drive or Notion. You can withdraw consent at any time without affecting what happened before.",
+        "Legal obligation (Art. 6(1)(c)): for example accounting and tax records, where they apply.",
+        "We do not sell personal data, and we do not use it for advertising or automated decisions that have legal effects on you.",
+      ],
+    },
+    {
+      heading: "Cookies",
+      body: [
+        "Cookies and similar storage are small pieces of data saved in your browser. We use few of them, in these groups:",
+      ],
+      list: [
+        "Necessary (no consent needed): session cookies keep you signed in (replace with your real cookie names); your browser stores your cookie choice and demo progress (local storage).",
+        "Analytics (analytics cookies only after you accept them): PostHog sets a cookie and local storage entry with a random visitor id, and can record pages viewed, clicks and screen sessions so we can see what is confusing. They last up to 12 months.",
+        "We use no advertising or retargeting cookies, and no Google Analytics.",
+        "If you use the Google file picker, Google may set its own cookies. See Google's policy.",
+      ],
+    },
+    {
+      heading: "Your cookie choices",
+      body: [
+        "When you first visit, a banner asks you to accept or reject analytics cookies. Until you accept, nothing is measured. You can change your mind at any time with “Cookie settings” in the footer of the website, or by clearing this site's data in your browser. Most browsers also let you block or delete cookies.",
       ],
     },
     {
@@ -142,6 +173,18 @@ export const terms: LegalDoc = {
       ],
     },
     {
+      heading: "Website content",
+      body: [
+        "The texts, design and software of the website belong to RFPZen or its licensors. You may read and use the site for your own business. Do not copy, resell or republish it, or use it to build a competing service, without our written agreement.",
+      ],
+    },
+    {
+      heading: "Cookies and third-party services",
+      body: [
+        "How we use cookies and which providers process data is explained in the privacy policy. The site may link to or work with third-party services (for example buyers' procurement portals, Google and Notion). We do not control them and are not responsible for their content or practices.",
+      ],
+    },
+    {
       heading: "Liability",
       body: [
         "The pilot is provided as is. To the extent the law allows, we are not liable for indirect losses, such as lost bids, revenue or profit. Nothing in these terms limits liability that cannot be limited by law.",
@@ -152,6 +195,10 @@ export const terms: LegalDoc = {
       body: [
         `You can stop using ${product} at any time and ask us to delete your workspace at ${contact}. We may suspend access that breaks these terms.`,
       ],
+    },
+    {
+      heading: "Changes to these terms",
+      body: ["We may update these terms. We will change the date above and tell you about important changes. Using the service after a change means you accept the new terms."],
     },
     {
       heading: "Law",
