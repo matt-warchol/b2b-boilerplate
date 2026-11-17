@@ -43,7 +43,9 @@ Product context:
 ${context}`;
 }
 
-function parse(text: string): AgentResult | null {
+type Parsed = Omit<AgentResult, "inputTokens" | "outputTokens">;
+
+function parse(text: string): Parsed | null {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
   if (start < 0 || end < start) return null;
