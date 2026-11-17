@@ -5,6 +5,12 @@ A reusable module: a chat inside the product that answers questions from a knowl
 ## What users see
 One short intro: this is the feedback agent, it answers from the knowledge base, and feedback is used to improve the product for them. Replies use the user's language.
 
+## Responsive UI pattern (17 Nov 2026)
+- The shared React widget uses shadcn Card, Button and Textarea, with Motion for React transitions. It displays **one** close action in the header while open; the floating trigger is shown only while closed, preventing overlapping controls.
+- Constrain chat width to 24rem and height to the visual viewport; scroll only the conversation, not the page. Keep the composer as a flex row with a min-width-0 Textarea and a fixed 44px send target. On narrow screens the panel takes the viewport width minus safe gutters.
+- Enter sends, Shift+Enter adds a newline, Escape closes and returns focus to the trigger; announce errors and thinking status, preserve the message on failure, use reduced-motion preferences for transitions. The widget is a non-modal support panel and never traps focus.
+- For RFPZen's standalone `content/panel.html`, React/shadcn cannot mount without migrating the panel. Its `lib/agent/widget.ts` mirrors the Card/Button/Textarea styling and motion using scoped CSS; do not copy another independent widget or keep both open/close buttons.
+
 ## What you get
 - Every message saved in Supabase (`feedback` table) with user, workspace, page, topic, sentiment and a one-line summary.
 - PostHog events `feedback_message` and `feedback_summary`, both with `$current_url`.

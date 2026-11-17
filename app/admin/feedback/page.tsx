@@ -16,7 +16,7 @@ import { CopyPromptButton } from "@/components/feedback/copy-prompt-button";
 import { adminCookie, adminCookieValue, adminToken, isFeedbackAdmin, sameSecret } from "@/lib/feedback/admin-auth";
 import { supabaseConfig } from "@/lib/feedback/config";
 import { buildExport } from "@/lib/feedback/export";
-import { groupByTopic, groupByUser, listSince, pathOf } from "@/lib/feedback/store";
+import { groupByTopic, groupByUser, listRecentFeedback, pathOf } from "@/lib/feedback/store";
 
 export const metadata: Metadata = { title: "Feedback", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -55,7 +55,7 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
 
   const { days: daysParam } = await searchParams;
   const days = [1, 7, 30, 90].includes(Number(daysParam)) ? Number(daysParam) : 7;
-  const rows = await listSince(new Date(Date.now() - days * 86_400_000).toISOString());
+  const rows = await listRecentFeedback(days);
   const groups = groupByTopic(rows);
   const users = groupByUser(rows);
   const analysisText = `${feedbackAnalysisPrompt}\n\n---\n\n${buildExport(rows, days)}`.slice(0, 80_000);
