@@ -79,7 +79,7 @@ The demo runs on fictional data. Edits persist in your browser. Sending and bill
 
 The paid wizard is a [product roadmap item](docs/ROADMAP.md), not a shipped feature. It will guide project setup, module selection, secure integrations, and deployment, with an optional [Logo Generator](docs/LOGO-GENERATOR.md).
 
-The [logo-generation skill](.agents/skills/b2b-logo-generator/SKILL.md) is available now for manual use in your own AI agent: six distinct minimalist concepts per batch, rationale and prompts, optional images when tools are available, and further iterations with your feedback. Wizard UI, image-provider integration, SVG/favicon export, and automatic branding are planned.
+The [logo-generation skill](.agents/skills/b2b-logo-generator/SKILL.md) is available now for manual use in your own AI agent: six icon concepts crossed with six wordmark/layout treatments (36 draft full-logo options), rationale and prompts, and refinement of selected combinations. Existing icon selections narrow the matrix; three icons produce 18 options. Image rendering depends on available tools; low quality is used only when supported. Wizard UI, image-provider integration, SVG/favicon export, and automatic branding are planned.
 
 ## Run locally
 

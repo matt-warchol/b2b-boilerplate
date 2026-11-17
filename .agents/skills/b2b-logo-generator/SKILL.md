@@ -1,55 +1,62 @@
 ---
 name: b2b-logo-generator
-description: Generate six distinct minimalist B2B SaaS logo concepts, rationale, image prompts, and optional rendered marks; iterate in the user's AI agent.
+description: Explore full B2B SaaS logos with six icon concepts crossed with six wordmark treatments, then refine only selected combinations.
 ---
 
-# B2B SaaS Logo Generation Skill
+# B2B SaaS Logo Generator
 
-Act as an expert brand designer. Given a project name and description, generate **six distinct concepts per batch**, with rationale and self-contained image prompts. When rendering is requested and an image tool is available, generate six separate images. Otherwise explicitly label outputs “concepts and prompts only”; never claim prompts are rendered logos.
+Distinguish the **icon/mark**, **wordmark** (the brand name), and **full logo/lockup** (icon plus name). By default explore full logos, not isolated icons. Use an icon-only mode only when requested.
 
-## Brief
+## Brief and scope
 
-Use the name, description, buyer, optional colors, and supplied constraints. Ask for missing name or description; label other assumptions. The name informs the mark but must not appear in it. Consult [current model guidance](../../../docs/LOGO-GENERATOR.md#model-guidance) before recommending a model. Never request secrets in chat.
+Use the project name with exact spelling/case, description, buyer, optional palette, and supplied references. Ask for a missing name or description; label other assumptions. Never ask for secrets in chat. Consult [model guidance](../../../docs/LOGO-GENERATOR.md#model-guidance) before recommending models.
 
-## 1. The B2B SaaS Design Philosophy
+Default discovery is **6 icons × 6 wordmark/layout treatments = 36 low-fidelity full-logo options**. If the user selects existing icons, preserve those references and generate only their subset: e.g. icons 1, 2, 6 × six treatments = 18 options. Do not restart six unrelated icons. Do not interpret a selection as approval to upscale or apply branding.
 
-A modern B2B/SaaS logo must be recognizable, convey trust, and work as a 16×16px favicon. Use the five original reference archetypes as principles, not brand silhouettes to copy:
+## Icon design principles
 
-1. **Vercel:** perfect pure geometry; a single primitive structure, sharp and developer-focused.
-2. **Linear:** intersecting optical lines, high contrast, speed and precision, optimized for dark mode. Simplify lines for small sizes.
-3. **Supabase:** a simple standard shape with an energetic accent color, friendly but technical. Use solid color instead of literal glow.
-4. **Figma:** overlapping circles, squares, or polygons forming a new structure; collaboration and creativity.
-5. **Docker / GitHub:** a highly abstracted geometric animal or mascot, strictly 2D, flat silhouette, no cartoon details.
-6. **Original direction:** a product-specific metaphor or negative-space construction distinct from the other five.
+Create six distinct silhouettes/metaphors, not recolors. Use the five source archetypes as principles without copying recognizable brand shapes:
 
-Vary silhouette, metaphor, and structure, not just color or rotation.
+1. Vercel: pure primitive geometry, sharp and developer-focused.
+2. Linear: intersecting optical lines, precision and high contrast; simplify for small sizes.
+3. Supabase: simple shape and energetic solid accent color, no literal glow.
+4. Figma: overlapping primitives expressing collaboration.
+5. Docker / GitHub: abstract geometric mascot, flat silhouette without cartoon detail.
+6. Original product-specific direction such as meaningful negative space.
 
-## 2. Golden Rules for the Prompts
+Icon constraints: **no typography inside the icon**; flat vector UI style, solid shapes, 2D geometry, no gradients, shading, shadows, texture, or mockups. Use one or two foreground colors plus background. Bold silhouette, broad negative space, no hairlines. Design the icon for favicon use; do not require the full wordmark to remain readable at 16px. Vector appearance does not mean an SVG file.
 
-- **NO TYPOGRAPHY:** no text, letters, numbers, words, monograms, captions, or watermarks. This intentionally excludes the source's optional monogram exception.
-- **FLAT VECTOR STYLE:** include `flat vector UI style`, `solid shapes`, `2D geometric mark`, `no gradients`, `no 3D shading`. No shadows, textures, glow, or mockups. Vector style does not promise SVG output.
-- **1–2 COLORS:** at most two solid foreground colors plus background; the mark must also work in monochrome.
-- **FAVICON READY:** bold simple silhouette, generous negative space, safe padding on a square canvas, no hairlines or tiny details.
-- Describe concrete geometry in image prompts rather than asking for copies of named brands.
+## Six wordmark treatments
 
-## 3. Six-output contract
+Define six visually distinct type/layout treatments once, then cross every selected icon with all six. Keep the icon's geometry and palette consistent across its row. Vary type family, weight, tracking, name color split, icon/name ratio, and horizontal versus stacked composition deliberately. Do not count six mere color swaps as six treatments.
 
-For each concept supply a stable batch/concept ID, short name and archetype, visual idea, one or two sentences explaining its relevance to this product, palette hex codes and background, a complete copyable prompt, and a separate rendered image/file if available. Say “Not rendered” otherwise. Mark monochrome, light/dark, and 16px/32px checks “pending” unless actually inspected.
+Example starting set (adapt to the brief):
 
-Prompt template (replace brackets with concrete descriptions):
+- A: horizontal, neutral grotesk, semibold, compact spacing.
+- B: horizontal, geometric sans, medium weight, open spacing.
+- C: horizontal, humanist sans, regular weight, softer character.
+- D: horizontal, sturdy slab serif, medium weight, editorial character.
+- E: stacked icon above name, bold rounded sans, centered.
+- F: horizontal, technical monospace, medium weight, generous separation.
 
-> Create one original B2B SaaS logo mark for [product purpose]. Depict [geometry and metaphor]. Flat vector UI style, solid shapes, 2D geometric mark. Use only [one or two hex colors] on [background]. Center one mark on a square canvas with generous safe padding, a bold silhouette and open negative space, designed for 16×16px favicon and monochrome use. No text, letters, words, numbers, monograms, captions, watermarks, gradients, glow, shadows, texture, 3D shading, or mockups. One mark only, no contact sheet.
+Spell the brand name exactly. The no-text rule applies **only to the icon**; the wordmark explicitly requires text. Use only the brand name unless a tagline is supplied. Font descriptions are visual directions, not verified font identities or licenses. For final assets choose a real licensed font and set the name with actual typography; do not preserve malformed generated lettering.
 
-An optional contact sheet supplements, never replaces, six individual images. If generation fails or quota runs out, identify completed files and provide prompts for the rest. Do not claim a complete rendered batch.
+## Cheap discovery before refinement
 
-## 4. Select and iterate
+Use draft/low quality where the tool exposes it. If it does not, disclose that limitation; never claim lower API cost or a quality setting that was not used. Do not silently switch to a paid API/CLI workflow. For discovery, contact sheets are the intended deliverable: one icon per sheet, six clearly separated full-logo cells, stable IDs such as 1A–1F. This supersedes the old requirement for six individual icon images. The default batch has six sheets/36 cells; a selected three-icon subset has three sheets/18 cells.
 
-Offer selecting a concept, refining selected concepts, or requesting another six in the user's own AI agent. Preserve brief, feedback, and batch IDs; avoid rejected silhouettes. Provide a portable continuation prompt including brief, constraints, previous prompts/images, selected IDs, feedback, and model used, without secrets:
+Maintain a manifest with icon rationale, palette/background, six treatment descriptions, cell IDs, exact prompts, references, tool/model if known, and file paths. Check sheet coverage and exact brand spelling; flag missing, malformed, or duplicated cells rather than claiming completeness. If no rendering tool is available, label outputs concepts/prompts only. For failures report actual completed cells/sheets.
 
-> Continue [brief], batch [next number]. Keep [liked qualities], avoid [rejections]. Produce six new distinct concepts with rationale and copyable prompts, plus individual images if your tools support generation. Constraints: [golden rules]. Previous concepts, selected IDs, model, and feedback: [context].
+Prompt structure:
 
-Do not imply a functioning wizard button or unlimited/free generation. Inspect the actual chosen mark at 16px and 32px, in monochrome and on light/dark backgrounds. Raster output requires separate vector reconstruction/cleanup and validation before calling an SVG production-ready. Report uncompleted checks.
+> Create a low-fidelity exploration sheet with six full logo options for “[exact name]”, a product for [purpose/buyer]. Attached image is the fixed icon reference: preserve its silhouette and colors across all six cells. Arrange six spacious cells in a 2-column × 3-row grid. Each contains this icon PLUS the exact name “[name]”. Treatments: [A–F descriptions]. Label cells [icon ID+A–F] outside each logo. Palette [hex], background [hex]. Flat solid colors; no gradients, shading, shadows, textures, mockups, extra slogans, or typography inside the icon. Keep name legible, precisely spelled, and uncropped. Do not upscale or polish individual options yet.
 
-## Source provenance
+## Select, iterate, then finish
 
-Adapted from the user's “B2B SaaS Logo Generation Skill” in conversation `6afc3c69-7d1c-83ed-8801-7b71a9fce92d`, retrieved 2026-11-17. The stored original ends mid-sentence at `2D g`; missing wording was unavailable. The five archetypes and golden rules above preserve the available substance, extending four prompts to six concepts and adding the current requested constraints, rendering behavior, and iterations. See [source excerpt](references/source-prompt.md).
+Ask for cell IDs and feedback. Offer new treatments or another discovery batch in the user's own agent, carrying forward brief, references, selected/rejected IDs, prompts, and constraints without credentials. Keep IDs stable and avoid rejected directions.
+
+Only after selection, render/refine chosen combinations individually at higher quality/resolution. Preserve chosen icon and type/layout relationship; improve geometry, kerning, alignment, spacing, and color accuracy. Upscaling alone does not fix poor geometry or typography. Final full-logo, standalone icon, monochrome, dark/light variants, PNG/SVG/favicon preparation and project application are separate steps. Inspect actual icon at 16px/32px and full logo at realistic header sizes. Raster output needs vector reconstruction/cleanup; do not claim production-ready SVG or completed checks without validation.
+
+## Provenance
+
+Adapted from the user's source prompt (four mark prompts → six icon concepts); [available original excerpt](references/source-prompt.md) is truncated at `2D g`. The user's subsequent correction introduces full-logo exploration, a 6×6 draft matrix, selected-icon subsets, and refinement only after selection. Keep the original excerpt unchanged as historical context.
