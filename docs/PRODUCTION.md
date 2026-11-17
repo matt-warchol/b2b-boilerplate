@@ -6,7 +6,7 @@ Ship production plumbing in the order the first workflow needs it.
 | --- | --- |
 | People from different companies sign in | Authentication, organizations, invitations, membership roles, and server-side authorization on every read and write |
 | Records need to be shared | A database and tenant-scoped records, migrations, backups, a data import/export path, and audit events for important changes |
-| The workflow needs email | Start with transactional invitations and a sender identity. Retry with idempotency, record delivery status, and keep marketing consent separate |
+| The workflow needs email | Reuse the [React Email and Resend module](EMAIL.md). Connect trusted product events, make retries idempotent, and record delivery status |
 | Teams use it repeatedly | Onboarding, configurable views, telemetry for activation, error monitoring, reminders and background jobs where justified |
 | Customers pay | Tenant-level plan limits, usage reporting, recovery paths for failed payments, and a direct upgrade path |
 

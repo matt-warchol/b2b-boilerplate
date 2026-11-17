@@ -88,6 +88,7 @@ Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, type
 
 - **Start a project:** use the GitHub template and customize [site settings](content/site.ts), [landing blocks](components/marketing/blocks.tsx), [CRM records](features/crm/data.ts), and [owner demo accounts](features/admin/customers.ts).
 - **Work with Claude Code or Codex:** use the [starter skill](.agents/skills/b2b-starter/SKILL.md) to plan a new screen or [audit an existing app](docs/AUDIT.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before implementation and before handoff.
+- **Add product email:** use the [email module and audit checklist](docs/EMAIL.md) for seven React Email templates, a local preview, and dry-run Resend delivery.
 - **Go to production:** see the [production guide](docs/PRODUCTION.md) for authorization, persistence, billing, email, and optional AI cost controls.
 
 Folidock uses Next.js, TypeScript, Tailwind CSS, shadcn/ui, Tailark OSS, Dice UI Kanban with dnd-kit, Recharts, TanStack Table, Motion for React, and Lucide. The [UI audit](docs/UI-AUDIT.md) shows which pieces came from ready-made blocks and what was adapted. The starter is [MIT licensed](LICENSE).
