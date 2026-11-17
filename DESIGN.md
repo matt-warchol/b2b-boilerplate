@@ -49,6 +49,23 @@ These are the preferred tools for the jobs they already cover in Folidock. Use a
 | Interactive charts | [shadcn Chart](https://ui.shadcn.com/docs/components/chart) with [Recharts](https://recharts.github.io/). Keep chart tooltips, legends and accessibility features where relevant. |
 | Table sorting, filters and selection that outgrow a basic table | shadcn Table with [TanStack Table](https://tanstack.com/table/latest/docs/introduction) for behavior. Folidock uses this combination in the tender workspace. |
 
+## Settings and data-sharing patterns
+
+Proven in RFPZen (rfpzen.com, Nov 2026). Reuse these instead of designing settings screens from scratch.
+
+| Need | Use | Notes |
+| --- | --- | --- |
+| Upload documents | [Dice UI File Upload](https://www.diceui.com/docs/components/file-upload) (`npx shadcn@latest add "https://diceui.com/r/file-upload"`) | Centered dropzone: round icon, one line title, one line of limits, a "Browse files" button; border darkens on drag-over; keyboard: Enter/Space opens the picker. Below it a shadcn Table of files with a Select per row for the category. |
+| Show what is still missing | shadcn Card grid (3 columns, 1 on mobile) | One card per document type; filled state uses the success tint. A Badge in the header says "2 of 6 ready". |
+| Connect Notion / Google Drive / SharePoint | shadcn Card per source: title, one line hint, then form | Card is `flex flex-col`; the hint has a fixed min-height and the form sits at `mt-auto`, so the buttons line up across cards. Always add a "Safe by design" list: read-only, one folder, EU storage, not used for training, one-click delete. |
+| Email notification frequency | shadcn Table + Select (Off / Daily / Weekly) per row | Save on change and show "Saved" next to the heading. Store per member, send from a daily cron. |
+| Webhook to a CRM | Input + Button "Save" + Button "Send a test" | Explain in one sentence what is sent and when; recommend Zapier, Make or n8n for HubSpot/Pipedrive/Attio. Server forwards the request (https only, no raw IPs). |
+| Deadlines to a calendar | Link to an `.ics` route | Works with Google, Outlook and Apple Calendar without OAuth. |
+| Help text that would clutter the page | `details`/Accordion "Why they ask and how to answer" | Plain language; pair every question with a "Suggest an answer" Button that prefills an editable Textarea. |
+| Feedback from any page | Floating Button bottom-right opening a Card with a Textarea | Send the message with the page URL; also capture a PostHog event. |
+
+Remove legal-sounding grey footnotes from product screens; put commitments in one "Safe by design" block where they matter.
+
 ## Landing
 
 Use a capped canvas and one spacing rhythm. Give adjacent sections room to breathe. The hero should show who the product helps, the job it does, and one usable action on the first desktop screen. Reuse the same primary action at the close. A quiet anchor link can serve a reader who needs more detail. Use a real product screenshot with alt text or an interaction that demonstrates the job. Start with hero, product proof, workflow, objections, and close. Add pricing or a customer story only when it helps the reader decide.
