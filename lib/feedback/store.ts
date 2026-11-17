@@ -48,6 +48,12 @@ export async function listSince(sinceIso: string, limit = 1000): Promise<Feedbac
   return res.json();
 }
 
+// Time-dependent filtering belongs to the server data layer, not React render.
+export async function listRecentFeedback(days: number): Promise<FeedbackRow[]> {
+  const since = new Date(Date.now() - days * 86_400_000).toISOString();
+  return listSince(since);
+}
+
 export async function countWhere(filter: string): Promise<number> {
   const cfg = supabaseConfig();
   if (!cfg) return 0;
