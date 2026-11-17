@@ -8,8 +8,8 @@ Guide a founder through project name/domain, module selection, secure integratio
 
 - [ ] Define module boundaries, configuration persistence, secret handling, and deployment ownership.
 - [ ] Build the setup and selection screens using the starter's registry-first workflow.
-- [ ] Add the optional [Logo Generator flow](LOGO-GENERATOR.md): brief → six concepts/previews → select or iterate in the user's agent → validated assets → apply to project.
-- [x] Document a reusable [logo-generation skill](../.agents/skills/b2b-logo-generator/SKILL.md), rationale/prompts, portable iteration, and model caveats.
+- [ ] Add the optional [Logo Generator flow](LOGO-GENERATOR.md): brief → 6 icons × 6 wordmark treatments / 36 draft full logos → select combinations → refine at higher quality → validated assets → apply to project.
+- [x] Document a reusable [logo-generation skill](../.agents/skills/b2b-logo-generator/SKILL.md), 36-option draft matrix, selected-icon subsets, rationale/prompts, portable iteration, and model/quality caveats.
 - [ ] Implement image generation with visible costs, quotas, and partial-failure handling.
 - [ ] Implement SVG cleanup, PNG/favicon exports, light/dark variants, and project branding preview/application.
 - [ ] Verify the complete configuration and deployment journey before advertising it as available.
