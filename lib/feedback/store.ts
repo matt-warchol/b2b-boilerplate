@@ -17,6 +17,7 @@ export type FeedbackRow = {
   input_tokens?: number | null;
   output_tokens?: number | null;
   cost_usd?: number | null;
+  ip_hash?: string | null;
 };
 
 function headers(key: string) {

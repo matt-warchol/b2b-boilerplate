@@ -1,5 +1,5 @@
 import { LockKeyhole } from "lucide-react";
-import { FeedbackWidget } from "@/components/feedback/feedback-widget";
+import { FeedbackMount } from "@/components/feedback/feedback-mount";
 import { WorkspaceNav } from "@/components/workspace-nav";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -20,6 +20,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
       </header>
       <main className="workspace-main" id="workspace-main" tabIndex={-1}>{children}</main>
     </SidebarInset>
-    <FeedbackWidget />
+    <FeedbackMount />
   </SidebarProvider>;
 }

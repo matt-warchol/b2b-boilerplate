@@ -9,6 +9,8 @@ export const feedbackLimits = {
   perUserPerDay: 60,
   perSessionTotal: 30,
   perWorkspacePerDay: 300,
+  perIpPerHour: 40,
+  budgetStopAt: 0.9, // stop at 90% of the daily budget to leave room for requests already in flight
 };
 
 // Cheap default: Claude Haiku. Override with FEEDBACK_LLM_MODEL.

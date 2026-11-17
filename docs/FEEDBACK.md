@@ -35,6 +35,14 @@ One short intro: this is the feedback agent, it answers from the knowledge base,
 ## Port to another product (e.g. RFPZen)
 Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedback`, `content/product-context.md`, `content/feedback-prompt.ts`, `scripts/product-map.mjs`, `supabase/feedback.sql`, the `vercel.json` cron, the `prebuild` script and the `outputFileTracingIncludes` entry. Then replace `resolveIdentity` with the real session, mount the widget in the signed-in layout, and put `/admin/feedback` behind owner auth instead of the token.
 
+## Security
+- Keys live only in server environment variables (Vercel, marked Sensitive). Nothing is prefixed `NEXT_PUBLIC_`. The Supabase service role key is used only on the server, and the table has row-level security with no policies.
+- Chat API: same-origin JSON calls only, signed-in users only, size cap, limits per user, chat, workspace and IP (the IP is stored as a salted hash), daily budget stop at 90%.
+- Admin and export: token of 24+ characters, stored in the cookie only as a hash (httpOnly, secure, strict, 8 h), 1.5 s delay on a wrong token. Cron route: Bearer secret, timing-safe check.
+- Agent has no tools and cannot act. Users' text is escaped in the admin page and the email, and marked as untrusted in the Claude export.
+- The hard stop for money is the spending limit in your model provider's console. The in-app budget is a second layer, not atomic.
+- Widget is off until `FEEDBACK_ENABLED=1`.
+
 ## Known gaps
 - Messages are stored as plain text. The agent never asks for personal data, but users can type anything.
 - Limits count rows in Supabase, so they are not atomic. For hard guarantees, add a Postgres function or a rate limiter.

@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { feedbackAnalysisPrompt } from "@/content/feedback-prompt";
 import { CopyPromptButton } from "@/components/feedback/copy-prompt-button";
-import { adminCookie, isFeedbackAdmin, sameSecret } from "@/lib/feedback/admin-auth";
+import { adminCookie, adminCookieValue, adminToken, isFeedbackAdmin, sameSecret } from "@/lib/feedback/admin-auth";
 import { supabaseConfig } from "@/lib/feedback/config";
 import { buildExport } from "@/lib/feedback/export";
 import { groupByTopic, groupByUser, listSince, pathOf } from "@/lib/feedback/store";
@@ -23,23 +23,24 @@ export const dynamic = "force-dynamic";
 
 async function unlock(formData: FormData) {
   "use server";
-  const token = process.env.FEEDBACK_ADMIN_TOKEN;
+  const token = adminToken();
   const given = String(formData.get("token") ?? "");
   if (token && sameSecret(given, token)) {
-    (await cookies()).set(adminCookie, given, { httpOnly: true, secure: true, sameSite: "strict", path: "/admin/feedback", maxAge: 60 * 60 * 8 });
+    (await cookies()).set(adminCookie, adminCookieValue(token), { httpOnly: true, secure: true, sameSite: "strict", path: "/admin/feedback", maxAge: 60 * 60 * 8 });
   }
+  await new Promise((resolve) => setTimeout(resolve, 1500)); // slows down guessing
   redirect("/admin/feedback");
 }
 
 export default async function FeedbackAdminPage({ searchParams }: { searchParams: Promise<{ days?: string }> }) {
-  const token = process.env.FEEDBACK_ADMIN_TOKEN;
+  const token = adminToken();
   if (!(await isFeedbackAdmin())) {
     return (
       <main className="mx-auto max-w-sm p-6">
         <Card>
           <CardHeader>
             <CardTitle>Feedback</CardTitle>
-            <CardDescription>{token ? "Enter the admin token." : "Set FEEDBACK_ADMIN_TOKEN to unlock this page."}</CardDescription>
+            <CardDescription>{token ? "Enter the admin token." : "Set FEEDBACK_ADMIN_TOKEN (at least 24 characters) to unlock this page."}</CardDescription>
           </CardHeader>
           <CardContent>
             <form action={unlock} className="flex gap-2">

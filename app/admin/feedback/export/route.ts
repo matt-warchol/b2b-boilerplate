@@ -10,6 +10,6 @@ export async function GET(request: Request) {
   const days = [1, 7, 30, 90].includes(requested) ? requested : 7;
   const rows = await listSince(new Date(Date.now() - days * 86_400_000).toISOString());
   return new Response(buildExport(rows, days), {
-    headers: { "Content-Type": "text/markdown; charset=utf-8", "Content-Disposition": `attachment; filename="feedback-${days}d.md"` },
+    headers: { "Content-Type": "text/markdown; charset=utf-8", "Content-Disposition": `attachment; filename="feedback-${days}d.md"`, "Cache-Control": "no-store", "X-Robots-Tag": "noindex" },
   });
 }
