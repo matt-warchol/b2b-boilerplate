@@ -7,7 +7,7 @@
 import ts from "typescript";
 import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, existsSync, appendFileSync } from "node:fs";
-import { join, resolve, relative } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
@@ -52,7 +52,6 @@ export function analyzeTsx(content, path, installed = installedExports()) {
   const ast = sourceFile(path, content);
   const findings = [];
   const localUiImports = new Set();
-  let hasPrimitivePackageImports = false;
   for (const statement of ast.statements) {
     if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
     const value = statement.moduleSpecifier.text;
@@ -60,7 +59,6 @@ export function analyzeTsx(content, path, installed = installedExports()) {
       const bindings = statement.importClause?.namedBindings;
       if (bindings && ts.isNamedImports(bindings)) for (const item of bindings.elements) localUiImports.add(item.name.text);
     } else if (/^(radix-ui|@radix-ui\/)/.test(value)) {
-      hasPrimitivePackageImports = true;
       findings.push({ severity: "review", line: ast.getLineAndCharacterOfPosition(statement.getStart(ast)).line + 1, message: "Direct Radix import outside components/ui: check if an installed shadcn wrapper already covers the same behavior." });
     }
   }
