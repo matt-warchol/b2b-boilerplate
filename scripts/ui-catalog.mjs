@@ -1,19 +1,25 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { createHash } from "node:crypto";
 
 // Small dependency-free source inventory. Precise inherited types live in the linked .tsx files.
 const root = resolve(process.cwd());
 const dir = join(root, "components", "ui");
 const files = readdirSync(dir).filter((name) => name.endsWith(".tsx")).sort();
 const doc = join(root, "docs", "design-system-docs.md");
+const fingerprint = (source) => {
+  const bytes = Buffer.from(source, "utf8");
+  return createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+};
+const markers = files.map((name) => `<!-- ui-catalog ${name} ${fingerprint(readFileSync(join(dir, name), "utf8"))} -->`);
 if (process.argv.includes("--check")) {
   const content = readFileSync(doc, "utf8");
-  const missing = files.filter((name) => !content.includes("](../components/ui/" + name + ")"));
+  const missing = files.filter((name, i) => !content.includes("](../components/ui/" + name + ")") || !content.includes(markers[i]));
   if (missing.length) {
-    console.error("Unlisted installed UI source modules: " + missing.join(", ") + ". Run npm run ui:catalog.");
+    console.error("Unlisted or changed UI modules: " + missing.join(", ") + ". Run npm run ui:catalog and commit the updated catalog.");
     process.exitCode = 1;
   } else {
-    console.log("All installed UI module paths are listed in the catalog.");
+    console.log("Installed UI module inventory and source fingerprints are current.");
   }
 } else {
   function exportedNames(src) {
@@ -57,7 +63,7 @@ if (process.argv.includes("--check")) {
       out.push("| [`" + name + "`](../components/ui/" + name + ") | `" + symbol + "` | `" + propSignature(src, symbol) + "` |");
     }
   }
-  out.push("", "For reusable product-specific compositions see [marketing blocks](../components/marketing/blocks.tsx), [feedback agent](FEEDBACK.md), [CRM dashboard shell](../features/crm/dashboard-shell.tsx), [pipeline](../features/crm/pipeline-board.tsx) and [charts](../features/crm/outbound-chart.tsx).", "");
+  out.push("", "For reusable product-specific compositions see [marketing blocks](../components/marketing/blocks.tsx), [feedback agent](FEEDBACK.md), [CRM dashboard shell](../features/crm/dashboard-shell.tsx), [pipeline](../features/crm/pipeline-board.tsx) and [charts](../features/crm/outbound-chart.tsx).", "", ...markers, "");
   writeFileSync(doc, out.join("\n"));
   console.log("Wrote " + doc);
 }
