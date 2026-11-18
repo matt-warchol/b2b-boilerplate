@@ -98,6 +98,7 @@ Open [localhost:3000](http://localhost:3000). Use `npm run ui:catalog` to refres
 ## Build on it
 
 - **Start a project:** use the GitHub template and customize [site settings](content/site.ts), [landing blocks](components/marketing/blocks.tsx), [CRM records](features/crm/data.ts), and [owner demo accounts](features/admin/customers.ts).
+- **Small change:** simply say `On /crm/people tighten the table layout.` With the repo open, the agent reads `AGENTS.md` automatically; no long prompt needed. The PR [UI reuse guard](docs/UI-REUSE-GUARD.md) catches name collisions and flags likely duplication.
 - **Work with Claude Code or Codex:** follow the [step-by-step AI Start/Audit guide](docs/USING-WITH-AI.md), inspect the [installed components and props](docs/design-system-docs.md), then use the [starter skill](.agents/skills/b2b-starter/SKILL.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before and after implementation.
 - **Add product email:** use the [email module and audit checklist](docs/EMAIL.md) for seven React Email templates, a local preview, and dry-run Resend delivery.
 - **Go to production:** see the [production guide](docs/PRODUCTION.md) for authorization, persistence, billing, email, and optional AI cost controls.

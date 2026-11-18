@@ -1,0 +1,33 @@
+name: UI reuse guard
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - "components/**"
+      - "features/**"
+      - "scripts/ui-reuse-check.mjs"
+      - "scripts/ui-reuse-check.test.mjs"
+      - ".github/workflows/ui-reuse.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  reuse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check reuse guard tests
+        run: npm run test:ui-reuse
+      - name: Review new TSX against installed UI components
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: npm run ui:reuse:check
