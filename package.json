@@ -13,12 +13,14 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run ui:catalog:check && npm run lint && npm run typecheck && npm run test:email && npm run build",
+    "check": "npm run ui:catalog:check && npm run test:ui-reuse && npm run lint && npm run typecheck && npm run test:email && npm run build",
     "email:preview": "email dev --dir emails --port 3001",
     "email:smoke": "node --import tsx scripts/email-smoke.ts",
     "test:email": "node --import tsx --test features/email/email.test.ts",
     "ui:catalog": "node scripts/ui-catalog.mjs",
-    "ui:catalog:check": "node scripts/ui-catalog.mjs --check"
+    "ui:catalog:check": "node scripts/ui-catalog.mjs --check",
+    "ui:reuse:check": "node scripts/ui-reuse-check.mjs",
+    "test:ui-reuse": "node --test scripts/ui-reuse-check.test.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",

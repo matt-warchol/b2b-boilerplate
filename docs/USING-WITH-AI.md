@@ -22,6 +22,18 @@ Ask the agent to read in order: [AGENTS.md](../AGENTS.md), [DESIGN.md](../DESIGN
 
 > Audit **[target repo/path]** using Folidock as a **reference**, not as a wholesale replacement. Read AGENTS.md, DESIGN.md, docs/design-system-docs.md, docs/AUDIT.md and the target product's own architecture and UI first. Produce evidence-backed findings with real file:line references, severity, impact and proposed fixes. For each UI issue, identify an already installed component or exact upstream block, explicitly saying which. Do not claim a feature, API, prop, library or integration exists unless you have verified its source. Preserve working auth, providers, permissions, design system and business flows. Build a reuse map and recommend small changes first. Only implement approved fixes; then run the target's checks, exercise affected desktop/mobile flows and state what could not be verified.
 
+## Quick changes: no long prompts necessary
+
+In a coding agent with this repository open, say just:
+
+> On `/crm/people`, make the table more compact.
+
+Or, in Polish: `Na /crm/people popraw odstępy w tabeli.`
+
+**No slash command or lengthy instruction is required.** `AGENTS.md` applies to the repository. The agent should silently consult the component catalog and local source, use installed components, then report what changed and what it tested. For small tasks, do not start a full audit or request a long brief; a 1–2 sentence summary is enough.
+
+A GitHub pull request also runs [the UI reuse guard](UI-REUSE-GUARD.md), which blocks exact installed-component name collisions and flags suspicious reimplementations for human review. It cannot recognize every visually equivalent component.
+
 ## The anti-hallucination protocol
 
 1. **Code over guesses.** An existing TypeScript export and its actual usage beats model memory or upstream example code. Verify package versions, props, routes, schema, backend wiring and whether a component is *installed* or merely *recommended*.
