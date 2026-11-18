@@ -56,3 +56,31 @@
 5. After implementation, inspect actual imports and run `npm run check`. Document exceptions in [UI-AUDIT.md](UI-AUDIT.md).
 
 `npm run ui:catalog` rebuilds this list from actual source exports/parameters. `npm run ui:catalog:check` verifies the checked-in inventory still names every installed UI module. TypeScript remains the ultimate validator for props.
+
+<!-- The source fingerprints below are automatically refreshed by npm run ui:catalog. -->
+<!-- ui-catalog accordion.tsx b377229353f9b05e295e5cef03cbd88fe6f98d25 -->
+<!-- ui-catalog alert.tsx f99164ed4b320790482f514342dab5e72f284aca -->
+<!-- ui-catalog avatar.tsx dceaf96a6227c0d10105c833adeac2b8a3d22539 -->
+<!-- ui-catalog badge.tsx 2b41c16fb6f4a78ebab05088c1451c8f8cff0f3d -->
+<!-- ui-catalog breadcrumb.tsx fdeada10c485d8b8c02d50ad04e77a5dced2ab28 -->
+<!-- ui-catalog button.tsx 0d202d63f7724dc27b426c2376d28c7fd7198084 -->
+<!-- ui-catalog card.tsx 6c922ec27ab7bb6a3c19253e1b3f5912ee861f91 -->
+<!-- ui-catalog chart.tsx e81f68ce6b6224c02eaa53bd7dcc32db28838032 -->
+<!-- ui-catalog dropdown-menu.tsx 3faa9f76f1f4c0c656cf0e4733d22ff8bf8c69b0 -->
+<!-- ui-catalog empty.tsx 8ad1a987eec7f07226be7217e77db43480fa25a3 -->
+<!-- ui-catalog input.tsx 1e3b9328903bda2e241ad19fffd804770f30f082 -->
+<!-- ui-catalog item.tsx 8904bc69e130d8ae2b3a6519f149dfbc13670710 -->
+<!-- ui-catalog kanban.tsx c23872bffa591cb6dbf38d38cf13802ec54b79a3 -->
+<!-- ui-catalog label.tsx 1ac80f701ebfe9dc02d632c08cafade732e46625 -->
+<!-- ui-catalog navigation-menu.tsx 65b562acbb64896a629d9e5353990e9c9b5bb3cc -->
+<!-- ui-catalog select.tsx 18b305581d4ab93da1c1005f76cc87616145705e -->
+<!-- ui-catalog separator.tsx baf5a66815ecdc0acfba7f45ea70765838bfe339 -->
+<!-- ui-catalog sheet.tsx ce2be06dcef94c03e0a2b2b2e77edc0e9726f75e -->
+<!-- ui-catalog sidebar.tsx af8a8e4f6b8563e31fc7b5196af0c71c3b43dc87 -->
+<!-- ui-catalog skeleton.tsx 3ec6be770b846170b8e7f8916e5f165e2d1730df -->
+<!-- ui-catalog table.tsx c707725e85a3a6852aff84e01c31999af6317d38 -->
+<!-- ui-catalog tabs.tsx 27365d8b3361a1354178d8295c455763b2858b6b -->
+<!-- ui-catalog textarea.tsx 8d02e03e18a4ddca3d4626aea8ccd24aef8ebbda -->
+<!-- ui-catalog toggle-group.tsx 1f8a0ae5c58e7b6c5b618e5680e94f1cc9925110 -->
+<!-- ui-catalog toggle.tsx d27756842b1da38412ab61237d90200ed230a6d3 -->
+<!-- ui-catalog tooltip.tsx d10e766a14bc9c122271308fd1e7ca00a0e1c5f1 -->
