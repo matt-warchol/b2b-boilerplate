@@ -10,6 +10,8 @@ Pick a style for the buyer and the work the screen has to support. Reuse an exis
 
 Set `site.theme` in `content/site.ts` as the default. The Style picker on the landing, CRM, and owner console remembers the selected preset locally. Add `?theme=editorial` or `?theme=technical` to a demo URL to share that style. Edit `app/themes.css` to adapt shadcn tokens, chart colors, type, and layout. The presets share the same Tailark and shadcn components. Change the section order when the buyer needs a different argument.
 
+The [installed UI catalog](docs/design-system-docs.md) lists checked-in components and their source-level props; refresh with `npm run ui:catalog`. The [AI start/audit guide](docs/USING-WITH-AI.md) shows the evidence-first workflow. The upstream library table below is a **preference list**, not proof that every block is installed.
+
 ## Registry-only UI
 
 The starter is meant to be assembled by agents from ready-made parts. Custom UI is the last resort.

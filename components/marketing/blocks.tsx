@@ -9,6 +9,7 @@ import {
   Building2,
   Check,
   GitBranch,
+  MessageSquareText,
   Shield,
   Workflow,
 } from "lucide-react";
@@ -182,6 +183,7 @@ export function ProductFeatures() {
     <section id="features" className={`${blockSpace} border-y bg-muted/50`}>
       <div className={pageWidth}>
         <Reveal>
+          <p className="mb-3 text-sm font-semibold text-muted-foreground">What’s inside</p>
           <h2 className={titleStyle}>
             One workspace.
             <br />
@@ -224,6 +226,30 @@ export function ProductFeatures() {
             </Reveal>
           ))}
         </div>
+        <Reveal className="mt-5">
+          <Card className="flex flex-col gap-5 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                <MessageSquareText className="size-4" />
+                Also included · Feedback agent
+              </p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+                Learn what users need from inside your app.
+              </h3>
+              <p className="mt-2 text-muted-foreground">
+                A product chat answers questions from your knowledge base, gathers
+                feedback with user and page context, and groups insights for the owner.
+                Configure Supabase and your server-side AI provider to enable it.
+              </p>
+            </div>
+            <Button asChild variant="outline" className="shrink-0">
+              <Link href={source + "/blob/main/docs/FEEDBACK.md"}>
+                Explore feedback agent
+                <ArrowUpRight />
+              </Link>
+            </Button>
+          </Card>
+        </Reveal>
       </div>
     </section>
   );

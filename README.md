@@ -14,6 +14,7 @@ An open-source B2B SaaS starter with a marketing site, CRM and outbound workspac
 | [Inbox](https://folio-crm-demo.vercel.app/crm/inbox) | Read sample conversations and save reply drafts. |
 | [Pipeline](https://folio-crm-demo.vercel.app/crm/pipeline) | Drag deals between stages, reorder cards, or use the stage menu. Totals update as you move deals. |
 | [Owner console](https://folio-crm-demo.vercel.app/admin) | Search customer accounts, review sample MRR, and edit plans, status, seats, and notes. |
+| [Feedback agent](docs/FEEDBACK.md) | In-app chat for questions and feedback, with user/page context, admin analysis at `/admin/feedback`, PostHog events and daily email digest. Needs Supabase and server-side AI credentials; disabled until configured. |
 
 ## Visual styles
 
@@ -92,12 +93,12 @@ npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). Run `npm run check` for lint, types, and a production build.
+Open [localhost:3000](http://localhost:3000). Use `npm run ui:catalog` to refresh the component/props inventory and `npm run check` for lint, types, and a production build.
 
 ## Build on it
 
 - **Start a project:** use the GitHub template and customize [site settings](content/site.ts), [landing blocks](components/marketing/blocks.tsx), [CRM records](features/crm/data.ts), and [owner demo accounts](features/admin/customers.ts).
-- **Work with Claude Code or Codex:** use the [starter skill](.agents/skills/b2b-starter/SKILL.md) to plan a new screen or [audit an existing app](docs/AUDIT.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before implementation and before handoff.
+- **Work with Claude Code or Codex:** follow the [step-by-step AI Start/Audit guide](docs/USING-WITH-AI.md), inspect the [installed components and props](docs/design-system-docs.md), then use the [starter skill](.agents/skills/b2b-starter/SKILL.md). The [shadcn-first workflow](DESIGN.md#shadcn-first-workflow) checks reuse before and after implementation.
 - **Add product email:** use the [email module and audit checklist](docs/EMAIL.md) for seven React Email templates, a local preview, and dry-run Resend delivery.
 - **Go to production:** see the [production guide](docs/PRODUCTION.md) for authorization, persistence, billing, email, and optional AI cost controls.
 
