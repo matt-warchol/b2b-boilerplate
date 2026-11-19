@@ -1,8 +1,23 @@
 "use client";
 
+import type React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Inbox, Menu, Send, Users } from "lucide-react";
+import {
+  ArrowRight,
+  ChartColumn,
+  Columns3,
+  Inbox,
+  ListChecks,
+  Menu,
+  Rocket,
+  Route,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { motion, MotionConfig } from "motion/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +40,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -66,6 +83,75 @@ const views = [
   },
 ];
 
+type MenuItem = { href: string; icon: LucideIcon; title: string; text: string };
+
+// Edit these two lists per product. Mega menu pattern: shadcn NavigationMenu + Tailark-style items.
+const productMenu: MenuItem[] = [
+  { href: "/crm/people", icon: Users, title: "Relationships", text: "Contacts by company, owner and status." },
+  { href: "/crm/pipeline", icon: Columns3, title: "Pipeline", text: "Every deal on one board, with the next step." },
+  { href: "/crm/campaigns", icon: Send, title: "Outbound", text: "Introductions and follow-ups in one place." },
+  { href: "/crm/inbox", icon: Inbox, title: "Inbox", text: "Reply and save the next step." },
+  { href: "/crm/tasks", icon: ListChecks, title: "Tasks", text: "What is due today, per owner." },
+  { href: "/crm/analytics", icon: ChartColumn, title: "Analytics", text: "Replies, meetings and won deals." },
+];
+
+const resourcesMenu: MenuItem[] = [
+  { href: "/changelog", icon: Sparkles, title: "Changelog", text: "What is new, week by week." },
+  { href: "/#workflow", icon: Route, title: "Workflow", text: "How contacts, sequences and replies fit." },
+  { href: "/#get-started", icon: Rocket, title: "Get started", text: "Open the sample workspace." },
+  { href: "/privacy", icon: ShieldCheck, title: "Privacy", text: "What data we keep and why." },
+];
+
+function MenuLink({ item }: { item: MenuItem }) {
+  const Icon = item.icon;
+  return (
+    <NavigationMenuLink asChild>
+      <Link href={item.href} className="flex flex-row items-start gap-3.5 rounded-xl p-3 transition-colors hover:bg-muted">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border bg-background shadow-xs">
+          <Icon className="size-[18px] text-foreground" />
+        </span>
+        <span className="grid gap-0.5">
+          <span className="text-[15px] font-semibold text-foreground">{item.title}</span>
+          <span className="text-sm leading-snug text-muted-foreground">{item.text}</span>
+        </span>
+      </Link>
+    </NavigationMenuLink>
+  );
+}
+
+function FeatureCard({ href, image, title, text, cta }: { href: string; image: string; title: string; text: string; cta: string }) {
+  return (
+    <NavigationMenuLink asChild>
+      <Link href={href} className="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-2xl bg-muted p-3">
+        <Image src={image} alt="" fill sizes="272px" className="object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.03]" />
+        <span className="relative grid gap-1 rounded-xl border bg-background/90 p-4 backdrop-blur">
+          <span className="text-[15px] font-semibold text-foreground">{title}</span>
+          <span className="text-sm leading-snug text-muted-foreground">{text}</span>
+          <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-foreground">
+            {cta} <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </span>
+      </Link>
+    </NavigationMenuLink>
+  );
+}
+
+function MegaMenu({ label, items, feature }: { label: string; items: MenuItem[]; feature: React.ReactNode }) {
+  return (
+    <div className="grid w-[min(62rem,92vw)] grid-cols-[1fr_17rem] gap-4 p-4">
+      <div>
+        <p className="px-3 pt-1 pb-2 text-xs font-medium text-muted-foreground">{label}</p>
+        <div className="grid grid-cols-2 gap-1">
+          {items.map((item) => (
+            <MenuLink key={item.href} item={item} />
+          ))}
+        </div>
+      </div>
+      {feature}
+    </div>
+  );
+}
+
 export function FolioNav() {
   return (
     <>
@@ -74,40 +160,30 @@ export function FolioNav() {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Product</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <div className="folio-mega-menu">
-                {views.map(({ key, label, icon: Icon, title }) => (
-                  <NavigationMenuLink asChild key={key}>
-                    <Link href={"/crm/" + key}>
-                      <Icon className="size-5" />
-                      <strong>{label}</strong>
-                      <span>{title}</span>
-                    </Link>
-                  </NavigationMenuLink>
-                ))}
-              </div>
+              <MegaMenu
+                label="Product"
+                items={productMenu}
+                feature={<FeatureCard href="/crm/overview" image="/marketing-pipeline.webp" title="Open the sample workspace" text="Click through a CRM filled with fictional data." cta="Take the tour" />}
+              />
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <a href="#workflow">Workflow</a>
+            <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu
+                label="Resources"
+                items={resourcesMenu}
+                feature={<FeatureCard href="/changelog" image="/marketing-inbox.webp" title="What shipped this week" text="Short notes on every new feature and fix." cta="Read the changelog" />}
+              />
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+              <Link href="/#workflow">Workflow</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <a href="#get-started">Get started</a>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
               <Link href="/changelog">Changelog</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
@@ -115,29 +191,33 @@ export function FolioNav() {
       </NavigationMenu>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="folio-mobile-nav ml-auto"
-            aria-label="Menu"
-          >
+          <Button variant="outline" size="icon" className="folio-mobile-nav ml-auto" aria-label="Menu">
             <Menu />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {views.map(({ key, label }) => (
-            <DropdownMenuItem asChild key={key}>
-              <Link href={"/crm/" + key}>{label}</Link>
+        <DropdownMenuContent align="end" className="w-64">
+          <DropdownMenuLabel>Product</DropdownMenuLabel>
+          {productMenu.map(({ href, title, icon: Icon }) => (
+            <DropdownMenuItem asChild key={href}>
+              <Link href={href}>
+                <Icon /> {title}
+              </Link>
             </DropdownMenuItem>
           ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Resources</DropdownMenuLabel>
+          {resourcesMenu.map(({ href, title, icon: Icon }) => (
+            <DropdownMenuItem asChild key={href}>
+              <Link href={href}>
+                <Icon /> {title}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <a href="#workflow">Workflow</a>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <a href="#get-started">Get started</a>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/changelog">Changelog</Link>
+            <Link href={site.primaryAction.href} className="font-semibold">
+              {site.primaryAction.label}
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
