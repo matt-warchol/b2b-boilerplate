@@ -103,6 +103,14 @@ export function FolioNav() {
               <a href="#get-started">Get started</a>
             </NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link href="/changelog">Changelog</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <DropdownMenu>
@@ -127,6 +135,9 @@ export function FolioNav() {
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <a href="#get-started">Get started</a>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/changelog">Changelog</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
