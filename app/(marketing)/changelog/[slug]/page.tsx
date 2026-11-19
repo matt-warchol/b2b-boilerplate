@@ -87,7 +87,7 @@ export default async function ChangelogEntryPage({ params }: { params: Promise<{
                   <CardDescription>{formatEntryDate(older.date)}</CardDescription>
                 </CardHeader>
                 <CardFooter>
-                  <Button asChild variant="link" className="px-0">
+                  <Button asChild variant="link" className="h-auto p-0 has-[>svg]:px-0">
                     <Link href={`/changelog/${older.slug}`}>
                       Read entry <ArrowRight />
                     </Link>
@@ -101,7 +101,7 @@ export default async function ChangelogEntryPage({ params }: { params: Promise<{
                   <CardTitle className="text-lg">See everything we shipped</CardTitle>
                 </CardHeader>
                 <CardFooter>
-                  <Button asChild variant="link" className="px-0">
+                  <Button asChild variant="link" className="h-auto p-0 has-[>svg]:px-0">
                     <Link href="/changelog">
                       Open the changelog <ArrowRight />
                     </Link>
