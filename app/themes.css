@@ -50,6 +50,42 @@
   --folio-chart-meetings: #71717a;
 }
 
+/* Zinc + Green: Zinc with one muted green accent, as on rfpzen.com (Nov 2026). */
+:root[data-theme="green"] {
+  --color-focus: #2f8a4f;
+  --color-brand-soft: #eef5f0;
+  --accent: #eef5f0;
+  --accent-foreground: #026a2e;
+  --ring: #2f8a4f;
+  --color-stage-start: #f1f5f1;
+  --color-stage-end: #e3ece5;
+  --hero-glow: #3f5f4a;
+  --closing-glow: #2f4f3a;
+  --folio-chart-replies: #026a2e;
+  --folio-chart-meetings: #8fb79b;
+}
+
+/* Folio: the earlier indigo look, for products that need to stand out more than Zinc. */
+:root[data-theme="folio"] {
+  --color-paper-2: #f3f5fa;
+  --color-brand: #4b60c0;
+  --color-brand-soft: #eef1fa;
+  --color-focus: #4b60c0;
+  --primary: #24304b;
+  --accent: #eef1fa;
+  --accent-foreground: #24304b;
+  --ring: #4b60c0;
+  --sidebar: #f3f5fa;
+  --sidebar-primary: #4b60c0;
+  --hero-base: #24304b;
+  --hero-glow: #4b60c0;
+  --hero-glow-end: #33417a;
+  --closing-base: #24304b;
+  --closing-glow: #4b60c0;
+  --folio-chart-replies: #4b60c0;
+  --folio-chart-meetings: #9aa6d8;
+}
+
 :root[data-theme="editorial"]:has(.folidock-landing, .crm-app) {
   --border: var(--color-rule);
   --ring: var(--color-focus);
