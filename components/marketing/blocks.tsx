@@ -412,6 +412,7 @@ const footerGroups = [
     links: [
       { href: source, label: "GitHub" },
       { href: source + "/blob/main/docs/UI-AUDIT.md", label: "UI audit" },
+      { href: "/changelog", label: "Changelog" },
       { href: "#faq", label: "FAQ" },
     ],
   },
