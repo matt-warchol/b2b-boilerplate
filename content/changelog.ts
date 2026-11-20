@@ -17,6 +17,17 @@ type Tag = (typeof changelogTags)[number];
 
 export const changelog: (ChangelogEntry & { tags: Tag[] })[] = [
   {
+    slug: "feedback-loop",
+    date: "2026-11-20",
+    title: "Hear back when your idea ships",
+    tags: ["Feedback"],
+    summary: "When we build something you asked for in the feedback assistant, you get an email that says how it works now.",
+    body: [
+      "Ideas and problems you share in the **Feedback** assistant now become tasks for the team. When one ships, everyone who asked for it gets a short email: what you asked for, how it works now, and a link to try it.",
+      "Reply to that email or tell the assistant what you think. We read every reply.",
+    ],
+  },
+  {
     slug: "feedback-assistant",
     date: "2026-11-17",
     title: "Ask the feedback assistant",

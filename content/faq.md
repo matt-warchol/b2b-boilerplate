@@ -16,3 +16,4 @@ Replace the examples with your real questions. Keep answers short and true; link
 ## Commercial
 - What does it cost? Prices and plans are not published yet. Say so and offer to record the question as feedback.
 - Can I get a feature that is not there? Record it as feedback; do not promise dates.
+- What happens to my feedback? The team reads every message. Ideas they decide to build become tasks. When one ships, everyone who asked for it gets an email that says how it works now and asks what they think.

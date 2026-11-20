@@ -1,6 +1,6 @@
 # Product email
 
-Folidock ships seven English product emails in React Email with a server-side Resend adapter. Demo campaigns stay simulated. The email module starts in `dry-run` and needs no provider credentials for development or previews.
+Folidock ships eight English product emails in React Email with a server-side Resend adapter. Demo campaigns stay simulated. The email module starts in `dry-run` and needs no provider credentials for development or previews.
 
 ## Templates and triggers
 
@@ -13,12 +13,13 @@ Folidock ships seven English product emails in React Email with a server-side Re
 | `team-invite` | After an authorized workspace invitation | The invitation from the membership system |
 | `password-reset` | After the existing auth system issues a reset link | The expiring, single-use reset link |
 | `magic-link` | After the existing auth system issues a sign-in link | The expiring, single-use sign-in link |
+| `feedback-shipped` | Owner marks a feedback task done in `/admin/feedback` and chooses to email the users who asked ([docs/FEEDBACK.md](FEEDBACK.md#feedback-to-done)) | The screen where the change lives |
 
 Edit the [brand settings](../content/email.ts), [message copy](../features/email/messages.ts), and [shared React Email layout](../features/email/email-template.tsx). The text is original. The layout uses the free React Email library and follows the single-column patterns in its template catalog. Postmark’s open-source templates are references for message structure and action wording. Record the source and keep its license notice if you copy a template. [React Email templates](https://react.email/templates) · [Postmark templates](https://github.com/ActiveCampaign/postmark-templates)
 
 ## Preview and test
 
-1. Run `npm ci`, then `npm run email:preview`. Open the seven previews at [localhost:3001](http://localhost:3001). They use fictional recipients, records, and links. [React Email CLI](https://react.email/docs/cli)
+1. Run `npm ci`, then `npm run email:preview`. Open the eight previews at [localhost:3001](http://localhost:3001). They use fictional recipients, records, and links. [React Email CLI](https://react.email/docs/cli)
 2. Run `npm run test:email` for HTML and plain-text rendering, offline dry run, configuration checks, lifecycle skips, and mocked provider responses.
 3. For a provider smoke test, the owner can add a restricted Resend key and the matching verified sender in `.env.local`, then explicitly run `npm run email:smoke`. This submits fictional data to `delivered@resend.dev` and prints the accepted message ID. The command uses the Resend simulator independently of `EMAIL_MODE`. [Resend test addresses](https://resend.com/changelog/sending-test-emails)
 
