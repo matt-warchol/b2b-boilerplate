@@ -17,6 +17,17 @@ type Tag = (typeof changelogTags)[number];
 
 export const changelog: (ChangelogEntry & { tags: Tag[] })[] = [
   {
+    slug: "more-themes-and-menu",
+    date: "2026-11-23",
+    title: "Two more looks and a clearer top menu",
+    tags: ["Design"],
+    summary: "Two new themes, Zinc + Green and Folio, and a top menu that groups the site under Product and Resources.",
+    body: [
+      "Pick **Zinc + Green** (neutral grey with one muted green accent) or **Folio** (indigo on cool grey) next to **Zinc**, **Editorial** and **Technical**. One setting changes the site, CRM and workspace.",
+      "The top menu of the website now has **Product** and **Resources**. Each opens a panel with short cards, so visitors find every part of the product in one place.",
+    ],
+  },
+  {
     slug: "feedback-loop",
     date: "2026-11-20",
     title: "Hear back when your idea ships",
