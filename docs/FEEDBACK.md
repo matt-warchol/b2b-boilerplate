@@ -17,6 +17,15 @@ One short intro: this is the feedback agent, it answers from the knowledge base,
 - `/admin/feedback`: by topic and by user and page, 1/7/30/90 days. "Copy prompt + data for Claude" puts a ready prompt (`content/feedback-prompt.ts`) and the export on the clipboard. "Download .md" gives the same data as a file.
 - Daily email digest through Resend (`/api/feedback/digest`, 07:00 UTC via `vercel.json`).
 
+## Feedback to done
+Close the loop with the people who asked:
+1. In `/admin/feedback`, click **Create task** next to a message, or **Create task for this topic** to link every message in a topic. The task lands in **To do**.
+2. When you ship it, fill in **What they asked for** (written for the client), **How it works now** and an optional link in the product (`/crm/people`).
+3. **Done + email N people** sends the `feedback-shipped` email (`features/email`) to every signed-in user who asked, once per person, and asks what they think. **Done, no email** skips the email.
+4. The task moves to **Done** and no longer counts as open work. **Reopen** moves it back.
+
+Data: `supabase/feedback-tasks.sql` (`feedback_tasks`: title, linked `feedback_ids`, solution, solution_path, status, per-recipient `email_log`). Code: `lib/feedback/tasks.ts`, `app/admin/feedback/actions.ts`, `components/feedback/feedback-tasks.tsx`. Emails go through the product email module, so they stay in dry-run until `EMAIL_MODE=live`. Anonymous messages cannot be emailed. The agent tells users about this loop without promising dates (`lib/feedback/agent.ts`, `content/faq.md`).
+
 ## Flow
 1. Widget (`components/feedback`) is mounted in the product layouts (`app/(app)/workspace/layout.tsx`, `app/crm/layout.tsx`).
 2. `POST /api/feedback/chat` resolves the user (`lib/feedback/identity.ts`), checks limits and budget, calls the model, saves both messages, sends events.
@@ -34,12 +43,12 @@ One short intro: this is the feedback agent, it answers from the knowledge base,
 - A weekly scheduled task compares the curated file with the code and opens a pull request when the product changed.
 
 ## Setup
-1. Run `supabase/feedback.sql`.
+1. Run `supabase/feedback.sql`, then `supabase/feedback-tasks.sql`.
 2. Set the variables from `.env.example` in Vercel. On Preview set `FEEDBACK_ALLOW_DEMO_USER=1`, because the starter has no sign-in.
 3. Edit `content/product-context.md` for your product.
 
 ## Port to another product (e.g. RFPZen)
-Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedback`, `content/product-context.md`, `content/faq.md`, `content/playbook.md`, `content/feedback-prompt.ts`, `scripts/product-map.mjs`, `supabase/feedback.sql`, the `vercel.json` cron, the `prebuild` script and the `outputFileTracingIncludes` entry. Then replace `resolveIdentity` with the real session, mount the widget in the signed-in layout, and put `/admin/feedback` behind owner auth instead of the token.
+Copy `lib/feedback`, `app/api/feedback`, `app/admin/feedback`, `components/feedback`, `content/product-context.md`, `content/faq.md`, `content/playbook.md`, `content/feedback-prompt.ts`, `scripts/product-map.mjs`, `supabase/feedback.sql`, `supabase/feedback-tasks.sql`, the `feedback-shipped` email (`features/email`), the `vercel.json` cron, the `prebuild` script and the `outputFileTracingIncludes` entry. Then replace `resolveIdentity` with the real session, mount the widget in the signed-in layout, and put `/admin/feedback` behind owner auth instead of the token.
 
 ## Security
 - Keys live only in server environment variables (Vercel, marked Sensitive). Nothing is prefixed `NEXT_PUBLIC_`. The Supabase service role key is used only on the server, and the table has row-level security with no policies.

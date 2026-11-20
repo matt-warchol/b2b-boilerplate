@@ -49,4 +49,11 @@ export const previews = {
     expiresInMinutes: 15,
     actionPath: "/auth/confirm?token=preview-only",
   },
+  "feedback-shipped": {
+    kind: "feedback-shipped",
+    firstName: "Morgan",
+    request: "a way to export contacts to CSV",
+    howItWorks: "Open People, filter the list, then click Export. You get a CSV with the columns you see.",
+    actionPath: "/crm/people",
+  },
 } satisfies Record<EmailMessage["kind"], EmailMessage>;

@@ -11,6 +11,7 @@ export type EmailMessage = Recipient &
     | ({ kind: "trial-ending"; endsOn: string } & Lifecycle)
     | { kind: "team-invite"; inviterName: string; workspaceName: string }
     | { kind: "password-reset" | "magic-link"; expiresInMinutes: number }
+    | { kind: "feedback-shipped"; request: string; howItWorks: string }
   );
 
 export type EmailCopy = {
@@ -125,7 +126,26 @@ export function messageCopy(message: EmailMessage): EmailCopy {
         ],
         action: "Sign in",
       };
+    case "feedback-shipped":
+      return {
+        subject: `You asked, we built it: ${short(message.request, 60)}`,
+        preview: "The change you suggested is live. Here’s how it works now.",
+        heading: "Your idea is live",
+        paragraphs: [
+          `You asked for: ${short(message.request, 200)}.`,
+          `How it works now: ${short(message.howItWorks, 1200)}.`,
+          "What do you think? Reply to this email or tell the feedback assistant in the product. We read every reply.",
+        ],
+        action: "Try it now",
+        signature,
+      };
   }
+}
+
+function short(value: string, max: number) {
+  const v = value.replace(/\s+/g, " ").trim().replace(/[.\s]+$/, "");
+  if (!v) throw new Error("Feedback email needs the request and how it works now.");
+  return v.length > max ? v.slice(0, max - 1).trimEnd() + "…" : v;
 }
 
 export function emailLinks(message: EmailMessage, origin: string) {

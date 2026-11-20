@@ -23,7 +23,7 @@ Links use the format [Name](/path) and open that page inside the product. The wi
 
 ## Owner console (/admin)
 - Search customer accounts, review sample MRR, edit plan, status, seats and notes. Fictional data, billing simulated.
-- Product feedback (/admin/feedback): what users wrote in this chat, grouped by topic and by user.
+- Product feedback (/admin/feedback): what users wrote in this chat, grouped by topic and by user. The owner turns feedback into tasks (To do), adds how it works now when it ships, emails the users who asked, and the task moves to Done.
 
 ## Styles
 - Three visual styles that switch the landing, CRM and owner console together: Zinc (neutral gray), Editorial (warm, serif headings), Technical (dark graphite with mint). The choice is remembered in the browser; add ?theme=editorial or ?theme=technical to a URL to share it.

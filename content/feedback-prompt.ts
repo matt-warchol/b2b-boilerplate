@@ -4,7 +4,8 @@ export const feedbackAnalysisPrompt = `You are my product analyst. Below is feed
 1. Rank the top 5 problems or requests by how many users raise them and how negative they are.
 2. For each: who raised it (users, pages), the underlying need, and one concrete product change.
 3. List questions users asked that our knowledge base should answer, so I can add them.
-4. Flag anything urgent: bugs, confusion at a key step, signs a user may leave.
+4. For each top item, suggest a task title written for the user (e.g. "Export contacts to CSV"), so I can create it in /admin/feedback.
+5. Flag anything urgent: bugs, confusion at a key step, signs a user may leave.
 
 Be brief: bullets, no filler.
 

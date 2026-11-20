@@ -17,6 +17,18 @@ import { adminCookie, adminCookieValue, adminToken, isFeedbackAdmin, sameSecret 
 import { supabaseConfig } from "@/lib/feedback/config";
 import { buildExport } from "@/lib/feedback/export";
 import { groupByTopic, groupByUser, listRecentFeedback, pathOf } from "@/lib/feedback/store";
+import { CreateTaskButton, FeedbackTasks, TaskStatusBadge } from "@/components/feedback/feedback-tasks";
+import { feedbackByIds, listTasks, recipientsFor, splitTasks, taskByFeedback } from "@/lib/feedback/tasks";
+
+const notes: Record<string, { title: string; text: string; error?: boolean }> = {
+  created: { title: "Task created", text: "It is in To do. Add how it works now when it ships." },
+  done: { title: "Moved to Done", text: "The task no longer counts as open. Email results are in the Done list." },
+  reopened: { title: "Task reopened", text: "It is back in To do." },
+  solution: { title: "Add how it works now", text: "The task needs a short description of the solution before it can be done.", error: true },
+  path: { title: "Check the link", text: "Use a path in the product that starts with /, for example /crm/people.", error: true },
+  missing: { title: "Nothing to save", text: "A task needs a title and at least one message.", error: true },
+  failed: { title: "Not saved", text: "Supabase did not accept the change. Check that supabase/feedback-tasks.sql is applied.", error: true },
+};
 
 export const metadata: Metadata = { title: "Feedback", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -32,7 +44,7 @@ async function unlock(formData: FormData) {
   redirect("/admin/feedback");
 }
 
-export default async function FeedbackAdminPage({ searchParams }: { searchParams: Promise<{ days?: string }> }) {
+export default async function FeedbackAdminPage({ searchParams }: { searchParams: Promise<{ days?: string; note?: string }> }) {
   const token = adminToken();
   if (!(await isFeedbackAdmin())) {
     return (
@@ -53,11 +65,17 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
     );
   }
 
-  const { days: daysParam } = await searchParams;
+  const { days: daysParam, note: noteParam } = await searchParams;
+  const note = noteParam ? notes[noteParam] : undefined;
   const days = [1, 7, 30, 90].includes(Number(daysParam)) ? Number(daysParam) : 7;
   const rows = await listRecentFeedback(days);
   const groups = groupByTopic(rows);
   const users = groupByUser(rows);
+  const tasks = await listTasks();
+  const { todo, done } = splitTasks(tasks);
+  const taskOf = taskByFeedback(tasks);
+  const asked = await feedbackByIds([...new Set(todo.flatMap((t) => t.feedback_ids))]);
+  const recipients = new Map(todo.map((t) => [t.id, recipientsFor(asked.filter((r) => r.id && t.feedback_ids.includes(r.id))).length]));
   const analysisText = `${feedbackAnalysisPrompt}\n\n---\n\n${buildExport(rows, days)}`.slice(0, 80_000);
 
   return (
@@ -65,7 +83,7 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
       <header className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h1 className="text-xl font-semibold">Feedback</h1>
-          <p className="text-muted-foreground text-sm">{groups.reduce((n, g) => n + g.items.length, 0)} messages in {groups.length} topics, last {days} days</p>
+          <p className="text-muted-foreground text-sm">{groups.reduce((n, g) => n + g.items.length, 0)} messages in {groups.length} topics, last {days} days · {todo.length} open tasks · {done.length} done</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <CopyPromptButton text={analysisText} />
@@ -88,6 +106,15 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
           <AlertDescription>Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY and apply supabase/feedback.sql.</AlertDescription>
         </Alert>
       )}
+
+      {note && (
+        <Alert variant={note.error ? "destructive" : "default"}>
+          <AlertTitle>{note.title}</AlertTitle>
+          <AlertDescription>{note.text}</AlertDescription>
+        </Alert>
+      )}
+
+      <FeedbackTasks todo={todo} done={done} days={days} recipients={recipients} />
 
       {groups.length === 0 ? (
         <Empty>
@@ -114,7 +141,14 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
                       {g.negative > 0 && <Badge variant="destructive">{g.negative} negative</Badge>}
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent>
+                  <AccordionContent className="space-y-2">
+                    <CreateTaskButton
+                      feedbackIds={g.items.filter((i) => i.id && !taskOf.has(i.id)).map((i) => i.id!)}
+                      title={g.topic}
+                      topic={g.topic}
+                      days={days}
+                      label="Create task for this topic"
+                    />
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -122,6 +156,7 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
                           <TableHead>Page</TableHead>
                           <TableHead>User / workspace</TableHead>
                           <TableHead>When</TableHead>
+                          <TableHead>Task</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -131,6 +166,13 @@ export default async function FeedbackAdminPage({ searchParams }: { searchParams
                             <TableCell className="max-w-40 truncate">{pathOf(i.page_url)}</TableCell>
                             <TableCell>{i.user_email ?? i.user_id ?? "anonymous"}{i.workspace_id ? ` / ${i.workspace_id}` : ""}</TableCell>
                             <TableCell>{i.created_at ? new Date(i.created_at).toLocaleString("en-GB") : ""}</TableCell>
+                            <TableCell>
+                              {i.id && taskOf.has(i.id) ? (
+                                <TaskStatusBadge task={taskOf.get(i.id)!} />
+                              ) : (
+                                <CreateTaskButton feedbackIds={i.id ? [i.id] : []} title={i.summary ?? i.message} topic={i.topic ?? g.topic} days={days} />
+                              )}
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

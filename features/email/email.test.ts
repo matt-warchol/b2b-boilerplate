@@ -17,8 +17,8 @@ const live = {
   RESEND_API_KEY: "re_mock",
 };
 
-test("all seven messages render HTML and plain text with a working standalone preview link", async () => {
-  assert.equal(Object.keys(previews).length, 7);
+test("all eight messages render HTML and plain text with a working standalone preview link", async () => {
+  assert.equal(Object.keys(previews).length, 8);
   for (const message of Object.values(previews)) {
     const { subject, html, text } = await renderProductEmail(
       message,
